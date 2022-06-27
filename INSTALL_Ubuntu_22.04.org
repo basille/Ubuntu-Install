@@ -35,7 +35,7 @@ génériques pour tout ordinateur, cependant :
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
     - [[#nextcloud][NextCloud]]
     - [[#zoom][Zoom]]
-  - [[#signal][Signal]]
+    - [[#signal][Signal]]
   - [[#bureautique][Bureautique]]
     - [[#polices][Polices]]
     - [[#emacs][Emacs]]
@@ -223,7 +223,7 @@ Ne pas répondre immédiatement ; comparer la clé affichée avec celles disponi
 réponse. Si le shell renvoie : "Hi <login>! You've successfully authenticated,
 but GitHub does not provide shell access.", c'est que ça a fonctionné.
 
-Pour finir, on copie le fichier =.gitignore= (du dossier Git) dans le dossier
+Pour finir, on copie le fichier =.gitconfig= (du dossier Git) dans le dossier
 utilisateur. 
 
 
@@ -345,7 +345,7 @@ TLP pour optimiser l'utilisation de la batterie :
   sudo apt install gnome-session gnome-icon-theme
 #+end_src
 
-(ne pas installer adwaita-icon-theme-full)
+(ne pas installer =adwaita-icon-theme-full=)
 
 Se déconnecter, puis se reconnecter en utilisant la session (pour les écrans
 HiDPI, on préférera la session Gnome sur Xorg, Wayland présentant toujours des
@@ -408,8 +408,7 @@ soucis avec ce type d'écrans).
     gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
     gsettings set org.gnome.shell.keybindings screenshot "['<Shift><Super>Print']"
     gsettings set org.gnome.shell.keybindings screenshot-window "['<Super>Print']"
-    gsettings get org.gnome.shell.keybindings show-screen-recording-ui
-['<Super>R']
+    gsettings get org.gnome.shell.keybindings show-screen-recording-ui ['<Super>R']
     gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Primary>Escape']"
     gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Super>Return']"
   #+end_src
@@ -436,7 +435,7 @@ Depuis Ubuntu 21.10, Firefox est installé via un paquet snap qui ne permet plus
 d'installer d'extensions Gnome Shell directement via le navigateur. On utilise
 désormais le Gnome Extension Manager à la place :
 
-#+begin_src
+#+begin_src sh
   sudo apt install gnome-shell-extension-manager
 #+end_src
 
@@ -445,7 +444,7 @@ désormais le Gnome Extension Manager à la place :
 - [[https://extensions.gnome.org/extension/904/disconnect-wifi/][Disconnect Wifi]]
 - [[https://extensions.gnome.org/extension/28/gtile/][gTile]] : Changer la taille de grille à 4x2,3x2,4x3
 - [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] : Changer le raccourci pour ~Super+F1~ :
-  #+begin_src 
+  #+begin_src sh
     dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '["<Super>F1"]'
   #+end_src
 - [[https://extensions.gnome.org/extension/750/openweather/][OpenWeather]] : Il y a un bug avec le jeu d'icônes (Adwaita) qui est normalement
@@ -505,33 +504,33 @@ désormais le Gnome Extension Manager à la place :
 
 **** Extensions
 
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/allow-html-temp/][Allow HTML Temp
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/birthday-calendar/][Birthday Calendar
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/cardbook/][CardBook]] : configurer le carnet d'adresse CardDav
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/compact-headers/][Compact Headers
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/emojiaddin/][Emoji
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/filelink-nextcloud-owncloud/][*cloud - FileLink for Nextcloud and ownCloud]] : configurer le serveur
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/allow-html-temp/][Allow HTML Temp]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/birthday-calendar/][Birthday Calendar]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/cardbook/][CardBook]] : configurer le carnet d'adresse CardDav
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/compact-headers/][Compact Headers]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/emojiaddin/][Emoji]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/filelink-nextcloud-owncloud/][*cloud - FileLink for Nextcloud and ownCloud]] : configurer le serveur
   NextCloud dans les Préférences > Rédaction > Pièces jointes
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/lookout-fix-version/][LookOut (fix version)
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/manually-sort-folders/][Trier manuellement les dossiers
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/msghdr-toolbar-customize/][Message Header Toolbar Customize]] : dans la barre d'outils, « Customize
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/lookout-fix-version/][LookOut (fix version)]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/manually-sort-folders/][Trier manuellement les dossiers]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/msghdr-toolbar-customize/][Message Header Toolbar Customize]] : dans la barre d'outils, « Customize
   Calendar buttons », et enlever les tâches.
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/nestedquote-remover/][NestedQuote Remover
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/quickfolders-tabbed-folders/][QuickFolders (Tabbed Folders)]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Supprimer les messages en double (Alternatif)]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/nestedquote-remover/][NestedQuote Remover]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/quickfolders-tabbed-folders/][QuickFolders (Tabbed Folders)]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Supprimer les messages en double (Alternatif)]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
   #+begin_quote
   toolkit.legacyUserProfileCustomizations.stylesheets: true
   #+end_quote
   Cocher « Sujet » dans les colonnes sélectionnées, ajouter le dossier =chrome=
   avec les PNGs et le fichier =showInOut.css= dans le dossier d'utilisateur
   Thunderbird (=.thunderbird/***.default-release=). Redémarrer Thunderbird.
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/signature-switch/][Signature Switch
-]]- [[https://addons.thunderbird.net/fr/thunderbird/addon/gnotifier/][GNotifier]] (off)
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/signature-switch/][Signature Switch]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/gnotifier/][GNotifier]] (off)
 
 
 *** Firefox
@@ -540,7 +539,8 @@ désormais le Gnome Extension Manager à la place :
   marques-page, mots de passe, historique, extensions et préférences.
 - Dans les Paramètres > Général > Onglets, décocher « Ctrl+Tab fait défiler vos
   onglets en les classant selon leur dernière utilisation ».
-- Pas de délai dans la popup des pièces jointes : ouvrir l'éditeur de configuration (about:config) :
+- Pas de délai dans la popup des pièces jointes : ouvrir l'éditeur de
+  configuration (about:config) :
   #+begin_quote
   security.dialog_enable_delay: 0
   #+end_quote
@@ -583,27 +583,28 @@ Vie privée :
 - ClearURLs : Retirer les espions dans les adresses Internet.
 - Cookie AutoDelete : Contrôlez vos fichiers témoins ! Supprimez automatiquement
   les fichiers témoins non utilisés de vos onglets fermés tout en gardant ceux
-  que vous voulez. 
+  que vous voulez.
 - Decentraleyes : Protège du pistage lié aux diffuseurs de contenus
-  « gratuits », centralisés. 
+  « gratuits », centralisés.
 - HTTPS Everywhere : Chiffrez la Toile ! Utilisez automatiquement la sécurité
-  HTTPS avec de nombreux sites. 
+  HTTPS avec de nombreux sites.
 - Privacy Badger : Privacy Badger apprend automatiquement à bloquer les
-  traqueurs invisibles. 
-- Smart Referer : Des référents intelligents partout ! 
+  traqueurs invisibles.
+- Smart Referer : Des référents intelligents partout !
 
 Autres :
 
 - Bitwarden : Un gestionnaire de mots de passe sécurisé et gratuit pour tous vos
-  appareils. 
-- Flagfox : Affiche un drapeau selon la localisation du serveur courant 
+  appareils.
+- Flagfox : Affiche un drapeau selon la localisation du serveur courant
 - I don't care about cookies : Get rid of cookie warnings from almost all
   websites! 
 - Intégration à GNOME Shell : Cette extension permet l'intégration à GNOME Shell
-  et aux extensions correspondantes du dépôt https://extensions.gnome.org 
+  et aux extensions correspondantes du dépôt https://extensions.gnome.org
 - Nuke Anything : Permet la suppression de n'importe quel element de la page via
-  le menu contextuel. 
-- Sci-Hub X Now! : Free access to academic papers with just a single click via sci-hub!
+  le menu contextuel.
+- Sci-Hub X Now! : Free access to academic papers with just a single click via
+  sci-hub!
 - Textarea Cache : Allows to save automatically the content in a text input
   field. Régler "auto clear old cache" sur 15 jours.
 
@@ -611,28 +612,34 @@ YouTube et vidéos : download + subtitles…
 
 - 'Improve YouTube!' (Video & YouTube Tools) : Make YouTube tidy & powerful!
   YouTube Player Size Theme Quality Auto HD Colors Playback Speed Style ad block
-  Playlist Channel H.264 
+  Playlist Channel H.264
 
 Désactivées :
 
 - Unpaywall : Legally get full text of scholarly articles as you browse.
 - User-Agent Switcher and Manager : Spoof websites trying to gather information
-  about your web navigation to deliver distinct content you may not want 
+  about your web navigation to deliver distinct content you may not want
 - Video DownloadHelper : Download Videos from the Web
 
 Conserver uniquement Bitwarden dans la barre des outils.
 
 
-**** Search engines: Copy the =search.json.mozlz4= file from old to new
-  profile.
+**** Moteurs de recherche
 
-And the list of search engines that I keep:
-- Google [by default]
-- [[https://addons.mozilla.org/fr/firefox/addon/google-fr-recherche-sur-le-web/][Google.fr (Web)]] [installed]
-- Wikipedia (en)
-- [[https://addons.mozilla.org/fr/firefox/addon/wikipedia-fr/][Wikipedia (fr)]] [installed]
-- [[https://addons.mozilla.org/fr/firefox/addon/qwant/][Qwant]] [installed]
-- Debian packages
+Le plus simple est de le faire à la main. Pour enlever les moteurs de recherche
+des moteurs proposés dans la barre d'adresse, ça se passe dans les Paramètres >
+Recherche > Raccourcis de recherche, et on décoche ceux qu'on ne veut pas. Pour
+en rajouter (au format OpenSearch), on visite simplement la page que l'on
+souhaite, puis on clique sur le =+= de la barre d'adresse. 
+
+# Copy the =search.json.mozlz4= file from old to new profile.
+
+Voici la liste que je conserve : 
+- Google [par défaut ; mot-clé @google]
+- Wikipedia (fr) [mot-clé : @wp]
+- Wikipedia (en) [installé ; mot-clé : @wpen]
+- [[https://packages.ubuntu.com/search?keywords=test&searchon=names&suite=all&section=all][Packages Ubuntu]] [installé directement via le formulaire de recherche de la
+  page, mot-clé : @ubuntu]
 
 
 
@@ -667,26 +674,34 @@ Zoom est directement disponible sur les dépots snap pour Ubuntu :
   sudo snap install zoom-client
 #+end_src
 
-... mais buggué (interface graphique ne démarre pas sous 22.04, bloque sur fond flou ou fond d'écran) --> préférer version officielle, disponible à cette adresse :
+... mais buggué (interface graphique ne démarre pas sous 22.04, bloque sur fond
+flou ou fond d'écran). On y préfère version officielle, disponible en
+téléchargement [[https://zoom.us/download?os=linux][à cette adresse]], puis :
+
+#+begin_src sh
+  sudo apt install ./zoom_amd64.deb
+#+end_src
 
 
-https://zoom.us/download?os=linux
+*** Signal
 
-Puis :
+Signal est disponible en paquet snap :
 
-sudo apt install ./zoom_amd64.deb
+#+begin_src sh
+  sudo snap install signal-desktop
+#+end_src
 
+On synchronise ensuite avec le téléphone, puis dans les Paramètres, utiliser le
+thème système, cacher la barre de menu, et autoriser l'accès au micro et à la
+caméra.
 
-** Signal
-
-sudo snap install signal-desktop
+On peut lancer Signal avec une icône dans la barre système avec :
 
 Sync with phone, then in the Settings, use System theme, hide the menu bar, allow access to mic and camera.
 
-Launch with:
-
-signal-desktop --use-tray-icon
-
+#+begin_src sh
+  signal-desktop --use-tray-icon
+#+end_src
 
 
 
@@ -798,7 +813,7 @@ sudo apt install r-base r-base-core r-base-dev r-recommended littler
 
 Puis on récupère [[https://github.com/basille/R][ma configuration de R]] : 
 
-git clone https://github.com/basille/R.git ~/.R-site
+git clone git@github.com:basille/R-site.git ~/.R-site
 ln -s ~/.R-site/.Rprofile ~/.Rprofile
 ln -s ~/.R-site/.Renviron ~/.Renviron
 mkdir ~/.R-site/site-library
