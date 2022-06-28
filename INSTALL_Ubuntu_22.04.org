@@ -35,6 +35,7 @@ génériques pour tout ordinateur, cependant :
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
     - [[#nextcloud][NextCloud]]
     - [[#zoom][Zoom]]
+    - [[#microsoft-teams][Microsoft Teams]]
     - [[#signal][Signal]]
     - [[#admin-internet][Admin Internet]]
   - [[#bureautique][Bureautique]]
@@ -681,6 +682,28 @@ téléchargement [[https://zoom.us/download?os=linux][à cette adresse]], puis :
 #+begin_src sh
   sudo apt install ./zoom_amd64.deb
 #+end_src
+
+
+*** Microsoft Teams
+
+Microsoft Teams est disponible en =.deb= sur [[https://www.microsoft.com/fr-fr/microsoft-teams/download-app#desktopAppDownloadregion][le site de Microsoft]]
+([[https://go.microsoft.com/fwlink/p/?LinkID=2112886&clcid=0x40c&culture=fr-fr&country=FR][téléchargement direct de la version Linux]]). Une fois téléchargé, il peut être
+installé par :
+
+#+begin_src sh
+  sudo apt install ./teams_1.5.00.10453_amd64.deb
+#+end_src
+
+L'installeur vient avec la configuration du dépôt, ce qui assure ensuite
+automatiquement les mises-à-jour. Pour tout enlever :
+
+#+begin_src sh
+  sudo apt purge teams 
+  sudo rm /etc/apt/sources.list.d/teams.list
+#+end_src
+
+Alternativement, on peut ouvrir les liens visio Teams directement par Chromium.
+
 
 
 *** Signal
