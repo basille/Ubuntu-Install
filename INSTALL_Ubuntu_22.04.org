@@ -36,6 +36,7 @@ génériques pour tout ordinateur, cependant :
     - [[#nextcloud][NextCloud]]
     - [[#zoom][Zoom]]
     - [[#signal][Signal]]
+    - [[#admin-internet][Admin Internet]]
   - [[#bureautique][Bureautique]]
     - [[#polices][Polices]]
     - [[#emacs][Emacs]]
@@ -63,7 +64,6 @@ génériques pour tout ordinateur, cependant :
   - [[#postgresql-pgadmin-postgis-and-plr][PostgreSQL, pgAdmin, PostGIS and Pl/R]]
   - [[#uninstall][Uninstall]]
   - [[#miscellaneous][Miscellaneous]]
-    - [[#internet-admin][Internet admin]]
   - [[#leisure][Leisure]]
   - [[#office][Office]]
     - [[#hugo-1][Hugo]]
@@ -703,6 +703,15 @@ Sync with phone, then in the Settings, use System theme, hide the menu bar, allo
   signal-desktop --use-tray-icon
 #+end_src
 
+
+*** Admin Internet
+
+#+begin_src sh
+  sudo apt install cifs-utils dnsutils gftp gvncviewer network-manager-openconnect-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome revelation rsync screen unison
+#+end_src
+
+Pour GTFP, on copie ensuite le fichier `bookmarks` du dossier `GFTP` dans le
+dossier de configuration créé après la première utilisation de GFTP (`~/.gftp`).
 
 
 ** Bureautique
@@ -1362,10 +1371,6 @@ Git to list files in subfolders:
   : git config --global status.showUntrackedFiles all
 
 
-
-*** Internet admin
-
-  : sudo apt install cifs-utils dnsutils gftp gvncviewer network-manager-openconnect-gnome network-manager-vpnc-gnome revelation rsync screen unison
 
 
 ** Leisure
