@@ -762,7 +762,8 @@ homebank
 
 Installer Emacs et quelques librairies utiles (notamment dictionnaires) :
 
-  : sudo apt install emacs hunspell hunspell-en-gb hunspell-en-ca hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa
+: sudo apt install emacs hunspell hunspell-en-gb hunspell-en-ca hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa pip elpa-pdf-tools-server
+sudo pip install format-sql
 
 Cloner ensuite ma configuration disponible sur GitHub :
 
