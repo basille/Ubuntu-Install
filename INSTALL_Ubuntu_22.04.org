@@ -187,7 +187,7 @@ On installe quelques utilitaires qui seront utiles pour la suite (PIP est
 l'installateur de packages Python):
 
 #+begin_src sh
-  sudo apt install cmake git gparted mlocate net-tools pip rename
+  sudo apt install cmake git gparted mlocate net-tools pip rename sqlite3
 #+end_src
 
 *** SSH et git
@@ -450,8 +450,8 @@ désormais le Gnome Extension Manager à la place :
   #+end_src
 - [[https://extensions.gnome.org/extension/750/openweather/][OpenWeather]] : Il y a un bug avec le jeu d'icônes (Adwaita) qui est normalement
   corrigé avec l'installation de =gnome-icon-theme=.  Dans les paramètres,
-  ajouter « Pignan » comme Emplacement, déplacer la boîte de menu à 50%. Il
-  reste un bug sur la couleur du texte qui s'affiche en gris dans la boîte.
+  Agencement : mettre au centre, avec un décalage de 1 (pour l'avoir à droite de
+  l'heure) ; Emplacements : ajouter « Pignan ».
 - [[https://extensions.gnome.org/extension/1411/quake-mode/][Quake Mode]] : Ajouter Tilix, puis raccourci avec touche au-dessus du Tab
 - [[https://extensions.gnome.org/extension/1133/supertab-launcher/][Super+Tab Launcher]] : L'extension n'est plus mise à jour mais fonctionne encore
   sous Gnome 40. Pour cela, éditer le fichier
