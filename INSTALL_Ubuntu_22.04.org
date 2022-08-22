@@ -829,6 +829,9 @@ Mes préférences exportées sont disponibles dans le dossier =QOwnNotes=.
 
 *** R, RStudio & QGIS
 
+
+**** R
+
 Instructions : https://cran.r-project.org/bin/linux/ubuntu/
 
 Installation des dépendances nécessaires :
@@ -850,7 +853,6 @@ git clone git@github.com:basille/R-site.git ~/.R-site
 ln -s ~/.R-site/.Rprofile ~/.Rprofile
 ln -s ~/.R-site/.Renviron ~/.Renviron
 mkdir ~/.R-site/site-library
-
 
 
 **** Packages
@@ -905,18 +907,19 @@ Si besoin, regarder du côté des « [[https://dailies.rstudio.com/rstudio/spott
 
 **** QGIS
 
-On suit les instructions officielles pour Debian/Ubuntu, d'abord pour récupérer
+On suit les [[https://www.qgis.org/fr/site/forusers/alldownloads.html#debian-ubuntu][instructions officielles pour Debian/Ubuntu]], d'abord pour récupérer
 la clé du dépôt :
 
 #+begin_src sh
-wget -qO - https://qgis.org/downloads/qgis-2021.gpg.key | sudo gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/qgis-archive.gpg --import
-sudo chmod a+r /etc/apt/trusted.gpg.d/qgis-archive.gpg
+sudo wget -O /etc/apt/keyrings/qgis-archive-keyring.gpg https://download.qgis.org/downloads/qgis-archive-keyring.gpg
 #+end_src
 
-Puis on ajoute le dépôt et on installe de suite QGIS :
+Puis on ajoute le dépôt pour la bonne version d'Ubuntu, et on installe de suite
+QGIS :
 
 #+begin_src sh
-sudo add-apt-repository "deb https://qgis.org/ubuntu $(lsb_release -c -s) main"
+sudo sh -c 'echo "Types: deb deb-src\nURIs: https://qgis.org/ubuntu\nSuites: jammy\nArchitectures: amd64\nComponents: main\nSigned-By: /etc/apt/keyrings/qgis-archive-keyring.gpg\n" > /etc/apt/sources.list.d/qgis.sources2'
+sudo apt update
 sudo apt install qgis
 #+end_src
 
