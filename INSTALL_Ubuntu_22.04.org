@@ -579,6 +579,11 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
 
 **** Extensions :
 
+Correction orthographique :
+
+- [[https://addons.mozilla.org/fr/firefox/addon/dictionnaire-fran%C3%A7ais1/][Dictionnaire français]] : Dictionnaire orthographique pour la langue française
+  (requis à cause du confinement du snap).
+
 Vie privée :
 
 - ClearURLs : Retirer les espions dans les adresses Internet.
