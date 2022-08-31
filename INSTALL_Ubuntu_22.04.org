@@ -101,7 +101,7 @@ instructions sont génériques pour tout ordinateur, cependant :
     sudo ln -s /etc/profile.d/vte-2.91.sh /etc/profile.d/vte.sh
     nano ~/.bashrc
   #+end_src
-  - *Autocompletion:* check that following lines are uncommented:
+  - *Autocompletion :* vérifier que ces lignes sont décommentées :
   #+begin_quote
   : if ! shopt -oq posix; then
   :   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -111,7 +111,7 @@ instructions sont génériques pour tout ordinateur, cependant :
   :   fi
   : fi
   #+end_quote
-  - *Other:* add the following at the end of the file:
+  - *Autres :* ajouter ces lignes à la fin du fichier :
   #+begin_quote
   : # Manpages with colors
   : export MANPAGER="/usr/bin/most -s"
@@ -122,7 +122,7 @@ instructions sont génériques pour tout ordinateur, cependant :
   : # Alias upgrade & upgrade-full
   : alias upgrade='sudo apt update && sudo apt upgrade && sudo snap refresh'
   : alias upgrade-full='sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove && sudo snap refresh'
-  :
+  : 
   : # For Tilix and Powerline
   : # https://gnunn1.github.io/tilix-web/manual/vteconfig/
   : if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
@@ -241,16 +241,16 @@ Si la MAJ n'est pas possible (problème d'UEFI), on peut la faire à la main :
   (datée de 2020/10/06).
 - Après téléchargement, on vérifie les signatures :
   #+begin_quote
-  md5sum XPS_9350_1.13.0.exe
-  a4baf26b7e21ec1d16232e529b01a13e  XPS_9350_1.13.0.exe
-  sha1sum XPS_9350_1.13.0.exe
-  154934618915e1e5734adf2808473fc8a78feb45  XPS_9350_1.13.0.exe
-  sha256sum XPS_9350_1.13.0.exe
-  a085b7a0fa418db71ca3ba256e67e35129ae1a920e8cd9d45e57e51a27cbe80d  XPS_9350_1.13.0.exe
+: md5sum XPS_9350_1.13.0.exe
+: a4baf26b7e21ec1d16232e529b01a13e  XPS_9350_1.13.0.exe
+: sha1sum XPS_9350_1.13.0.exe
+: 154934618915e1e5734adf2808473fc8a78feb45  XPS_9350_1.13.0.exe
+: sha256sum XPS_9350_1.13.0.exe
+: a085b7a0fa418db71ca3ba256e67e35129ae1a920e8cd9d45e57e51a27cbe80d  XPS_9350_1.13.0.exe
   #+end_quote
 - Copier le fichier sur une clé USB, redémarrer, appuyer sur =F12= pour avoir le
   menu de démarrage, sélectionner "BIOS Flash update" et suivre les
-  instructions. 
+  instructions.
 
 
 ** Configuration ordinateur portable
@@ -265,8 +265,7 @@ TLP pour optimiser l'utilisation de la batterie :
 ** Swap et RAM
 
 - On utilise ZRAM pour compresser la RAM, avec un réglage plus agressif pour le
-  swap :
-  !!! /etc/sysctl.conf absent sur 21.10 ???
+  swap (/!\ plus possible sur Ubuntu 22.04 /!\) :
   #+begin_src sh
     sudo apt install zram-config
     sudo nano /etc/sysctl.conf
@@ -322,6 +321,7 @@ TLP pour optimiser l'utilisation de la batterie :
     #+begin_src sh
       swapon -s
     #+end_src
+
 
 ** Écrans
 
@@ -393,9 +393,6 @@ soucis avec ce type d'écrans).
   en silence.
 - Raccourcis clavier :
   - Désactiver « Masquer la fenêtre » :
-    #+begin_src sh
-      gsettings set org.gnome.desktop.wm.keybindings minimize ['']
-    #+end_src
   - Dossier personnel : ~Super+H~
   - Masquer toutes les fenêtres normales : ~Super+D~
   - Enregistrer une capture d'écran dans Images : ~Super+P~
@@ -405,6 +402,7 @@ soucis avec ce type d'écrans).
   - Verrouiller l'écran : ~Ctrl+Échap~
   - Basculer l'état d'agrandissement : ~Super+Return~
   #+begin_src sh
+    gsettings set org.gnome.desktop.wm.keybindings minimize ['']
     gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>h']"
     gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
     gsettings set org.gnome.shell.keybindings screenshot "['<Shift><Super>Print']"
@@ -479,14 +477,14 @@ désormais le Gnome Extension Manager à la place :
 - Discussion avec suivi, triées par date (plus récentes en dernier) pour tous
   les dossiers : Préférences > Général > Éditeur de configuration :
   #+begin_quote
-  mailnews.default_sort_order: 1
-  mailnews.default_sort_type: 22
-  mailnews.thread_pane_column_unthreads: false
+: mailnews.default_sort_order: 1
+: mailnews.default_sort_type: 22
+: mailnews.thread_pane_column_unthreads: false
   #+end_quote
 - Limiter la largeur des messages textes à 80 caractères : Préférences > Général
   > Éditeur de configuration :
   #+begin_quote
-  mailnews.wraplength: 80
+: mailnews.wraplength: 80
   #+end_quote
 - Dans le panneau des e-mails, enlever Discussion et Lu des colonnes
   affichées. Appliquer ces réglages à tous les dossiers et sous-dossiers de tous
@@ -496,7 +494,7 @@ désormais le Gnome Extension Manager à la place :
 - Pas de délai dans la popup des pièces jointes : Préférences > Général >
   Éditeur de configuration :
   #+begin_quote
-  security.dialog_enable_delay: 0
+: security.dialog_enable_delay: 0
   #+end_quote
 - Dans le calendrier, ajouter un séparateur et le bouton Recherche dans la barre
   d'outils.
@@ -525,7 +523,7 @@ désormais le Gnome Extension Manager à la place :
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
   #+begin_quote
-  toolkit.legacyUserProfileCustomizations.stylesheets: true
+: toolkit.legacyUserProfileCustomizations.stylesheets: true
   #+end_quote
   Cocher « Sujet » dans les colonnes sélectionnées, ajouter le dossier =chrome=
   avec les PNGs et le fichier =showInOut.css= dans le dossier d'utilisateur
@@ -543,7 +541,7 @@ désormais le Gnome Extension Manager à la place :
 - Pas de délai dans la popup des pièces jointes : ouvrir l'éditeur de
   configuration (about:config) :
   #+begin_quote
-  security.dialog_enable_delay: 0
+: security.dialog_enable_delay: 0
   #+end_quote
 
 **** [[https://github.com/rafaelmardojai/firefox-gnome-theme][Thème GNOME]]
@@ -558,11 +556,11 @@ Télécharger le thème :
 
 Puis le configurer dans =about:config= :
 #+begin_quote
-toolkit.legacyUserProfileCustomizations.stylesheets: true
-svg.context-properties.content.enabled: true
-gnomeTheme.hideSingleTab: true
-gnomeTheme.activeTabContrast: true
-ui.useOverlayScrollbars: true
+: toolkit.legacyUserProfileCustomizations.stylesheets: true
+: svg.context-properties.content.enabled: true
+: gnomeTheme.hideSingleTab: true
+: gnomeTheme.activeTabContrast: true
+: ui.useOverlayScrollbars: true
 #+end_quote
 
 Redémarrer Firefox. Pour coller au visuel Gnome global, on ajoute le bouton de
@@ -579,12 +577,12 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
 
 **** Extensions :
 
-Correction orthographique :
+*Correction orthographique :*
 
 - [[https://addons.mozilla.org/fr/firefox/addon/dictionnaire-fran%C3%A7ais1/][Dictionnaire français]] : Dictionnaire orthographique pour la langue française
   (requis à cause du confinement du snap).
 
-Vie privée :
+*Vie privée :*
 
 - ClearURLs : Retirer les espions dans les adresses Internet.
 - Cookie AutoDelete : Contrôlez vos fichiers témoins ! Supprimez automatiquement
@@ -598,7 +596,7 @@ Vie privée :
   traqueurs invisibles.
 - Smart Referer : Des référents intelligents partout !
 
-Autres :
+*Autres :*
 
 - Bitwarden : Un gestionnaire de mots de passe sécurisé et gratuit pour tous vos
   appareils.
@@ -614,18 +612,18 @@ Autres :
 - Textarea Cache : Allows to save automatically the content in a text input
   field. Régler "auto clear old cache" sur 15 jours.
 
-YouTube et vidéos : download + subtitles…
+*YouTube et vidéos :*
 
 - 'Improve YouTube!' (Video & YouTube Tools) : Make YouTube tidy & powerful!
   YouTube Player Size Theme Quality Auto HD Colors Playback Speed Style ad block
   Playlist Channel H.264
+- Video DownloadHelper : Download Videos from the Web
 
-Désactivées :
+*Désactivées :*
 
 - Unpaywall : Legally get full text of scholarly articles as you browse.
 - User-Agent Switcher and Manager : Spoof websites trying to gather information
   about your web navigation to deliver distinct content you may not want
-- Video DownloadHelper : Download Videos from the Web
 
 Conserver uniquement Bitwarden dans la barre des outils.
 
@@ -638,8 +636,6 @@ Recherche > Raccourcis de recherche, et on décoche ceux qu'on ne veut pas. Pour
 en rajouter (au format OpenSearch), on visite simplement la page que l'on
 souhaite, puis on clique sur le =+= de la barre d'adresse. 
 
-# Copy the =search.json.mozlz4= file from old to new profile.
-
 Voici la liste que je conserve : 
 - Google [par défaut ; mot-clé @google]
 - Wikipedia (fr) [mot-clé : @wp]
@@ -648,16 +644,11 @@ Voici la liste que je conserve :
   page, mot-clé : @ubuntu]
 
 
-
-
 *** Navigateurs alternatifs
 
 #+begin_src sh
   sudo apt install chromium-browser epiphany-browser torbrowser-launcher privoxy
 #+end_src
-
- iridium-browser?
-
 
 
 *** NextCloud
@@ -688,6 +679,8 @@ téléchargement [[https://zoom.us/download?os=linux][à cette adresse]], puis :
   sudo apt install ./zoom_amd64.deb
 #+end_src
 
+Il faut ensuite penser à la mettre à jour régulièrement…
+
 
 *** Microsoft Teams
 
@@ -707,8 +700,7 @@ automatiquement les mises-à-jour. Pour tout enlever :
   sudo rm /etc/apt/sources.list.d/teams.list
 #+end_src
 
-Alternativement, on peut ouvrir les liens visio Teams directement par Chromium.
-
+Alternativement, on peut ouvrir les liens visio Teams directement via Chromium.
 
 
 *** Signal
@@ -761,6 +753,7 @@ Pour GTFP, on copie ensuite le fichier `bookmarks` du dossier `GFTP` dans le
 dossier de configuration créé après la première utilisation de GFTP (`~/.gftp`).
 
 
+
 ** Bureautique
 
 
@@ -805,7 +798,8 @@ les packages soient installés.
 sudo apt install libreoffice-style-sifr
 #+end_src
 
-Puis choisir le style d'icônes Sifr dans les options (Outils > Options > LibreOffice > Affichage).
+Puis choisir le style d'icônes Sifr dans les options (Outils > Options >
+LibreOffice > Affichage).
 
 
 *** Slack
@@ -821,15 +815,7 @@ Slack est directement disponible sur les dépots snap pour Ubuntu :
 
 QOwnNotes permet de gérer des notes au format Markdown ; avantage non
 négligeable, il permet de travailler sur des notes synchronisées via
-NextCloud. Pour l'installer, 
-# on utilise un snap :
-# 
-# #+begin_src sh
-#   sudo snap install qownnotes
-# #+end_src
-# 
-# Alternativement, 
-on peut utiliser  le PPA officiel :
+NextCloud. Pour l'installer, on peut utiliser  le PPA officiel :
 
 #+begin_src sh
   sudo add-apt-repository ppa:pbek/qownnotes
@@ -864,46 +850,56 @@ Instructions : https://cran.r-project.org/bin/linux/ubuntu/
 
 Installation des dépendances nécessaires :
 
+#+begin_src sh
 sudo apt install software-properties-common dirmngr
+#+end_src
 
-On récupère la clé de signature pour le dépôt R qu'on va rajouter, et on le rajoute :
+On récupère la clé de signature pour le dépôt R qu'on va rajouter, et on le
+rajoute :
 
+#+begin_src sh
 wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
+#+end_src
 
 On peut ensuite installer R et son environnement complet :
 
+#+begin_src sh
 sudo apt install r-base r-base-core r-base-dev r-recommended littler
+#+end_src
 
 Puis on récupère [[https://github.com/basille/R][ma configuration de R]] : 
 
+#+begin_src sh
 git clone git@github.com:basille/R-site.git ~/.R-site
 ln -s ~/.R-site/.Rprofile ~/.Rprofile
 ln -s ~/.R-site/.Renviron ~/.Renviron
 mkdir ~/.R-site/site-library
+#+end_src
 
 
 **** Packages
 
-Certains packages doivent être installés par les dépôts directement, sans quoi ils engendrent des problèmes insolubles de dépendances :
+Certains packages doivent être installés par les dépôts directement, sans quoi
+ils engendrent des problèmes insolubles de dépendances :
 
+#+begin_src sh
 sudo apt install r-cran-rjava r-cran-rodbc r-cran-tkrplot
+#+end_src
 
-On pourra avoir besoin des dépendances suivantes selon les packages que l'on souhaite installer :
+On pourra avoir besoin des dépendances suivantes selon les packages que l'on
+souhaite installer :
 
-spatiaux (libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libv8-dev), 
-adehabitat (libgsl-dev libgmp-dev libmpfr-dev [ctmm et amt]) 
-tidyverse (libcurl4-openssl-dev libssl-dev libxml2-dev)
-plotting (libcairo2-dev libxt-dev [Cairo])
-data (libudunits2-dev [units] libmagick++-dev [summarytools])
-others (libharfbuzz-dev et libfribidi-dev [pkgdown])
+- spatiaux (libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libv8-dev), 
+- adehabitat (libgsl-dev libgmp-dev libmpfr-dev [ctmm et amt]) 
+- tidyverse (libcurl4-openssl-dev libssl-dev libxml2-dev)
+- plotting (libcairo2-dev libxt-dev [Cairo])
+- data (libudunits2-dev [units] libmagick++-dev [summarytools])
+- others (libharfbuzz-dev et libfribidi-dev [pkgdown])
 
+#+begin_src sh
 sudo apt install libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libv8-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers
-
-# Autres /
-# jags libatk1.0-dev libglib2.0-dev libglu1-mesa-dev libgtk2.0-dev libjq-dev libpango1.0-dev libprotobuf-dev protobuf-compiler 
-
-#sudo ln -s /usr/lib/x86_64-linux-gnu/libOpenCL.so.1 /usr/lib/libOpenCL.so
+#+end_src
 
 L'installation des packages se fait sous R via la fonction =install.selected()=.
 
@@ -912,9 +908,14 @@ L'installation des packages se fait sous R via la fonction =install.selected()=.
 
 RStudio n'est malheureusement pas disponible directement dans les dépôts Ubuntu. On passe donc par le [[https://rstudio.com/products/rstudio/download/#download][site de RStudio]], où l'on peut télécharger le dernier =.deb= (pour RStudio Desktop 2022.02.2+485 au 17 mai 2022), puis l'installer avec par exemple :
 
+#+begin_src sh
 sudo apt install ./RStudio/rstudio-2022.02.2-485-amd64.deb
+#+end_src
 
-Si besoin, regarder du côté des « [[https://dailies.rstudio.com/rstudio/spotted-wakerobin/desktop/jammy/][dailies]] » en cas de problème de dépendances non résolues (c'est le cas pour Ubuntu 22.04 et la version 2022.02.2+485).
+Si besoin, regarder du côté des « [[https://dailies.rstudio.com/rstudio/spotted-wakerobin/desktop/jammy/][dailies]] » en cas de problème de dépendances
+non résolues (c'est le cas pour Ubuntu 22.04 et la version 2022.02.2+485).
+
+Il faut ensuite penser à le mettre à jour régulièrement.
 
 # (RStudio has a tendancy to mess a bit with file associations, so it
 # might be necessary to clean that after if RStudio is not supposed to
@@ -1047,15 +1048,15 @@ sudo apt install homebank sweethome3d
   sudo apt install gimp-gap gimp-gmic gimp-plugin-registry gimp-resynthesizer gthumb imagemagick inkscape
 #+end_src
 
-- ImageMagick ([[https://askubuntu.com/questions/1181762/imagemagickconvert-im6-q16-no-images-defined][sécurité PDF]]) :
+*ImageMagick* ([[https://askubuntu.com/questions/1181762/imagemagickconvert-im6-q16-no-images-defined][sécurité PDF]]) :
 #+begin_src sh
   sudo sed -i_bak \
        's/rights="none" pattern="PDF"/rights="read | write" pattern="PDF"/' \
        /etc/ImageMagick-6/policy.xml
 #+end_src
 
-- Enlevés de ma liste : =darktable=, =hugin= (pb d'install avec 22.04),
-  =luminance-hdr= (pb d'install avec 22.04).
+Enlevés de ma liste : =darktable=, =hugin= (pb d'install avec 22.04),
+=luminance-hdr= (pb d'install avec 22.04).
 
 
 *** Musique (partitions)
