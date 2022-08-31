@@ -1,10 +1,10 @@
-l#+TITLE: Installation d'Ubuntu
+#+TITLE: Installation d'Ubuntu 22.04
 #+AUTHOR: Mathieu Basille
 
 
 Ceci est un tutoriel complet pour installer la dernière version d'Ubuntu (22.04
-à l'heure de l'écriture de ce tutoriel). La plupart des instructions sont
-génériques pour tout ordinateur, cependant :
+LTS Jammy Jellyfish à l'heure de l'écriture de ce tutoriel). La plupart des
+instructions sont génériques pour tout ordinateur, cependant :
 - Je travaille sur un ordinateur portable, avec SSD, et certaines étapes visent
   à optimiser ces caractéristiques (mais on peut sauter les sections
   correspondantes) ;
@@ -23,6 +23,7 @@ génériques pour tout ordinateur, cependant :
   - [[#bios-dell][BIOS Dell]]
   - [[#configuration-ordinateur-portable][Configuration ordinateur portable]]
   - [[#swap-et-ram][Swap et RAM]]
+  - [[#écrans][Écrans]]
 - [[#configurer-le-bureau][Configurer le bureau]]
   - [[#installer-la-session-gnome][Installer la session Gnome]]
   - [[#clavier-et-internationalisation][Clavier et internationalisation]]
@@ -37,6 +38,7 @@ génériques pour tout ordinateur, cependant :
     - [[#zoom][Zoom]]
     - [[#microsoft-teams][Microsoft Teams]]
     - [[#signal][Signal]]
+    - [[#hugo][Hugo]]
     - [[#admin-internet][Admin Internet]]
   - [[#bureautique][Bureautique]]
     - [[#polices][Polices]]
@@ -46,33 +48,20 @@ génériques pour tout ordinateur, cependant :
     - [[#qownnotes][QOwnNotes]]
     - [[#r-rstudio--qgis][R, RStudio & QGIS]]
     - [[#latex--pdf][LaTeX & PDF]]
+    - [[#divers][Divers]]
   - [[#multimédia][Multimédia]]
     - [[#codecs][Codecs]]
     - [[#audiovideo][Audio/video]]
     - [[#images][Images]]
     - [[#musique-partitions][Musique (partitions)]]
-    - [[#optionnel][Optionnel]]
+    - [[#qarte][Qarte]]
+    - [[#spotify][Spotify]]
+    - [[#loisirs][Loisirs]]
 - [[#réglages-finaux][Réglages finaux]]
 - [[#opérations-systèmes][Opérations systèmes]]
   - [[#mettre-à-jour-ubuntu-vers-une-nouvelle-version][Mettre à jour Ubuntu vers une nouvelle version]]
   - [[#enlever-les-anciens-noyaux][Enlever les anciens noyaux]]
   - [[#récupération-système-avec-tails][Récupération système avec Tails]]
-  - [[#vpn][VPN]]
-  - [[#recettes][Recettes]]
-  - [[#hugo][Hugo]]
-- [[#postgresql][PostgreSQL]]
-  - [[#dependencies-and-clients][Dependencies and clients]]
-  - [[#postgresql-pgadmin-postgis-and-plr][PostgreSQL, pgAdmin, PostGIS and Pl/R]]
-  - [[#uninstall][Uninstall]]
-  - [[#miscellaneous][Miscellaneous]]
-  - [[#leisure][Leisure]]
-  - [[#office][Office]]
-    - [[#hugo-1][Hugo]]
-    - [[#qgis-gdal-geos-and-proj4][QGIS, GDAL, GEOS and PROJ.4]]
-  - [[#other][Other]]
-    - [[#google-stuff][Google Stuff]]
-- [[#admin-operations][Admin operations]]
-  - [[#backup][Backup]]
 
 * Installer Ubuntu
 
@@ -333,6 +322,17 @@ TLP pour optimiser l'utilisation de la batterie :
     #+begin_src sh
       swapon -s
     #+end_src
+
+** Écrans
+
+*Affichage intégré*
+- Écran secondaire
+- 1920×1080 (16:9)
+- Mise à l'échelle à 150 %
+
+*Écran LG* en HDMI → DVI
+- Écran principal (barre supérieure)
+- 1680×1050 (16:10)
 
 
 * Configurer le bureau
@@ -732,6 +732,25 @@ Sync with phone, then in the Settings, use System theme, hide the menu bar, allo
 #+end_src
 
 
+*** Hugo
+
+#+begin_src sh
+sudo apt install hugo
+#+end_src
+
+Pour garder une ancienne version de Hugo (par exemple 0.50) :
+
+- Vérifier les [[https://github.com/gohugoio/hugo/releases][releases]] (pour la 0.50, c'est [[https://github.com/gohugoio/hugo/releases/tag/v0.50][cette page]]) et télécharger le
+  =.tar.gz= pour Linux 64 bits ;
+- Renommer le binaire en =hugo_0.50= et le déplacer dans =/usr/local/bin/=, avec
+  les bonnes permissions :
+
+#+begin_src sh
+sudo mv hugo /usr/local/bin/hugo_0.50
+sudo chmod 755 /usr/local/bin/hugo_0.50
+#+end_src
+
+
 *** Admin Internet
 
 #+begin_src sh
@@ -743,9 +762,6 @@ dossier de configuration créé après la première utilisation de GFTP (`~/.gft
 
 
 ** Bureautique
-
-
-homebank
 
 
 *** Polices
@@ -767,20 +783,27 @@ homebank
 
 Installer Emacs et quelques librairies utiles (notamment dictionnaires) :
 
-: sudo apt install emacs hunspell hunspell-en-gb hunspell-en-ca hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa pip elpa-pdf-tools-server
+#+begin_src sh
+sudo apt install emacs hunspell hunspell-en-gb hunspell-en-ca hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa pip elpa-pdf-tools-server
 sudo pip install format-sql
+#+end_src
 
-Cloner ensuite ma configuration disponible sur GitHub :
+Cloner ensuite ma configuration [[https://github.com/basille/.emacs.d][disponible sur GitHub]] :
 
-[[https://github.com/basille/.emacs.d][Configuration via Git]]:
-  : git clone git@github.com:basille/.emacs.d ~/.emacs.d/
+#+begin_src sh
+git clone git@github.com:basille/.emacs.d ~/.emacs.d/
+#+end_src
 
-Ouvrir Emacs, qui va installer tout un ensemble de packages et s'auto-configurer. Si besoin, relancer Emacs plusieurs fois jusqu'à ce que tous les packages soient installés.
+Ouvrir Emacs, qui va installer tout un ensemble de packages et
+s'auto-configurer. Si besoin, relancer Emacs plusieurs fois jusqu'à ce que tous
+les packages soient installés.
 
 
 *** LibreOffice
 
+#+begin_src sh
 sudo apt install libreoffice-style-sifr
+#+end_src
 
 Puis choisir le style d'icônes Sifr dans les options (Outils > Options > LibreOffice > Affichage).
 
@@ -928,6 +951,13 @@ sudo apt update
 sudo apt install qgis
 #+end_src
 
+Finalement, lancer QGIS et installer les extensions suivantes (Extensions >
+Gérer/Installer les extensions) :
+
+- DB Manager
+- QuickMapServices
+- TimeManager
+
 
 *** LaTeX & PDF
 
@@ -983,6 +1013,16 @@ Et on y ajoute :
 #+end_src
 
 
+*** Divers
+
+HomeBank est un logiciel de gestion de comptes ; Sweet Home 3D est un logiciel
+d'aménagement d'intérieur :
+
+#+begin_src sh
+sudo apt install homebank sweethome3d
+#+end_src
+
+
 
 ** Multimédia
 
@@ -1025,17 +1065,16 @@ Et on y ajoute :
 #+end_src
 
 
-*** Optionnel
-
-- [[http://oqapy.eu/download?lang=fr#ppa][Qarte]]
+*** [[http://oqapy.eu/download?lang=fr#ppa][Qarte]]
 
 #+begin_src sh
   sudo add-apt-repository ppa:vincent-vandevyvre/vvv
   sudo apt update
   sudo apt install qarte
 #+end_src
-  
-- Spotify
+
+
+*** Spotify
 
 #+begin_src sh
 sudo snap install spotify
@@ -1044,16 +1083,28 @@ sudo snap install spotify
 *Notes :* [[https://support.spotify.com/us/article/data-rights-and-privacy-settings/][Récupérer ses données Spotify]] ; [[https://support.spotify.com/us/article/understanding-my-data/][Explications des données]].
 
 
+*** Loisirs
+
+Chromium BSU est un bon gros /shoot'em up/ qui défoule bien ; DOSBox un
+émulateur DOS pour jouer aux [[https://abandonware-france.org/][abandonwares]] ; Marble est un globe terrestre à la
+Google Earth ; Stellarium est un planétarium :
+
+#+begin_src sh
+sudo apt install chromium-bsu dosbox marble stellarium
+#+end_src
+
 
 * Réglages finaux
 
-- On vérifie les applications par défaut (Paramètres > Applications par défaut),
+- Vérifier les applications par défaut (Paramètres > Applications par défaut),
   notamment Firefox, Thunderbird, VLC.
-- On vérifie les applications au démarrage avec =Ajustements= (Applications au
+- Vérifier les applications au démarrage avec =Ajustements= (Applications au
   démarrage), notamment QOwnNotes, NextCloud et Fichiers.
-- Mise-à-jour de nettoyage :
+- Effectuer une mise-à-jour de nettoyage pour terminer :
 
+#+begin_src sh
 upgrade-full  
+#+end_src
 
 
 
@@ -1097,12 +1148,8 @@ La procédure est très simple :
 
 ** Enlever les anciens noyaux
 
-Les noyaux peuvent s'accumuler au cours des mises-à-jour. On commencer par
+Les noyaux peuvent s'accumuler au cours des mises-à-jour. On commence par
 vérifier la version utilisée :
-
-Kernels tend to accumulate, and eat space in the =/boot= partition. If
-=/boot= is full, it becomes necessary to remove old kernels. First
-check the current kernel:
 
 #+begin_src sh
   uname -r 
@@ -1130,15 +1177,10 @@ où =XXX= donne le numéro de version. On termine par mettre à jour GRUB :
 
 ** Récupération système avec Tails
 
-(toujours vrai ? Il y a un bug important avec l'absence d'utilisateur =root= (du
-fait de l'utilisation de =sudo=) : La récupération à partir du GRUB ne se charge
-pas, retournant que =root= est verrouillé (il est en fait absent). Il n'y a donc
-pas de moyen de charger le mode de récupération directement via le système).
-
-Une alternative est de créer un système Live USB afin de monter le système de
-fichiers et d'y apporter les modifications nécessaires. Une solution est le
-système [[https://tails.boum.org/index.en.html][Tails]] live OS, orienté sécurité et vie privée (toujours bon à avoir sur
-une clé USB) : pour [[https://tails.boum.org/install/expert/usb-overview/index.en.html][installer Tails sur une clé USB]].
+On créé ici un système Live USB afin de monter le système de fichiers et d'y
+apporter les modifications nécessaires. Une solution est le système [[https://tails.boum.org/index.en.html][Tails]] live
+OS, orienté sécurité et vie privée (toujours bon à avoir sur une clé USB) : pour
+[[https://tails.boum.org/install/expert/usb-overview/index.en.html][installer Tails sur une clé USB]].
 
 Quand la clé est prête, on démarre l'ordinateur dessus. Il faut penser à mettre
 un mot de passe =root= à l'écran de démarrage (vérifier dans les options). Il
@@ -1225,309 +1267,3 @@ avant de quitter Tails :
   sudo vgchange -a n mablap2-vg 
   sudo cryptsetup luksClose crypt
 #+end_src 
-
-
-
-
-
-
-
-===============================================================================
-
-
-
-
-
-
-
-
-
-** VPN
-
-sudo apt install network-manager-openconnect-gnome
-
-To access a Cisco Anyconnect VPN, go to Settings > Network > VPN and add a "multi-protocol VPN client (openconnect). For UF GatorLink VPN, simply enter the gateway vpn.ufl.edu. On VPN startup, username is user@ufl.edu, and password must be =<PASSWORD>,push= (maybe not necessary to add =,push=?) to get a security confirmation via Duo Mobile.
-
-
-
-
-** Recettes
-
-sudo apt install gnome-recipes
-
-
-Si besoin, récupérer le fichier de [[https://l10n.gnome.org/vertimus/recipes/master/po/fr/][traduction en français]], puis le convertir en
-binaire à copier au bon endroit :
-
-sudo apt install gettext
-msgfmt -cv recipes.master.fr.po -o gnome-recipes.mo
-sudo mv gnome-recipes.mo /usr/share/locale/fr/LC_MESSAGES/
-
-
-
-
-** Hugo
-
-sudo apt install hugo
-
-Pour garder Hugo 0.50 (indispensable pour MabLab.org) :
-
-https://github.com/gohugoio/hugo/releases/tag/v0.50
-
-Télécharger le .tar.gz pour Linux 64 bits, renommer le binaire en =hugo_0.50= et
-le déplacer dans =/usr/local/bin/=, avec les bonnes permissions :
-
-sudo mv hugo /usr/local/bin/hugo_0.50
-sudo chmod 755 /usr/local/bin/hugo_0.50
-
-
-
-
-
-* PostgreSQL
-
-
-** Dependencies and clients
-
-We first check or install required libraries: GDAL (3.1), GEOS (3.8)
-and Proj (7.1), which are present in official Ubuntu repositories:
-
-#+begin_src sh
-  sudo apt install gdal-bin libgdal-dev libgeos-dev proj-bin libproj-dev
-#+end_src
-
-We can check the formats supported by OGR (vector) and GDAL (raster)
-with:
-
-#+begin_src sh
-ogrinfo --formats | grep Post
-gdalinfo --formats | grep Post
-#+end_src
-
-which should return, respectively:
-
-#+begin_src sh
-  PostgreSQL -vector- (rw+): PostgreSQL/PostGIS
-  PGDUMP -vector- (w+v): PostgreSQL SQL dump
-#+end_src
-
-#+begin_src sh
-  PostGISRaster -raster- (rws): PostGIS Raster driver
-#+end_src
-
-We also install QGIS as the main GIS client. Ubuntu does not ship the most
-recent QGIS, so we first add the [[https://www.qgis.org/fr/site/forusers/alldownloads.html#debian-ubuntu][official QGIS repository]]. This requires to add
-the key of the repository first:
-
-#+begin_src sh
-wget -qO - https://qgis.org/downloads/qgis-2021.gpg.key | sudo gpg --no-default-keyring --keyring gnupg-ring:/etc/apt/trusted.gpg.d/qgis-archive.gpg --import
-sudo chmod a+r /etc/apt/trusted.gpg.d/qgis-archive.gpg
-#+end_src
-
-Then we can add the repository:
-
-#+begin_src sh
-  sudo add-apt-repository "deb https://qgis.org/ubuntu $(lsb_release -c -s) main"
-#+end_src
-
-We can now install the latest release of QGIS (3.18):
-
-#+begin_src sh
-  sudo apt install qgis
-#+end_src
-
-
-** PostgreSQL, pgAdmin, PostGIS and Pl/R
-
-Like for QGIS, Ubuntu does not always provide the most recent
-PostgreSQL release.  We thus add the [[https://www.postgresql.org/download/linux/ubuntu/][official PostgreSQL repository]] and the
-[[https://www.pgadmin.org/download/pgadmin-4-apt/][official pgAdmin4 repository]]:
-
-#+begin_src sh
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list'
-#+end_src
-
-This requires to add the key of the repository and update the sources:
-
-#+begin_src sh
-  wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add
-  sudo apt update
-#+end_src
-
-We can now install the latest release of PostgreSQL (13.2), pgAdmin
-(5.0), PostGIS (3.1.1) and Pl/R (8.4.1):
-
-#+begin_src 
-  sudo apt install postgresql postgresql-client postgresql-contrib postgis postgresql-13-postgis-3 postgresql-13-plr pgadmin4-web virtualenv
-#+end_src
-
-We need to configure the webserver for pgadmin4-web:
-
-#+begin_src 
-sudo /usr/pgadmin4/bin/setup-web.sh
-#+end_src
-
-** Uninstall
-
-In case there is the need to uninstall PostgreSQL/PostGIS:
-
-#+begin_src sh
-  sudo apt purge '.*postgis.*'
-  sudo apt purge '.*postgresql.*'
-#+end_src
-
-
-
-
-
-
-
-
-================================================================================
-
-
-
-
-
-
-
-
-** Miscellaneous
-
-  : sudo apt install autoconf build-essential cmake cmake-curses-gui cowsay debian-goodies detox disper dos2unix elinks espeak etcher-electron fortune-mod git git-flow git-sizer gnome-common gparted gtick hibernate libcanberra-gtk3-0:i386 mlocate most ntp privoxy subversion transmission tree units unrar virtualbox wakeonlan
-
-Git to list files in subfolders:
-
-  : git config --global status.showUntrackedFiles all
-
-
-
-
-** Leisure
-  : sudo apt install chromium-bsu dosbox marble stellarium sweethome3d
-
-
-** Office
-
-  : sudo apt install abiword aspell aspell-fr aspell-en gnote homebank hunspell hunspell-en-ca hunspell-en-us hunspell-fr myspell-en-gb pandoc pandoc-citeproc tesseract-ocr tesseract-ocr-eng tesseract-ocr-fra
-
-- Need to remove all links to French dictionaries:
-  : sudo rm /usr/share/hunspell/fr_*
-  : sudo rm /usr/share/myspell/dicts/fr_*
-  In case of trouble, just reinstal =hunspell-fr=.
-- Change Icon style of LibreOffice (Tools > Options > LibreOffice >
-  View) to Breeze, and possibly Show Icons in menus.
-- Preferences for HomeBank are stored in =~/.config/homebank=. It's
-  probably safe to simply copy this folder.
-
-
-*** Hugo
-
-Debian does not provide up-to-date Hugo. Check the latest release
-[[https://github.com/gohugoio/hugo/releases][here]], then:
-
-  : cd Downloads/
-  : wget https://github.com/gohugoio/hugo/releases/download/v0.30.2/hugo_0.30.2_Linux-32bit.deb
-  : sudo dpkg -i hugo_0.30.2_Linux-32bit.deb
-  : hugo version
-  : rm hugo_0.30.2_Linux-32bit.deb
-
-
-*** QGIS, GDAL, GEOS and PROJ.4
-
-  : sudo apt install qgis gdal-bin libgdal-dev libgeos-dev proj-bin libproj-dev
-
-Then, from inside QGIS, install the following plugins:
-
-- DB Manager
-- GdalTools
-- GPS Tools
-- OpenLayers Plugins
-- QuickMapServices
-- Time manager
-
-
-** Other
-
-
-*** Google Stuff
-
-Google provides official repositories for Chrome and Earth
-(notably). Unfortunately, the installation adds their own repository
-setting, which is annoying:
-
-  : sudo apt install google-chrome-stable google-earth-pro-stable
-  : sudo rm /etc/apt/sources.list.d/google-chrome.list
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-* Admin operations
-
-
-** Backup
-
-The easiest way is to use CRON on a daily basis to backup the entire
-=/home=, as well as the databases. To do this, prepare a file
-=home-backup= (or any other name), with something like the following:
-
-#+begin_src sh
-    #!/bin/sh
-    
-    ### Mount operations (needs credentials in ~/.smb)
-    mount.cifs //XX.YYY.ZZZ/<USER> /mnt/<USER>/ -o credentials=/home/<USER>/.smb,uid=<USER>,gid=<USER>
-    
-    ### Save PostgreSQL databases (full dump):
-    pg_dumpall | gzip > /mnt/<USER>/home/postgresql/full_`date -I`.sql.gz
-    
-    ### Save file ACLs (permission, ownership)
-    cd ~
-    getfacl -R . > /mnt/<USER>/home/<USER>.file-acl
-    ### Restore file ACLs (in the file-acl directory)
-    # setfacl --restore=<USER>.file-acl
-    
-    ### Entire /home except: 
-    ### Downloads, caches/thumbnails, .extraswap, emacs.d/elpa/,
-    ### .R-site/site-library/, Torbrowser, Trash
-    ###  --modify-window=1 to consider rounded timestamp 
-    rsync -avz --progress --delete-during --modify-window=1 --exclude=Downloads --exclude=.local/share/torbrowser --exclude=.cache --exclude=.gftp/cache --exclude=.googleearth/Cache/ --exclude=.thumbnails --exclude=.emacs.d/elpa --exclude=.R-site/site-library/ --exclude=.local/share/Trash /home/<USER>/ /mnt/<USER>/home/<USER>/
-    
-    ### Unmount operations
-    umount /mnt/<USER>/    
-#+end_src
-
-Then make the file executable and copy it to =/etc/cron.daily=:
-
-  : chmod +x home-backup
-  : sudo cp home-backup /etc/cron.daily/
-
-CRON will run daily at the time setup in =/etc/crontab=:
-
-  : grep run-parts /etc/crontab
-
-In this case, every day at 6:25AM. If the computer is not turned on at
-this time, CRON looks for =/etc/anacrontab=
-
-  : less /etc/anacrontab
-
-In this case, every day after a period of 5 minutes since wake-up.
-
-This results in a directory =home= with
-
-- The =home= backup in =home/<USER>/=
-- The databases backup as a full compressed dump in =home/postgresql=
-- The file permissions in =home/<USER>.file-acl=
-
-
