@@ -884,7 +884,7 @@ Certains packages doivent être installés par les dépôts directement, sans qu
 ils engendrent des problèmes insolubles de dépendances :
 
 #+begin_src sh
-sudo apt install r-cran-rjava r-cran-rodbc r-cran-tkrplot
+sudo apt install r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot
 #+end_src
 
 On pourra avoir besoin des dépendances suivantes selon les packages que l'on
