@@ -23,7 +23,6 @@ instructions sont génériques pour tout ordinateur, cependant :
   - [[#bios-dell][BIOS Dell]]
   - [[#configuration-ordinateur-portable][Configuration ordinateur portable]]
   - [[#swap-et-ram][Swap et RAM]]
-  - [[#écrans][Écrans]]
 - [[#configurer-le-bureau][Configurer le bureau]]
   - [[#installer-la-session-gnome][Installer la session Gnome]]
   - [[#clavier-et-internationalisation][Clavier et internationalisation]]
@@ -34,7 +33,7 @@ instructions sont génériques pour tout ordinateur, cependant :
     - [[#thunderbird][Thunderbird]]
     - [[#firefox][Firefox]]
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
-    - [[#nextcloud][NextCloud]]
+    - [[#nextcloud][Nextcloud]]
     - [[#zoom][Zoom]]
     - [[#microsoft-teams][Microsoft Teams]]
     - [[#signal][Signal]]
@@ -322,17 +321,6 @@ TLP pour optimiser l'utilisation de la batterie :
       swapon -s
     #+end_src
 
-
-** Écrans
-
-*Affichage intégré*
-- Écran secondaire
-- 1920×1080 (16:9)
-- Mise à l'échelle à 150 %
-
-*Écran LG* en HDMI → DVI
-- Écran principal (barre supérieure)
-- 1680×1050 (16:10)
 
 
 * Configurer le bureau
@@ -651,16 +639,27 @@ Voici la liste que je conserve :
 #+end_src
 
 
-*** NextCloud
+*** Nextcloud
 
 #+begin_src sh
-    sudo apt install nextcloud-desktop
+    sudo apt install nextcloud-desktop nautilus-nextcloud
 #+end_src
 
 Il faut ensuite configurer l'app avec les bons identifiants, et sélectionner ce
 que l'on veut synchroniser et où (je choisis pour ma part =Public=) ; dans les
 Paramètres, on coche « Lancer au démarrage » et « Utiliser les icônes
 monochrome ».
+
+Le paquet =nautilus-nextcloud= assure une intégration complète dans Nautilus
+(icônes de synchronisation, lien de partage, partage avec d'autres utilisateurs,
+…).
+
+**Note :** Une version plus à jour est disponible via le PPA officiel Nextcloud :
+
+#+begin_src sh
+  sudo add-apt-repository ppa:nextcloud-devs/client
+  sudo apt update
+#+end_src
 
 
 *** Zoom
@@ -672,7 +671,7 @@ Zoom est directement disponible sur les dépots snap pour Ubuntu :
 #+end_src
 
 ... mais buggué (interface graphique ne démarre pas sous 22.04, bloque sur fond
-flou ou fond d'écran). On y préfère version officielle, disponible en
+flou ou fond d'écran). On y préfère la version officielle, disponible en
 téléchargement [[https://zoom.us/download?os=linux][à cette adresse]], puis :
 
 #+begin_src sh
