@@ -488,6 +488,13 @@ désormais le Gnome Extension Manager à la place :
   d'outils.
 - Un bug empêche de redimensionner les panneaux sous Wayland. Pour cela, ouvrir
   une fonction Xorg.
+- Pour afficher les quotas IMAP tout le temps (par défaut, uniquement si
+  > 75 %) : Préférences > Général >
+  Éditeur de configuration :
+  #+begin_quote
+: mail.quota.mainwindow_threshold.show: 0
+  #+end_quote
+
 
 **** Extensions
 
