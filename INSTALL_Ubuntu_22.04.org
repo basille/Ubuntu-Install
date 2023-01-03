@@ -495,6 +495,20 @@ désormais le Gnome Extension Manager à la place :
 : mail.quota.mainwindow_threshold.show: 0
   #+end_quote
 
+  
+**** Calendrier
+
+La gestion des calendriers se fait naturellement via Lightning (installé par
+défaut dans Thunderbird). Pour envoyer des invitations à des événements :
+
+- Associer le calendrier à l'adresse e-mail pertinente
+- Cocher : « Choisir la planification des courriels côté client »
+
+Lorsqu'un événement est créé, inviter des participants se fait via le bouton
+dédié (on peut ajouter des e-mails qui sont dans les contacts ou non). À
+l'enregistrement de l'événement, une invitation est envoyée par e-mail (du type
+à accepter/décliner) ; les réponses sont également traitées comme des e-mails.
+
 
 **** Extensions
 
