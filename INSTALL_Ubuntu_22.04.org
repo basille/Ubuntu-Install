@@ -790,7 +790,8 @@ dossier de configuration créé après la première utilisation de GFTP (`~/.gft
   Polices, cocher « Appliquer la table de remplacement » avec une règle de
   remplacement pour chaque police (Calibri → Carlito, Cambria →
   Caladea). Laisser « Toujours » et « Écran uniquement » décochés.
-
+- Pour installer des polices TrueType (=.ttf=), simplement les copier dans
+  =~/.fonts/~ (créer le dossier au besoin).
 
 *** Emacs
 
