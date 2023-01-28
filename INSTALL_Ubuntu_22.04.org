@@ -414,7 +414,16 @@ soucis avec ce type d'écrans).
 #   #+begin_src sh
 #     gsettings set org.gnome.settings-daemon.plugins.power power-button-action "nothing"
 #   #+end_src
-
+- Mode nuit : activé au lever/coucher du soleil ; couleur à niveau 1 (échelle
+  0–3) /!\ On active au passage les services de géolocalisation pour avoir les
+  horaires de lever/couchers de soleil /!\ :
+  #+begin_src sh
+    gsettings set org.gnome.system.location enabled true
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic true
+    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature uint32 3700
+  #+end_src
+  
 
 ** Extensions Gnome
 
@@ -593,7 +602,8 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
 
 *Vie privée :*
 
-- ClearURLs : Retirer les espions dans les adresses Internet.
+- ClearURLs : Retirer les espions dans les adresses Internet. (semble redondant
+  avec Search Engine Ad Remover ci-dessous pour Google)
 - Cookie AutoDelete : Contrôlez vos fichiers témoins ! Supprimez automatiquement
   les fichiers témoins non utilisés de vos onglets fermés tout en gardant ceux
   que vous voulez.
@@ -603,6 +613,8 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
   HTTPS avec de nombreux sites.
 - Privacy Badger : Privacy Badger apprend automatiquement à bloquer les
   traqueurs invisibles.
+- Search Engine Ad Remover : Removes ads when searching using Google, Bing,
+  DuckDuckGo, StartPage and Ask!
 - Smart Referer : Des référents intelligents partout !
 
 *Autres :*
@@ -610,8 +622,8 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
 - Bitwarden : Un gestionnaire de mots de passe sécurisé et gratuit pour tous vos
   appareils.
 - Flagfox : Affiche un drapeau selon la localisation du serveur courant
-- I don't care about cookies : Get rid of cookie warnings from almost all
-  websites! 
+- I still don't care about cookies : Get rid of cookie warnings from almost all
+  websites! (community version of I don't care about cookies)
 - Intégration à GNOME Shell : Cette extension permet l'intégration à GNOME Shell
   et aux extensions correspondantes du dépôt https://extensions.gnome.org
 - Nuke Anything : Permet la suppression de n'importe quel element de la page via
@@ -626,13 +638,13 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
 - 'Improve YouTube!' (Video & YouTube Tools) : Make YouTube tidy & powerful!
   YouTube Player Size Theme Quality Auto HD Colors Playback Speed Style ad block
   Playlist Channel H.264
-- Video DownloadHelper : Download Videos from the Web
 
 *Désactivées :*
 
 - Unpaywall : Legally get full text of scholarly articles as you browse.
 - User-Agent Switcher and Manager : Spoof websites trying to gather information
   about your web navigation to deliver distinct content you may not want
+- Video DownloadHelper : Download Videos from the Web
 
 Conserver uniquement Bitwarden dans la barre des outils.
 
