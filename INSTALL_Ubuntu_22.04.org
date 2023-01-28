@@ -415,8 +415,9 @@ soucis avec ce type d'écrans).
 #     gsettings set org.gnome.settings-daemon.plugins.power power-button-action "nothing"
 #   #+end_src
 - Mode nuit : activé au lever/coucher du soleil ; couleur à niveau 1 (échelle
-  0–3) /!\ On active au passage les services de géolocalisation pour avoir les
-  horaires de lever/couchers de soleil /!\ :
+  0–3) ; note : contrôle également le passage au thème sombre si Night theme
+  switcher est également installé /!\ On active au passage les services de
+  géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
   #+begin_src sh
     gsettings set org.gnome.system.location enabled true
     gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
@@ -439,6 +440,8 @@ désormais le Gnome Extension Manager à la place :
 - [[https://extensions.gnome.org/extension/16/auto-move-windows/][Auto Move Windows]] : Firefox sur (2), Fichiers sur (3)
 - [[https://extensions.gnome.org/extension/904/disconnect-wifi/][Disconnect Wifi]]
 - [[https://extensions.gnome.org/extension/28/gtile/][gTile]] : Changer la taille de grille à 4x2,3x2,4x3
+- Night theme switcher : Passe automatiquement du thème clair au thème sombre
+  selon les horaires du jour. 
 - [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] : Changer le raccourci pour ~Super+F1~ :
   #+begin_src sh
     dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '["<Super>F1"]'
