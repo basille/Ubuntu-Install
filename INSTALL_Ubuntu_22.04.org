@@ -1007,6 +1007,12 @@ sudo apt install texlive-full bibtex2html bookletimposer calibre gedit-latex-plu
 
 *Notes :*
 
+- Pour qu'Evince puisse correctement lancer des liens (URLs) dans les PDFs, il
+  faut court-circuiter AppArmor :
+#+begin_src sh
+sudo apt install apparmor-utils
+sudo aa-disable /usr/bin/evince
+#+end_src
 - On retrouve =biblatex= dans le paquet =texlive-bibtex-extra= (installé avec
 =texlive-full=) ; =pdfjam= dans le paquet =texlive-extra-utils= (installé avec
 =texlive-full=) ; et =pdfmanipulate= dans le paquet =calibre=.
