@@ -175,7 +175,7 @@ On installe quelques utilitaires qui seront utiles pour la suite (PIP est
 l'installateur de packages Python):
 
 #+begin_src sh
-  sudo apt install cmake git gparted mlocate net-tools pip rename sqlite3
+  sudo apt install cmake git gparted htop mlocate net-tools pip rename sqlite3
 #+end_src
 
 *** SSH et git
@@ -508,6 +508,35 @@ désormais le Gnome Extension Manager à la place :
   #+end_quote
 
   
+**** [[https://github.com/rafaelmardojai/thunderbird-gnome-theme][Thème GNOME]]
+
+Télécharger le thème :
+
+#+begin_src sh
+  cd Ubuntu/Thunderbird
+  git clone https://github.com/rafaelmardojai/thunderbird-gnome-theme && cd thunderbird-gnome-theme
+  ./scripts/auto-install.sh
+#+end_src
+
+Puis le configurer dans =about:config= :
+#+begin_quote
+: toolkit.legacyUserProfileCustomizations.stylesheets: true
+: svg.context-properties.content.enabled: true
+: gnomeTheme.activeTabContrast: true
+: gnomeTheme.normalWidthTabs: true
+#+end_quote
+
+Redémarrer Thunderbird.
+
+Pour les mises-à-jour, on va dans le dossier de profile Thunderbird
+(=~/.thunderbird/XXX.default-release=), sous-dossier
+=chrome/thunderbird-gnome-theme=, puis on met à jour le dépôt :
+
+#+begin_src sh
+  git pull origin master
+#+end_src
+
+
 **** Calendrier
 
 La gestion des calendriers se fait naturellement via Lightning (installé par
@@ -524,25 +553,24 @@ l'enregistrement de l'événement, une invitation est envoyée par e-mail (du ty
 
 **** Extensions
 
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/filelink-nextcloud-owncloud/][*cloud - FileLink for Nextcloud and ownCloud]] : configurer le serveur
+  NextCloud dans les Préférences > Rédaction > Pièces jointes
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/allow-html-temp/][Allow HTML Temp]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/birthday-calendar/][Birthday Calendar]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/cardbook/][CardBook]] : configurer le carnet d'adresse CardDav
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/compact-headers/][Compact Headers]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T]] (désactivé)
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/emojiaddin/][Emoji]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/filelink-nextcloud-owncloud/][*cloud - FileLink for Nextcloud and ownCloud]] : configurer le serveur
-  NextCloud dans les Préférences > Rédaction > Pièces jointes
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/lookout-fix-version/][LookOut (fix version)]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/manually-sort-folders/][Trier manuellement les dossiers]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/manually-sort-folders/][Manually sort folders]] [Trier manuellement les dossiers] (désactivé)
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/msghdr-toolbar-customize/][Message Header Toolbar Customize]] : dans la barre d'outils, « Customize
   Calendar buttons », et enlever les tâches.
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/nestedquote-remover/][NestedQuote Remover]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/quickfolders-tabbed-folders/][QuickFolders (Tabbed Folders)]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Supprimer les messages en double (Alternatif)]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
+- Quick Folder Move
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors & Collapse]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Remove Duplicate Messages]] [Supprimer les messages en double (Alternatif)]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard]] (désactivé)
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] (désactivé) : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
   #+begin_quote
 : toolkit.legacyUserProfileCustomizations.stylesheets: true
   #+end_quote
@@ -550,7 +578,6 @@ l'enregistrement de l'événement, une invitation est envoyée par e-mail (du ty
   avec les PNGs et le fichier =showInOut.css= dans le dossier d'utilisateur
   Thunderbird (=.thunderbird/***.default-release=). Redémarrer Thunderbird.
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/signature-switch/][Signature Switch]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/gnotifier/][GNotifier]] (off)
 
 
 *** Firefox
@@ -625,6 +652,7 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
 - Bitwarden : Un gestionnaire de mots de passe sécurisé et gratuit pour tous vos
   appareils.
 - Flagfox : Affiche un drapeau selon la localisation du serveur courant
+- Firefox Multi-Account Containers
 - I still don't care about cookies : Get rid of cookie warnings from almost all
   websites! (community version of I don't care about cookies)
 - Intégration à GNOME Shell : Cette extension permet l'intégration à GNOME Shell
@@ -633,18 +661,17 @@ Pour les mises-à-jour, on va dans le dossier de profile Firefox
   le menu contextuel.
 - Sci-Hub X Now! : Free access to academic papers with just a single click via
   sci-hub!
+- Simple Tab Groups
 - Textarea Cache : Allows to save automatically the content in a text input
   field. Régler "auto clear old cache" sur 15 jours.
 
 *YouTube et vidéos :*
 
-- 'Improve YouTube!' (Video & YouTube Tools) : Make YouTube tidy & powerful!
-  YouTube Player Size Theme Quality Auto HD Colors Playback Speed Style ad block
-  Playlist Channel H.264
+- [[https://addons.mozilla.org/en-US/firefox/addon/adblock-for-youtube/][AdBlocker for YouTube™]]
+- Easy Youtube Video Downloader Express
 
 *Désactivées :*
 
-- Unpaywall : Legally get full text of scholarly articles as you browse.
 - User-Agent Switcher and Manager : Spoof websites trying to gather information
   about your web navigation to deliver distinct content you may not want
 - Video DownloadHelper : Download Videos from the Web
@@ -848,6 +875,8 @@ Slack est directement disponible sur les dépots snap pour Ubuntu :
 
 
 *** QOwnNotes
+
+(check Iotas et Joplin)
 
 QOwnNotes permet de gérer des notes au format Markdown ; avantage non
 négligeable, il permet de travailler sur des notes synchronisées via
