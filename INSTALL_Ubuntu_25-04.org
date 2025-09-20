@@ -1,0 +1,1201 @@
+#+TITLE: Installation d'Ubuntu 25-04
+#+AUTHOR: Mathieu Basille
+
+
+Ceci est un tutoriel complet pour installer la dernière version d'Ubuntu
+(version 25-04 "Plucky Puffin" à l'heure de l'écriture de ce tutoriel) sur un
+portable Dell Precision 7350. La plupart des instructions sont génériques pour
+tout ordinateur, cependant :
+
+- Je remplace le desktop Ubuntu pour installer sur GNOME Vanilla ;
+- Certaines étapes visent à optimiser la gestion d'un portable avec SSD ;
+- J'utilise un clavier AZERTY qui est ensuite largement personnalisé pour avoir
+  notamment des caractères spéciaux dans différentes langues ;
+- L'installation est orientée pour un travail académique, notamment basé sur
+  l'utilisation d'Emacs et R.
+
+Pour chaque élément ci-dessus, on peut évidemment sauter les sections
+correspondantes.
+
+
+* Table des matières                                       :TOC_3:
+- [[#installer-ubuntu][Installer Ubuntu]]
+  - [[#installer-le-système-complet][Installer le système complet]]
+- [[#configuration-du-système][Configuration du système]]
+  - [[#gnome-vanilla][GNOME Vanilla]]
+  - [[#ssh-et-git][SSH et git]]
+  - [[#configuration-du-terminal--tilix][Configuration du terminal : Tilix]]
+  - [[#bios-dell][BIOS Dell]]
+  - [[#batterie-swap-et-ram][Batterie, SWAP et RAM]]
+  - [[#note-bluetooth][Note Bluetooth]]
+  - [[#configurer-active-directory][Configurer Active Directory]]
+- [[#configurer-le-bureau][Configurer le bureau]]
+  - [[#clavier-et-internationalisation][Clavier et internationalisation]]
+  - [[#réglagles-spécifiques-du-bureau][Réglagles spécifiques du bureau]]
+  - [[#extensions-gnome][Extensions GNOME]]
+- [[#logiciels-spécifiques][Logiciels spécifiques]]
+  - [[#web][Web]]
+    - [[#thunderbird][Thunderbird]]
+    - [[#firefox][Firefox]]
+    - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
+    - [[#nextcloud][Nextcloud]]
+    - [[#zoom][Zoom]]
+    - [[#gftp][GFTP]]
+  - [[#bureautique][Bureautique]]
+    - [[#polices][Polices]]
+    - [[#emacs][Emacs]]
+    - [[#libreoffice][LibreOffice]]
+    - [[#r-rstudio--qgis][R, RStudio & QGIS]]
+    - [[#latex--pdf][LaTeX & PDF]]
+  - [[#multimédia][Multimédia]]
+- [[#opérations-systèmes][Opérations systèmes]]
+  - [[#mettre-à-jour-debian][Mettre à jour Debian]]
+  - [[#enlever-les-anciens-noyaux][Enlever les anciens noyaux]]
+
+* Installer Ubuntu
+
+1) Télécharger une image de la dernière version d'Ubuntu, puis créer une clé USB
+   bootable avec par exemple l'outil =Disques= ou bien [[https://github.com/balena-io/etcher#debian-and-ubuntu-based-package-repository-gnulinux-x86x64][=Etcher=]] (plus simple).
+2) Démarrer l'ordinateur sur la clé USB (sur un portable DELL, on appuie sur F12
+   au démarrage pour avoir le menu de boot). Au premier menu, on choisit
+   « Utiliser/installer Ubuntu ». L'installateur se lance en mode graphique, on
+   suit ensuite les instructions sans difficulté particulière :
+   - Clavier : 'Français (variante)'
+   - Connexion conseillée à un réseau Wi-Fi.
+   - Il est possible que l'installateur propose alors une mise-à-jour : on la
+     fait, et il faut ensuite redémarrer l'installateur.
+   - On choisit enfin « Installation interactive », puis « Installation par
+     défaut » (avec un minimum d'applications, puisqu'on complétera
+     l'installation manuellement ensuite).
+   - On sélectionne les logiciels tiers pour le support du matériel, mais pas
+     les formats de multimédias supplémentaires.
+   - On choisit bien l'option « Effacer le disque et installer Ubuntu » (on
+     laisse l'installateur faire le boulot du partitionnement), puis « Chiffrer
+     avec une phrase de passe ».
+   - On rentre les infos pour le compte utilisateur.
+   - Attention, dans mon cas, j'utilise Active Directory pour intégrer
+     l'ordinateur sur le réseau Windows, mais on fera ça plus tard en étant sur
+     le réseau d'entreprise.
+3) À la fin de l'installation, le système redémarre. On a nouveau quelques
+   options à choisir :
+   - Partage des données système avec Ubuntu (oui/non).
+   - Une première mise-à-jour peut se lancer, on la laisse de côté pour
+     l'instant.
+
+** Installer le système complet
+
+*L'installation par défaut prend environ 10–11 GB sur le disque dur (et démarre
+avec 1,7 GB de RAM utilisée). L'installation complète ajoute environ XX GB
+supplémentaires, pour un total de XX GB utilisés à la fin de la procédure.*
+
+*Note :* Il est préférable d'utiliser une connexion à l'Internet rapide pour
+l'installation complète.
+
+Par défaut, la liste des dépôts Ubuntu (désormais dans
+=/etc/apt/sources.list.d/ubuntu.sources=) inclut les paquets maintenus par
+Ubuntu, qu'ils soient libres (=main=) ou non (=restricted=), et les paquets
+maintenus par la communauté, qu'ils soient libres (=universe=) ou non
+(=multiverse=), pour les dépots de base, les dépôts de mises à jour, les dépôts
+de sécurité et les dépôts de rétro-portage (en anglais, /backports/).
+
+On rajoute quelques dépôts au cas par cas, avec les clés d'authentification : R
+et QGIS. 
+
+#+begin_src sh
+# R [!! à tester !!]
+# To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc 
+# Fingerprint: E298A3A825C0D65DFD57CBB651716619E084DAB9
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+# add the repo from CRAN -- lsb_release adjusts to 'noble' or 'jammy' or ... as needed
+sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu/noble-cran40/"
+
+# QGIS
+sudo wget -O /etc/apt/keyrings/qgis-archive-keyring.gpg https://download.qgis.org/downloads/qgis-archive-keyring.gpg
+sudo tee /etc/apt/sources.list.d/qgis.sources <<EOF
+Types: deb deb-src
+URIs: https://qgis.org/debian
+Suites: plucky
+Architectures: amd64
+Components: main
+Signed-By: /etc/apt/keyrings/qgis-archive-keyring.gpg
+EOF
+#+end_src
+
+À cette étape, on installe tous les paquets nécessaires pour obtenir le système
+complet en une seule commande :
+
+#+begin_src sh
+sudo apt update
+sudo apt upgrade
+sudo apt install \
+    `# GNOME` vanilla-gnome-desktop vanilla-gnome-default-settings gnome-shell-extension-manager \
+    `# Terminal` tilix python3-nautilus powerline fonts-powerline most bash-completion \
+    `# Utilitaires` cmake git gparted htop mlocate net-tools python3-pip rename sqlite3 fwupd tlp tlp-rdw localepurge flatpak gnome-software-plugin-flatpak \
+    `# Web` chromium epiphany-browser torbrowser-launcher privoxy nextcloud-desktop nautilus-nextcloud \
+    `# Utilitaires web` cifs-utils dnsutils gftp gocryptfs gvncviewer network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome revelation rsync screen unison \
+    `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine fonts-ubuntu ttf-mscorefonts-installer unifont \
+    `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-ca hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
+    `# Libre Office` libreoffice-style-sifr/bookworm-backports \
+    `# R` r-base r-base-core r-base-dev r-recommended littler r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libnode-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers \
+    `# QGIS` qgis qgis-plugin-grass \
+    `# LaTex/PDF` texlive-full bibtex2html bookletimposer calibre gedit-latex-plugin gummi impressive ispell latex2rtf latexmk lcdf-typetools libtext-pdf-perl mupdf pandoc pdf2djvu pdf2svg pdfarranger pdfchain pdfposter pdfsam pdftk poppler-utils qpdf xournalpp \
+    `# Divers` homebank sweethome3d \
+    `# Codecs` flac frei0r-plugins gnome-video-effects-frei0r gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg vorbis-tools vorbisgain \
+    `# Spécial Bluetooth` pulsemixer pipewire{,-alsa,-jack,-pulse} libspa-0.2-bluetooth wireplumber bluez-alsa-utils \
+    `# Audio/video` audacity cuetools easytag libimage-exiftool-perl ffmpeg shntool soundconverter devede gnome-mpv mkvtoolnix pitivi sound-juicer sox subtitleeditor vlc youtube-dl \
+    `# Images` gimp-gmic gimp-plugin-registry gthumb imagemagick inkscape \
+    `# Musique` lilypond frescobaldi \
+    `# Jeux/loisirs` chromium-bsu dosbox marble stellarium
+sudo apt install \
+     `# Libre Office` -t bookworm-backports libreoffice-style-sifr
+#+end_src
+
+Effectuer une mise-à-jour de nettoyage pour terminer, avec mise-à-jour de
+l'index de =locate= (pour recherche de fichiers en ligne de commande) et
+configuration pour la lecture des DVDs :
+
+#+begin_src sh
+sudo apt purge ubuntu-session && sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove --purge && sudo updatedb && sudo dpkg-reconfigure libdvd-pkg
+#+end_src
+
+
+* Configuration du système
+
+
+** GNOME Vanilla
+
+Au redémarrage (ou après avoir fermé la session), cliquer sur l’icône en bas à
+droite après avoir entré le nom d'utilisateur, puis choisir =GNOME=. Ça restera
+ensuite le choix par défaut. Pour terminer, on remplace la couleur
+d'accentuation d'orange (Ubuntu) à bleu (GNOME) :
+
+#+begin_src sh
+gsettings set org.gnome.desktop.interface accent-color 'blue'  
+#+end_src
+
+
+** SSH et git
+
+On crée une paire de clés publiques/privées SSH (pour accès distant SSH,
+dont GitHub) :
+
+#+begin_src sh
+ssh-keygen -t ed25519 -C "<email>"
+#+end_src
+
+Laisser l'emplacement par défaut puis une phrase de passe vide. On enregistre
+cette clé dans l'agent SSH qui s'occupe de gérer les identités :
+
+#+begin_src sh
+ssh-add ~/.ssh/id_ed25519 
+#+end_src
+
+Pour GitHub, on copie la nouvelle clé publique dans [[https://github.com/settings/keys][la configuration du compte]],
+clé que l'on peut afficher ainsi (copier la ligne complète) :
+
+#+begin_src sh
+cat ~/.ssh/id_ed25519.pub
+#+end_src
+
+Tester la connection à GitHub :
+
+#+begin_src sh
+ssh -T git@github.com
+#+end_src
+
+Ne pas répondre immédiatement ; comparer la clé affichée avec celles disponibles
+[[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints][sur le site de GitHub]], récupérer celle qui semble correcte et la copier comme
+réponse à =fingerprint= (y compris le =SHA256:=). Si le shell renvoie : "Hi <login>! You've successfully authenticated,
+but GitHub does not provide shell access.", c'est que ça a fonctionné.
+
+Pour finir, on copie le fichier =.gitconfig= (du dossier Git) dans le dossier
+utilisateur :
+
+#+begin_src sh
+cp Git/.gitconfig ~/
+#+end_src
+
+
+** Configuration du terminal : Tilix
+
+*Note :* Tilix nécessite =python3-nautilus= pour "Ouvrir Tilix ici" dans
+Nautilus.
+
+- Configuration du Bash :
+#+begin_src sh
+sudo ln -s /etc/profile.d/vte-2.91.sh /etc/profile.d/vte.sh
+nano ~/.bashrc
+#+end_src
+  - *Autocompletion :* vérifier que ces lignes sont décommentées :
+#+begin_quote
+: if ! shopt -oq posix; then
+:   if [ -f /usr/share/bash-completion/bash_completion ]; then
+:     . /usr/share/bash-completion/bash_completion
+:   elif [ -f /etc/bash_completion ]; then
+:     . /etc/bash_completion
+:   fi
+: fi
+#+end_quote
+  - *Autres :* ajouter ces lignes à la fin du fichier :
+#+begin_quote
+: # Manpages with colors
+: export MANPAGER="/usr/bin/most -s"
+: 
+: # For Tilix and Powerline
+: # https://gnunn1.github.io/tilix-web/manual/vteconfig/
+: if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+:         source /etc/profile.d/vte.sh
+: fi
+: if [ -f `which powerline-daemon` ]; then
+:         powerline-daemon -q
+:         POWERLINE_BASH_CONTINUATION=1
+:         POWERLINE_BASH_SELECT=1
+:         . /usr/share/powerline/bindings/bash/powerline.sh
+: fi
+: 
+: # Alias ls to have colors and directories before files 
+: alias ls='ls --color=auto --group-directories-first'
+: 
+: # Alias upgrade & upgrade-full
+: alias upgrade='sudo apt update && sudo apt upgrade'
+: alias upgrade-full='sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove'
+#+end_quote
+- Configuration de Tilix (en particulier pour copier automatiquement le texte
+  sélectionné dans le presse-papier ; thème sombre ; pas de barre de titre pour
+  le mode Quake ; ~Ctrl+Shift+D~ pour ouvrir un terminal dessous ;
+  ~Ctrl+Shift+R~ pour ouvrir un terminal à droite) :
+#+begin_src sh
+gsettings set com.gexperts.Tilix.Settings unsafe-paste-alert false
+gsettings set com.gexperts.Tilix.Settings copy-on-select true
+gsettings set com.gexperts.Tilix.Settings terminal-title-style 'none'
+gsettings set com.gexperts.Tilix.Settings theme-variant 'dark'
+gsettings set com.gexperts.Tilix.Settings quake-hide-headerbar true
+gsettings set com.gexperts.Tilix.Keybindings session-add-down '<Primary><Shift>d'
+gsettings set com.gexperts.Tilix.Keybindings session-add-right '<Primary><Shift>r'
+#+end_src
+  * Installer le thème Nord :
+#+begin_src sh
+git clone git@github.com:nordtheme/tilix.git Tilix/Nord
+cd Tilix/Nord/ && ./install.sh
+#+end_src
+  * Configuration : Préférences > Profil > Par défaut :
+    * Général : « Bip » du terminal : Icône
+    * Couleur : Palette prédéfinies : Nord, et ajouter un peu de transparence (un cran vers la droite)
+  * Raccourcis clavier : dans les Paramètres GNOME > Clavier > Raccourcis clavier, ajouter
+    deux raccourcis personnalisés (en bas de la liste) :
+    * Tilix / =tilix= / ~Super+T~
+    * Tilix (Quake mode) / =env GDK_BACKEND=x11 tilix --quake= / ~²~ (au dessus de ~Tab~) ; attention, c'est un hack qui nécessite que Tilix ne soit pas déjà lancé en mode Wayland (mais les deux peuvent coexister). Pour quelque chose de plus propre, voir du côté de =[[https://github.com/gnunn1/tilix/issues/1314#issuecomment-1140504915][ddterm]]=
+- Renvoyer des insultes quand on se trompe de mot de passe :
+#+begin_src sh
+sudo visudo
+#+end_src
+  Ajouter cette ligne au début du fichier :
+#+begin_quote
+: Defaults        insults
+#+end_quote
+
+
+** BIOS Dell
+
+On peut vérifier la version et les détails du BIOS avec :
+
+#+begin_src sh
+sudo dmidecode | less
+#+end_src
+
+Dell fournit les mises-à-jour du BIOS via le Linux Vendor Firmware Service
+(LVFS via =fwupd=) :
+
+#+begin_src sh
+sudo fwupdmgr get-devices
+sudo fwupdmgr refresh
+sudo fwupdmgr get-updates
+#+end_src
+
+Et si besoin :
+
+#+begin_src sh
+sudo fwupdmgr update
+#+end_src
+
+Si la MAJ n'est pas possible (problème d'UEFI), on peut la faire à la main :
+- À la date du 26/10/2023, la dernière version disponible du BIOS est [[https://www.dell.com/support/home/fr-fr/product-support/product/precision-15-3581-laptop/drivers][1.4.1]]
+  (datée du 15/06/2023).
+- Après téléchargement, on vérifie les signatures :
+#+begin_src sh
+md5sum Precision_3581_1.4.1.exe
+sha1sum Precision_3581_1.4.1.exe
+sha256sum Precision_3581_1.4.1.exe
+#+end_src
+- Copier le fichier sur une clé USB, redémarrer, appuyer sur =F12= pour avoir le
+  menu de démarrage, sélectionner "BIOS Flash update" et suivre les
+  instructions.
+
+  
+** Batterie, SWAP et RAM
+
+- Côté batterie, tout se passe par =TLP=, qui optimise par défaut l'utilisation
+  de la batterie pour en préserver la durée de vie, selon les recommandations
+  Powertop.
+
+- On utilise =Zswap= pour compresser la mémoire virtuelle en RAM, ce qui permet
+  une utilisation plus modérée de la partition de SWAP (utile pour un
+  SSD). Zswap peut s'appuyer sur =lz4= pour une compression plus
+  performante. Pour cela, on édite le fichier de configuration des modules :
+#+begin_src sh
+sudo nano /etc/initramfs-tools/modules
+#+end_src
+  Et on ajoute à la fin :
+#+begin_quote
+: z3fold
+: lz4
+: lz4_compress
+#+end_quote
+  Pour que la modification soit prise en compte :
+#+begin_src sh
+sudo update-initramfs -u
+#+end_src
+  Puis on active Zswap via GRUB :
+#+begin_src sh
+sudo nano /etc/default/grub
+#+end_src
+  Et on ajoute à la suite de la ligne démarrant par
+  « GRUB_CMDLINE_LINUX_DEFAULT= » :
+#+begin_quote
+: zswap.enabled=1 zswap.compressor=lz4 zswap.max_pool_percent=25 zswap.zpool=z3fold
+#+end_quote
+  Pour que la modification soit prise en compte :
+#+begin_src sh
+sudo update-grub
+#+end_src
+  Après redémarrage, on vérifie que tout est bien configuré :
+#+begin_src sh
+grep -R . /sys/module/zswap/parameters
+#+end_src
+  Qui devrait retourner :
+#+begin_quote
+: /sys/module/zswap/parameters/same_filled_pages_enabled:Y
+: /sys/module/zswap/parameters/enabled:Y
+: /sys/module/zswap/parameters/max_pool_percent:25
+: /sys/module/zswap/parameters/compressor:lz4
+: /sys/module/zswap/parameters/non_same_filled_pages_enabled:Y
+: /sys/module/zswap/parameters/zpool:z3fold
+: /sys/module/zswap/parameters/accept_threshold_percent:90
+#+end_quote
+
+- Augmenter la taille du volume de swap (à faire dans une session live si besoin
+  de réduire =/root=, qui nécessite d'être démontée).
+  - On sauvegarde la configuration :
+#+begin_src sh
+sudo vgcfgbackup -f vg-config
+#+end_src
+  - On trouve le nom du volume :
+#+begin_src sh
+sudo lvs
+#+end_src
+  - Puis on l'éteint [/dev/VG/LV] :
+#+begin_src sh
+sudo swapoff /dev/vgubuntu/swap_1
+#+end_src
+  - On récupère de l'espace d'un autre volume (=/root=) :
+#+begin_src sh
+sudo lvresize --resizefs -L-7G /dev/vgubuntu/root
+#+end_src
+  - On redimensionne le volume de swap :
+#+begin_src sh
+sudo lvresize -L+7G /dev/vgubuntu/swap_1
+#+end_src
+  - On termine en formatant le nouvel espace de swap pour le rendre utilisable :
+#+begin_src sh
+sudo mkswap /dev/vgubuntu/swap_1
+#+end_src
+  - Et redémarrer le volume :
+#+begin_src sh
+sudo swapon /dev/vgubuntu/swap_1
+#+end_src
+  - On peut vérifier avec :
+#+begin_src sh
+swapon -s
+#+end_src
+
+
+** Note Bluetooth
+
+La gestion du Bluetooth est parfois un peu hasardeuse, notamment pour les
+périphériques audio (casques/oreillettes)… En principe, tout passe par
+=PipeWire=, qui a remplacé =PulseAudio=, mais on a besoin de quelques modules
+supplémentaires (=-alsa=, =-jack=, =-pulse=) pour être tranquille. On y rajoute
+des librairies et outils en plus (=pulsemixer=, =libspa-0.2-bluetooth=,
+=wireplumber=, =bluez-alsa-utils=).
+
+Concernant les codecs audio utilisés, [[https://wiki.debian.org/BluetoothUser/a2dp][Bluetooth]] a une limitation de bande
+passante qui fait qu'on a soit un mode unidirectionnel (=A2DP=) avec ) des
+codecs permettant une bonne qualité audio (=SBC=, =AptX= ou =LDAC=), soit un
+mode bidirectionnel (=HFP= ou =HSP=) permettant le micro (avec codec =mSBC= de
+préférence, ou =CVSD=).
+
+Pour vérifier les spécifications des périphériques Bluetooth, on peut utiliser :
+
+#+begin_src sh
+pactl list sinks
+#+end_src
+
+Pour basculer d'un périphérique à l'autre, ça se passe dans le panneau de
+contrôle en haut à droite de GNOME (le choix du micro ne s'affiche que quand une
+application souhaite utiliser le micro). Le choix des codecs se fait dans les
+réglages sons du système.
+
+Le Bluetooth peut être assez instable en terme de configuration. Pistes de
+solution :
+
+- Supprimer le périphérique de la liste Bluetooth avant de le reconfigurer
+  (appairage) ;
+- Relancer le serveur Bluetooth :
+
+#+begin_src sh
+sudo service bluetooth restart
+#+end_src
+
+
+** Configurer Active Directory
+
+AD post-install
+
+https://github.com/ubuntu/adsys/blob/d42e5219b9ade2fd7d52416aa6cb90a07db6087e/doc/02.-Prerequisites.md
+
+
+* Configurer le bureau
+
+
+** Clavier et internationalisation
+
+- Avoir français (France) et anglais (UK, US) dans la liste des
+  langues, en mettant le français comme langue par défaut :
+#+begin_src sh
+sudo dpkg-reconfigure locales
+#+end_src
+  Sélectionner =en-GB.UTF-8=, =en-US.UTF-8=, =fr-FR.UTF-8= (actif par défaut).
+- Enlever les langues qui ne sont plus nécessaires :
+#+begin_src sh
+sudo localepurge
+#+end_src
+- [[https://help.ubuntu.com/community/Custom%20keyboard%20layout%20definitions][Disposition du clavier]] [à faire]:
+  * La liste des caractères et fonctions se trouve à :
+    =/usr/include/X11/keysymdef.h=.
+  * J'utilise un clavier légèrement personnalisé (basé sur le Français —
+    variante), qui inclue des caractères spéciaux (←→²³€—©☆§, etc.), des
+    opérateurs mathématiques (±×÷≠≤≥), et les lettres, accents et ponctuation en
+    français et espagnol (ÆæÀàÉéÈèÑñŒœÙù «» “” ¡¿, etc.) :
+#+begin_src sh
+sudo mv /usr/share/X11/xkb/symbols/fr /usr/share/X11/xkb/symbols/fr.bkp
+sudo cp Keyboard/keyboard-DELL-Precision-3581_fr /usr/share/X11/xkb/symbols/fr
+#+end_src
+  * Puis dans les Paramètres GNOME > Pays et langue, choisir « Français
+    (variante) » comme Source de saisie ; ajouter « Grec (étendu) » pour
+    l'alphabet grec. Pour changer de clavier à la volée : =Windows+Espace=.
+
+Vérifer
+https://toutetrien.lithio.fr/article/une-histoire-de-latex-et-point-median/ pour
+le point médian (pas celui du clavier qui est l'opérateur mathématique)
+Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
+
+** Réglagles spécifiques du bureau
+
+- Vérifier les applications favorites : Fichiers, Firefox, Thunderbird, Zoom,
+  Emacs, Libre Office Writer, Moniteur système
+- Vérifier les applications par défaut (Paramètres > Applications par défaut),
+  notamment Firefox, Thunderbird, VLC.
+- Vérifier les applications au démarrage avec =Ajustements= (Applications au
+  démarrage), notamment Firefox, Thunderbird, Zoom, Emacs, NextCloud et
+  Fichiers.
+- Souris et pavé tactile : Activer =Taper pour cliquer= :
+#+begin_src sh
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+#+end_src
+- Enlever le « bip » système : Paramètres GNOME > Son, mettre les Sons système
+  en silence.
+- Raccourcis clavier :
+  - Désactiver « Masquer la fenêtre » 
+  - Dossier personnel (fichiers) : ~Super+f~
+  - Masquer toutes les fenêtres normales : ~Super+D~
+  - Effectuer une capture d'écran : ~Super+P~
+  - Effectuer la capture d'écran d'une fenêtre : ~Ctrl+Super+P~
+  - Enregistrer une capture vidéo interactivement : ~Super+R~
+  - Verrouiller l'écran : ~Ctrl+Échap~
+  - Basculer l'état d'agrandissement : ~Super+Return~
+#+begin_src sh
+gsettings set org.gnome.desktop.wm.keybindings minimize ['']
+gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+gsettings set org.gnome.shell.keybindings screenshot "['<Super>p']"
+gsettings set org.gnome.shell.keybindings screenshot-window "['<Control><Super>p']"
+gsettings set org.gnome.shell.keybindings show-screen-recording-ui ['<Super>r']
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Control>Escape']"
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Super>Return']"
+#+end_src
+- Nautilus : Préférences > Vues : Trier les dossiers avant les fichiers
+- Calendrier qui affiche le numéro de la semaine :
+#+begin_src sh
+gsettings set org.gnome.desktop.calendar show-weekdate true
+#+end_src
+- Mode nuit : activé au lever/coucher du soleil ; couleur à niveau 1 (échelle
+  0–3) ; note : contrôle également le passage au thème sombre si Night theme
+  switcher est également installé /!\ On active au passage les services de
+  géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
+#+begin_src sh
+gsettings set org.gnome.system.location enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature uint32 3700
+#+end_src
+  
+
+** Extensions GNOME
+
+On utilise le gestionnaire d'extensions de GNOME
+(=gnome-shell-extension-manager=) pour installer et gérer des extensions GNOME
+Shell :
+
+- [[https://extensions.gnome.org/extension/16/auto-move-windows/][Auto Move Windows]] [intégrée] : Firefox sur (2), Fichiers sur (3)
+- [[https://extensions.gnome.org/extension/28/gtile/][gTile]] : Changer la taille de grille à 4x2,3x2,4x3
+- [[https://github.com/ihpled/mute-unmute][Mute/Unmute]]
+- [[https://extensions.gnome.org/extension/2236/night-theme-switcher/][Night theme switcher]] : Passe automatiquement du thème clair au thème sombre
+  selon les horaires du jour. 
+- [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] : Changer le raccourci pour ~Super+F1~ :
+#+begin_src sh
+dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '["<Super>F1"]'
+#+end_src
+- [[https://extensions.gnome.org/extension/750/openweather/][OpenWeather]] : Il y a un bug avec le jeu d'icônes (Adwaita) qui est normalement
+  corrigé avec l'installation de =gnome-icon-theme=.  Dans les paramètres,
+  Agencement : mettre au centre, avec un décalage de 1 (pour l'avoir à droite de
+  l'heure) ; Emplacements : ajouter « Pignan ».
+- [[https://extensions.gnome.org/extension/1133/supertab-launcher/][Super+Tab Launcher]] : L'extension n'est plus mise à jour mais fonctionne encore
+  sous GNOME 43 (à partir de GNOME 45, voir [[https://extensions.gnome.org/extension/6361/alttab-launcher/][ce fork]]). Pour cela, éditer le fichier
+  =~/.local/share/gnome-shell/extensions/gnome-shell-extension-super-tab-launcher.dsboger@gmail.com/metadata.json=,
+  et rajouter "43" dans la liste des "shell-version". Réouvrir la session.
+- Ubuntu AppIndicator [intégrée] : Utiliser une taille d'icone de 20.
+
+
+* Logiciels spécifiques
+
+** Web
+
+*** Thunderbird
+
+- Nettoyage des locales :
+#+begin_src sh
+sudo apt purge thunderbird-l10n-* && sudo apt install thunderbird-l10n-en-gb thunderbird-l10n-fr
+#+end_src
+
+Le dossier de profile se trouve dans =~/.thunderbird/XXX.default-default=.
+
+
+**** Configuration
+
+- Enlever la barre de titre : Paramètres > Général > Langue et apparence >
+  Disposition des fenêtres > cocher « Masquer la barre de titre de la
+  fenêtre ».
+- Barres d'outils mail : Clic droit sur la barre d'outils > Personnaliser :
+  enlever les boutons Messagerie instantanée, Adresses et Étiquettes, ajouter
+  les boutons « Reculer » et « Avancer » tout à gauche, ajouter un espace
+  flexible après la boîte de recherche, ajouter « Modules complémentaires » tout
+  à droite.
+- Vue des e-mails : bouton menu/affichage en haut de la liste des e-mails : Vue
+  en fiches, Trier par date, Ordre décroissant, Discussions groupées. Il ne
+  semble plus être possible de l'appliquer à tous. Vérifier tout de même :
+  Paramètres > Général > Éditeur de configuration :
+#+begin_quote
+: mailnews.default_sort_order: 1
+: mailnews.default_sort_type: 22
+#+end_quote
+- Limiter la largeur des messages textes à 80 caractères : Préférences > Général
+  > Éditeur de configuration :
+#+begin_quote
+: mailnews.wraplength: 80
+#+end_quote
+- Dans Paramètres > Vie privée et sécurité, Autoriser le contenu distant dans
+  les messages (l'extension Allow HTTP Temp s'occupe de bloquer l'HTML).
+- Pas de délai dans la popup des pièces jointes : Paramètres > Général >
+  Éditeur de configuration :
+#+begin_quote
+: security.dialog_enable_delay: 0
+#+end_quote
+- Pour afficher les quotas IMAP tout le temps (par défaut, uniquement si
+  > 75 %) : Paramètres > Général > Éditeur de configuration :
+#+begin_quote
+: mail.quota.mainwindow_threshold.show: 0
+#+end_quote
+- Dans le calendrier, empêcher le scroll de souris de changer de mois :
+#+begin_quote
+: calendar.view.mousescroll: false
+#+end_quote
+  
+**** [[https://github.com/rafaelmardojai/thunderbird-gnome-theme][Thème GNOME]]
+
+Télécharger le thème :
+
+#+begin_src sh
+cd Debian/Thunderbird
+git clone https://github.com/rafaelmardojai/thunderbird-gnome-theme && cd thunderbird-gnome-theme
+./scripts/auto-install.sh
+#+end_src
+
+Puis le configurer dans =about:config= :
+#+begin_quote
+: toolkit.legacyUserProfileCustomizations.stylesheets: true
+: svg.context-properties.content.enabled: true
+: gnomeTheme.activeTabContrast: true
+: gnomeTheme.normalWidthTabs: true
+#+end_quote
+
+Pour avoir le sujet des messages de la couleur des tags, on ajoute le snipet
+suivant dans le fichier =userChrome.css= :
+
+#+begin_src sh
+echo '/* Pour avoir le sujet des messages de la couleur des tags */
+#threadTree tr.card-layout {
+    .card-container {
+	.subject {
+	    color: var(--tag-color) !important;
+	}
+    }
+}
+' >> ~/.thunderbird/keiwnbok.default-default/chrome/userChrome.css
+#+end_src
+
+Redémarrer Thunderbird.
+
+Pour les mises-à-jour, on va dans le dossier de profile Thunderbird
+(=~/.thunderbird/XXX.default-default=), sous-dossier
+=chrome/thunderbird-gnome-theme=, puis on met à jour le dépôt :
+
+#+begin_src sh
+git pull origin main
+#+end_src
+
+
+**** Calendrier
+
+La gestion des calendriers se fait naturellement via Lightning (installé par
+défaut dans Thunderbird).
+
+- Barre d'outils calendrier : Clic droit sur la barre d'outils > Personnaliser :
+  on garde Synchroniser et Ajouter un événement tout à gauche, ajouter un espace
+  flexible puis le bouton Recherche.
+
+- Pour envoyer des invitations à des événements :
+  - Associer le calendrier à l'adresse e-mail pertinente
+  - Cocher : « Choisir la planification des courriels côté client »
+  - Lorsqu'un événement est créé, inviter des participants se fait via le bouton
+    dédié (on peut ajouter des e-mails qui sont dans les contacts ou non). À
+    l'enregistrement de l'événement, une invitation est envoyée par e-mail (du
+    type à accepter/décliner) ; les réponses sont également traitées comme des
+    e-mails. 
+
+
+**** Extensions
+
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/filelink-nextcloud-owncloud/][*cloud - FileLink for Nextcloud and ownCloud]] : configurer le serveur
+  NextCloud dans les Paramètres > Rédaction > Pièces jointes
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/allow-html-temp/][Allow HTML Temp]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/birthday-calendar/][Birthday Calendar]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/cardbook/][CardBook]] : configurer le carnet d'adresse CardDav
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T]] 
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/emojiaddin/][Emoji]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/lookout-fix-version/][LookOut (fix version)]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/nestedquote-remover/][NestedQuote Remover]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/quick-folder-move/][Quick Folder Move]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors & Collapse]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Remove Duplicate Messages]] [Supprimer les messages en double (Alternatif)]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/signature-switch/][Signature Switch]]
+
+- Compact Headers [désactivé]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard]] [désactivé]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/msghdr-toolbar-customize/][Message Header Toolbar Customize]] [désactivé]: dans la barre d'outils, « Customize
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] [désactivé et plus mis à jour] : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
+#+begin_quote
+: toolkit.legacyUserProfileCustomizations.stylesheets: true
+#+end_quote
+  Cocher « Sujet » dans les colonnes sélectionnées, ajouter le dossier =chrome=
+  avec les PNGs et le fichier =showInOut.css= dans le dossier d'utilisateur
+  Thunderbird (=.thunderbird/***.default-release=). Redémarrer Thunderbird.
+  Calendar buttons », et enlever les tâches.
+
+
+*** Firefox
+
+- Nettoyage des locales (vérifier aussi les fichiers dans
+  =/usr/lib/firefox-esr/browser/extensions/langpack-=): 
+#+begin_src sh
+sudo apt purge firefox-esr-l10n-* && sudo apt install firefox-esr-l10n-en-gb firefox-esr-l10n-fr
+#+end_src
+- Se connecter à Firefox Sync avec un profil vierge : cela synchronisera les
+  marques-page, mots de passe, historique, extensions et préférences. Attention,
+  certains extensions ne sont pas ajoutées ou correctement configurées, et
+  demandent un peu de manipulation manuelle (liste ci-dessous). Cela peut aussi
+  prendre un peu de temps avant que tout ne soit fonctionnel…
+- Pas de délai dans la popup des pièces jointes : ouvrir l'éditeur de
+  configuration (about:config) :
+#+begin_quote
+: security.dialog_enable_delay: 0
+#+end_quote
+- Utilisation de Pocket pour sauvegarder des liens à lire pour plus tard. (en
+  cours de test)
+
+**** [[https://github.com/rafaelmardojai/firefox-gnome-theme][Thème GNOME]]
+
+Télécharger le thème :
+
+#+begin_src sh
+cd Firefox
+git clone https://github.com/rafaelmardojai/firefox-gnome-theme/ && cd firefox-gnome-theme
+./scripts/install.sh -f ~/.mozilla/firefox
+#+end_src
+
+Puis le configurer dans =about:config= :
+#+begin_quote
+: toolkit.legacyUserProfileCustomizations.stylesheets: true
+: svg.context-properties.content.enabled: true
+: gnomeTheme.hideSingleTab: true
+: gnomeTheme.activeTabContrast: true
+: ui.useOverlayScrollbars: true
+#+end_quote
+
+Redémarrer Firefox. Pour coller au visuel GNOME global, on ajoute le bouton de
+nouvel onglet à gauche et celui du panneau latéral à droite ainsi que celui des
+extensions, puis on enlève le bouton d'accueil Firefox à gauche des onglets. On
+rajoutera ensuite les extensions liées aux sites visités directement à droite de
+la barre d'adresse (par exemple Pocket ou Bitwarden).
+
+Pour les mises-à-jour, on va dans le dossier de profile Firefox
+(=~/.mozilla/firefox/XXX.default-esr=), sous-dossier
+=chrome/firefox-gnome-theme=, puis on met à jour le dépôt :
+
+#+begin_src sh
+git pull origin master
+#+end_src
+
+
+**** Extensions :
+
+*Vie privée :*
+
+- ClearURLs : Retirer les espions dans les adresses Internet. (semble redondant
+  avec Search Engine Ad Remover ci-dessous pour Google)
+- Cookie AutoDelete : Contrôlez vos fichiers témoins ! Supprimez automatiquement
+  les fichiers témoins non utilisés de vos onglets fermés tout en gardant ceux
+  que vous voulez.
+- Decentraleyes : Protège du pistage lié aux diffuseurs de contenus
+  « gratuits », centralisés.
+- Privacy Badger : Privacy Badger apprend automatiquement à bloquer les
+  traqueurs invisibles.
+- Search Engine Ad Remover : Removes ads when searching using Google, Bing,
+  DuckDuckGo, StartPage and Ask!
+- Smart Referer : Des référents intelligents partout !
+
+*Autres :*
+
+- Bitwarden : Un gestionnaire de mots de passe sécurisé et gratuit pour tous vos
+  appareils.
+- Easy Youtube Video Downloader Express
+- Flagfox : Affiche un drapeau selon la localisation du serveur courant
+- I still don't care about cookies : Get rid of cookie warnings from almost all
+  websites! (community version of I don't care about cookies)
+- Intégration à GNOME Shell : Cette extension permet l'intégration à GNOME Shell
+  et aux extensions correspondantes du dépôt https://extensions.gnome.org
+- Nuke Anything : Permet la suppression de n'importe quel element de la page via
+  le menu contextuel.
+- Textarea Cache : Allows to save automatically the content in a text input
+  field. Régler "auto clear old cache" sur 15 jours.
+
+*YouTube et vidéos :*
+
+- [[https://addons.mozilla.org/en-US/firefox/addon/adblock-for-youtube/][AdBlocker for YouTube™]]
+- Easy Youtube Video Downloader Express
+
+*Désactivées :*
+
+- Firefox Multi-Account Containers
+- Simple Tab Groups
+- User-Agent Switcher and Manager : Spoof websites trying to gather information
+  about your web navigation to deliver distinct content you may not want
+- Video DownloadHelper : Download Videos from the Web
+
+Conserver uniquement Bitwarden et Simple Tab Groups dans la barre des outils.
+
+
+**** Moteurs de recherche
+
+Le plus simple est de le faire à la main. Pour enlever les moteurs de recherche
+des moteurs proposés dans la barre d'adresse, ça se passe dans les Paramètres >
+Recherche > Raccourcis de recherche, et on décoche ceux qu'on ne veut pas. Pour
+en rajouter (au format OpenSearch), on visite simplement la page que l'on
+souhaite, puis on clique sur le =+= de la barre d'adresse. 
+
+Voici la liste que je conserve : 
+- Google [par défaut ; mot-clé @google]
+- Wikipedia (fr) [mot-clé : @wp]
+- Wikipedia (en) [installé ; mot-clé : @wpen]
+- [[https://mycroftproject.com/install.html?id=19956&basename=all-debian-packages&icontype=ico&name=Debian+Packages+-+Names+%28All%29][Paquets Debian]] : Ajouter le moteur Debian Packages - Names (All)
+
+
+*** Navigateurs alternatifs
+
+L'installation propose Chromium (version libre de Google Chrome), Epiphany
+(navigateur GNOME), Tor Browser (navigation anonyme, en conjonction avec
+=privoxy=).
+
+
+*** Nextcloud
+
+On configure l'app avec les bons identifiants, et on sélectionne ce que l'on
+veut synchroniser et où (je choisis pour ma part =Public=) ; dans les
+Paramètres, on coche « Lancer au démarrage » et « Utiliser les icônes
+monochrome ».
+
+Le paquet =nautilus-nextcloud= assure une intégration complète dans Nautilus
+(icônes de synchronisation, lien de partage, partage avec d'autres utilisateurs,
+…).
+
+
+*** Zoom
+
+Zoom est disponible en =flatpak=, avec l'avantage de mises-à-jour gérées par le système, mais deux inconvénients : la lourdeur de l'installation (toutes les librairies sont téléchargées dans un espace dédié à Zoom) et le fait que le 'systray' (la zone des icones en haut à droite) est mal géré (Zoom n'y reste pas quand on ferme l'application). On utilise donc le =.deb= officiel de Zoom à la place, avec l'inconvénient de devoir le mettre à jour manuellement régulièrement.
+
+On le télécharge sur le [[https://zoom.us/download?os=linux][site de Zoom]] (version 5.16.5-303 au 28/10/2023), puis on l'installe avec :
+
+#+begin_src sh
+sudo apt install ./Zoom/zoom_amd64_5.16.5-303
+#+end_src
+
+Pour passer Zoom en français, il suffit de cliquer sur l'icone Zoom, puis "Switch language" et choisir Français. Si il y a un problème de connexion automatique au démarrage, simplement supprimer le dossier =~/.zoom/= peut régler le problème.
+
+Note : impossible en l'état de changer l'icone du systray, pour le passer en monochrome (il est intégré dans le binaire Zoom). 
+
+
+*** GFTP
+
+Pour GTFP, on copie ensuite le fichier `bookmarks` du dossier `GFTP` dans le
+dossier de configuration créé après la première utilisation de GFTP (`~/.gftp`).
+
+
+
+** Bureautique
+
+
+*** Polices
+
+- Utiliser =Ajustements= pour changer la police de Texte à chasse fixe à « Hack
+  Regular 11 ».
+- [[https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts][Alternatives pour Calibri/Cambria]] (polices MS) : Carlito and Caladea. Une fois
+  ces polices installées, dans ffice : Outils > Options > LibreOffice >
+  Polices, cocher « Appliquer la table de remplacement » avec une règle de
+  remplacement pour chaque police (Calibri → Carlito, Cambria →
+  Caladea). Laisser « Toujours » et « Écran uniquement » décochés.
+- Pour installer des polices TrueType (=.ttf=), simplement les copier dans
+  =~/.fonts/~ (créer le dossier au besoin).
+- En cas de problème d'affichage des polices, on peut régénérer le cache via :
+
+#+begin_src sh
+sudo dpkg-reconfigure fontconfig fontconfig-config
+#+end_src
+
+*** Emacs
+
+Cloner ma configuration [[https://github.com/basille/.emacs.d][disponible sur GitHub]] :
+
+#+begin_src sh
+git clone git@github.com:basille/.emacs.d ~/.emacs.d/
+#+end_src
+
+Ouvrir Emacs, qui va installer tout un ensemble de packages et
+s'auto-configurer. Si besoin, relancer Emacs plusieurs fois jusqu'à ce que tous
+les packages soient installés.
+
+**** Formater des fichiers markdown
+
+On utilise [[https://dprint.dev/overview/][dprint]] pour cela :
+
+#+begin_src sh
+curl -fsSL https://dprint.dev/install.sh | sh
+nano ~/.bashrc
+#+end_src
+#+begin_quote
+: # dprint dans le PATH
+: export DPRINT_INSTALL="/home/mathieu/.dprint"
+: export PATH="$DPRINT_INSTALL/bin:$PATH"
+#+end_quote
+
+#+begin_src sh
+nano .dprint.json
+#+end_src
+#+begin_quote
+: {
+:   "markdown": {
+:       "lineWidth": 80,
+:       "newLineKind": "lf",
+:       "textWrap": "always",
+:       "emphasisKind": "asterisks",
+:       "strongKind": "asterisks",
+:       "ignoreDirective": "dprint-ignore",
+:       "ignoreFileDirective": "dprint-ignore-file",
+:       "ignoreStartDirective": "dprint-ignore-start",
+:       "ignoreEndDirective": "dprint-ignore-end"
+:   },
+:   "markup": {
+:   },
+:   "yaml": {
+:   },
+:   "excludes": [],
+:   "plugins": [
+:     "https://plugins.dprint.dev/markdown-0.17.8.wasm",
+:     "https://plugins.dprint.dev/g-plane/markup_fmt-v0.12.0.wasm",
+:     "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.0.wasm"
+:   ]
+: }
+#+end_quote
+
+Pour mettre à jour :
+
+#+begin_src sh
+dprint upgrade
+#+end_src
+
+Pour formater, on utilise la commande =fmt=. Attention, =dprint= formate par
+défaut (sans argument) tous les fichiers dans le dossier courant et ses
+sous-dossiers. On peut spécifier le ou les fichiers à formater, et en exclure
+d'autres (avec =--exludes=) :
+
+#+begin_src sh
+dprint fmt
+dprint fmt some_file.md
+dprint fmt **/*.js --excludes **/data
+#+end_src
+
+
+*** LibreOffice
+
+On choisit le style d'icônes =Sifr= dans les options (Outils > Options >
+LibreOffice > Affichage) et on bloque LibreOffice en mode clair (les icônes Sifr
+ne gèrent pas le changement).
+
+Pour pouvoir exporter proprement en PDF des diapos avec animation
+d'apparition/disparition, on installe l'extension [[https://github.com/monperrus/ExpandAnimations/releases][ExpandAnimations]], en
+double-cliquant sur le fichier =.oxt=.
+
+
+*** R, RStudio & QGIS
+
+
+**** R
+
+Cloner [[https://github.com/basille/R][ma configuration de R]] : 
+
+#+begin_src sh
+git clone git@github.com:basille/R-site.git ~/.R-site
+ln -s ~/.R-site/.Rprofile ~/.Rprofile
+ln -s ~/.R-site/.Renviron ~/.Renviron
+mkdir ~/.R-site/site-library
+#+end_src
+
+L'installation des packages que j'ai sélectionnés se fait via la fonction
+=install.selected()= :
+
+- spatiaux
+- adehabitat et al.
+- tidyverse
+- plotting
+- data
+- others
+
+
+**** RStudio
+
+RStudio n'est malheureusement pas disponible directement dans les dépôts
+Ubuntu. On passe donc par le [[https://posit.co/download/rstudio-desktop/#download][site de RStudio]], où l'on peut télécharger le
+dernier =.deb= (pour RStudio Desktop 2023.09.1-497 au moment de l'écriture),
+puis l'installer avec par exemple :
+
+#+begin_src sh
+wget -P RStudio/ https://download1.rstudio.org/electron/focal/amd64/rstudio-2023.09.1-494-amd64.deb
+sudo apt install -f ./RStudio/rstudio-2023.09.1-494-amd64.deb
+#+end_src
+
+Si besoin, regarder du côté des « [[https://dailies.rstudio.com/rstudio/spotted-wakerobin/desktop/jammy/][dailies]] » en cas de problème de dépendances
+non résolues.
+
+Il faut ensuite penser à le mettre à jour régulièrement.
+
+# (RStudio has a tendancy to mess a bit with file associations, so it
+# might be necessary to clean that after if RStudio is not supposed to
+# be the default R editor; as a matter of fact, if it is the case, it is
+# the easiest way to associate =.R= or =.Rmd= files to any editor, while
+# keeping the association to Gedit for plain text documents)
+
+# RStudio is provided with its own version of Pandoc, but it seems to
+# come [[https://github.com/rstudio/rmarkdown/issues/867][with potential problems]]. The easiest way to overcome this is
+# simply to rename the Pandoc executable provided by RStudio (requests
+# will then fallback on the system Pandoc):
+
+#   : sudo mv /usr/lib/rstudio/bin/pandoc/pandoc /usr/lib/rstudio/bin/pandoc/pandoc.bkp
+
+# Retina) and may look very tiny in this case.
+# Note that RStudio is not adapted to very high resolution (for instance
+
+
+**** QGIS
+
+On suit les [[https://www.qgis.org/fr/site/forusers/alldownloads.html#debian-ubuntu][instructions officielles pour Debian/Ubuntu]], puis on lance QGIS et
+on installer les extensions suivantes (Extensions > Gérer/Installer les
+extensions) :
+
+- DB Manager
+- QuickMapServices
+- TimeManager
+
+
+*** LaTeX & PDF
+
+Pour installer un environnement LaTeX complet, on utilise la distribution TeX
+Live (version 2022), ainsi qu'un certain nombre d'utilitaires PDF
+
+- Pour qu'Evince puisse correctement lancer des liens (URLs) dans les PDFs, il
+  faut court-circuiter AppArmor :
+#+begin_src sh
+sudo apt install apparmor-utils
+sudo aa-disable /usr/bin/evince
+#+end_src
+- On retrouve =biblatex= dans le paquet =texlive-bibtex-extra= (installé avec
+=texlive-full=) ; =pdfjam= dans le paquet =texlive-extra-utils= (installé avec
+=texlive-full=) ; et =pdfmanipulate= dans le paquet =calibre=.
+- Pour lier le fichier BibTex principal à l'installation LaTex. On vérifie d'abord :
+#+begin_src sh
+kpsewhich -show-path=.bib
+#+end_src
+  qui devrait inclure :
+  =/home/<user>/.texlive2022/texmf-var/bibtex/bib//=. L'astuce est alors de
+  créer dans ce dossier un lien vers le dossier de la bibliographie principale :
+#+begin_src sh
+mkdir -p ~/.texlive2022/texmf-var/bibtex/bib
+ln -s ~/Work/Biblio/ ~/.texlive2022/texmf-var/bibtex/bib
+#+end_src
+- Pour installer un paquet LaTeX (e.g. =moderncv=) :
+#+begin_src sh
+sudo nano /etc/texmf/texmf.d/03local.cnf
+#+end_src
+Et on y ajoute :
+#+begin_quote
+: TEXMFHOME = ~/.texlive2022/texmf
+#+end_quote
+  Avant de mettre à jour la configuration LaTeX :
+#+begin_src sh
+sudo update-texmf
+#+end_src
+  On vérifie avec :
+#+begin_src sh
+kpsewhich --var-value TEXMFHOME
+#+end_src
+  Copier le paquet dans =~/.texlive2022/texmf/tex/latex/= et compléter
+  l'installation si nécessaire :
+#+begin_src sh
+latex moderntimeline.ins
+latex moderntimeline.dtx
+#+end_src
+- Pour installer une police LaTeX : copier la police dans
+  =~/.texlive2016.d/texmf/fonts/truetype/=, puis mettre à jour l'index TeX :
+#+begin_src sh
+sudo texhash
+#+end_src
+
+
+
+** Multimédia
+
+- *ImageMagick* ([[https://askubuntu.com/questions/1181762/imagemagickconvert-im6-q16-no-images-defined][sécurité PDF]]) :
+#+begin_src sh
+sudo sed -i_bak \
+     's/rights="none" pattern="PDF"/rights="read | write" pattern="PDF"/' \
+     /etc/ImageMagick-6/policy.xml
+#+end_src
+
+- Lecture de DVDs :
+#+begin_src sh
+sudo dpkg-reconfigure libdvd-pkg
+#+end_src
+
+- *Chromium BSU* est un bon gros /shoot'em up/ qui défoule bien ; *DOSBox* un
+  émulateur DOS pour jouer aux [[https://abandonware-france.org/][abandonwares]] ; *Marble* est un globe terrestre à
+  la Google Earth ; *Stellarium* est un planétarium.
+
+
+
+* Opérations systèmes
+
+
+** Mettre à jour Debian
+
+===================================================
+
+La procédure est très simple :
+
+1) On préférera une connexion filaire pour plus de rapidité de
+   téléchargement. On s'assure d'avoir un système complètement à jour, et
+   d'avoir effectué une sauvegarde complète de celui-ci.
+
+2) On vérifie la version d'Ubuntu et s'il y a une mise-à-jour disponible :
+
+#+begin_src sh
+lsb_release -a
+do-release-upgrade --check-dist-upgrade-only
+#+end_src
+
+3) Si on utilise une LTS, il faut passer la variable =Prompt= à =normal= (au
+   lieu de =lts=) en bas de =/etc/update-manager/release-upgrades=.
+
+4) On lance la MAJ en répondant aux questions posées :
+
+#+begin_src sh
+do-release-upgrade
+#+end_src
+
+5) On réactive les dépôts de logiciels tiers dans =/etc/apt/sources.list.d=, par
+   exemple via « Logiciels et mises-à-jour » (« Autres logiciels », chercher
+   ceux indiqués « désactivé pour la mise à niveau vers hirsute »).
+
+6) On vérifie finalement la version d'Ubuntu :
+
+#+begin_src sh
+lsb_release -a
+#+end_src
+
+===================================================
+
+
+** Enlever les anciens noyaux
+
+Les noyaux peuvent s'accumuler au cours des mises-à-jour. On commence par
+vérifier la version utilisée :
+
+#+begin_src sh
+uname -r 
+#+end_src
+
+et la liste des noyaux installés :
+
+#+begin_src sh
+dpkg --list | egrep -i --color 'linux-image|linux-headers'
+#+end_src
+
+On peut ensuite enlever les noyaux qui ne sont plus nécessaires (on gardera le
+noyaux actuel et le précédent) :
+
+#+begin_src sh
+sudo apt purge linux-image-XXX
+#+end_src
+
+où =XXX= donne le numéro de version. On termine par mettre à jour GRUB :
+
+#+begin_src sh
+sudo update-grub2
+#+end_src
