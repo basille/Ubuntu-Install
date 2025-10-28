@@ -130,7 +130,7 @@ sudo apt install \
     `# Web` chromium-browser epiphany-browser nextcloud-desktop nautilus-nextcloud \
     `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine ttf-mscorefonts-installer unifont \
     `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
-    `# Libre Office` libreoffice-style-sifr libreoffice-style-elementary libreoffice-l10n-fr
+    `# Libre Office` libreoffice-style-sifr libreoffice-style-elementary libreoffice-l10n-fr \
     `# Divers` homebank sweethome3d \
     `# Images` gimp gthumb imagemagick inkscape \
     `# Audio/video` audacity cuetools easytag libimage-exiftool-perl ffmpeg shntool soundconverter mkvtoolnix pitivi sound-juicer sox subtitleeditor vlc \
