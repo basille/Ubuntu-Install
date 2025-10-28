@@ -53,7 +53,8 @@ correspondantes.
 * Installer Ubuntu
 
 1) Télécharger une image de la dernière version d'Ubuntu, puis créer une clé USB
-   bootable avec par exemple l'outil =Disques= ou bien [[https://github.com/balena-io/etcher#debian-and-ubuntu-based-package-repository-gnulinux-x86x64][=Etcher=]] (plus simple).
+   bootable avec par exemple l'outil =Disques= ou bien [[https://github.com/balena-io/etcher#debian-and-ubuntu-based-package-repository-gnulinux-x86x64][Balena-Etcher]] (plus
+   simple).
 2) Démarrer l'ordinateur sur la clé USB (sur un portable DELL, on appuie sur F12
    au démarrage pour avoir le menu de boot). Au premier menu, on choisit
    « Utiliser/installer Ubuntu ». L'installateur se lance en mode graphique, on
@@ -71,9 +72,6 @@ correspondantes.
      laisse l'installateur faire le boulot du partitionnement), puis « Chiffrer
      avec une phrase de passe ».
    - On rentre les infos pour le compte utilisateur.
-   - Attention, dans mon cas, j'utilise Active Directory pour intégrer
-     l'ordinateur sur le réseau Windows, mais on fera ça plus tard en étant sur
-     le réseau d'entreprise.
 3) À la fin de l'installation, le système redémarre. On a nouveau quelques
    options à choisir :
    - Partage des données système avec Ubuntu (oui/non).
@@ -149,8 +147,6 @@ sudo apt install \
     `# Spécial Bluetooth` pulsemixer pipewire{,-alsa,-jack,-pulse} libspa-0.2-bluetooth wireplumber bluez-alsa-utils \
 # Ghostty
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
-# Snap : Zoom
-sudo snap install zoom-client
 #+end_src
 
 Effectuer une mise-à-jour de nettoyage pour terminer, avec mise-à-jour de
