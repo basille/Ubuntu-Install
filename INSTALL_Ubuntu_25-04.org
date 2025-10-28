@@ -23,11 +23,10 @@ correspondantes.
   - [[#installer-le-système-complet][Installer le système complet]]
 - [[#configuration-du-système][Configuration du système]]
   - [[#gnome-vanilla][GNOME Vanilla]]
+  - [[#désactiver-toutes-les-mises-à-jour-automatiques][Désactiver toutes les mises-à-jour automatiques]]
   - [[#ssh-et-git][SSH et git]]
   - [[#configuration-du-terminal--ghostty][Configuration du terminal : Ghostty]]
-  - [[#bios-dell][BIOS Dell]]
-  - [[#batterie-swap-et-ram][Batterie, SWAP et RAM]]
-  - [[#note-bluetooth][Note Bluetooth]]
+  - [[#mémoire-et-swap][Mémoire et SWAP]]
   - [[#configurer-active-directory][Configurer Active Directory]]
 - [[#configurer-le-bureau][Configurer le bureau]]
   - [[#clavier-et-internationalisation][Clavier et internationalisation]]
@@ -35,12 +34,12 @@ correspondantes.
   - [[#extensions-gnome][Extensions GNOME]]
 - [[#logiciels-spécifiques][Logiciels spécifiques]]
   - [[#web][Web]]
-    - [[#thunderbird][Thunderbird]]
-    - [[#firefox][Firefox]]
+    - [[#thunderbird-todo][Thunderbird [TODO]]]
+    - [[#firefox-todo][Firefox [TODO]]]
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
     - [[#nextcloud][Nextcloud]]
     - [[#zoom][Zoom]]
-    - [[#gftp][GFTP]]
+    - [[#gftp-todo][GFTP [TODO]]]
   - [[#bureautique][Bureautique]]
     - [[#polices][Polices]]
     - [[#emacs][Emacs]]
@@ -129,30 +128,30 @@ sudo apt update
 sudo apt upgrade
 sudo apt install \
     `# GNOME` vanilla-gnome-desktop vanilla-gnome-default-settings gnome-shell-extension-manager \
-    `# Utilitaires` curl
+    `# Utilitaires` curl gparted localepurge plocate sqlite3 \
     `# Terminal` python3-nautilus powerline most \
+    `# Web` chromium-browser epiphany-browser nextcloud-desktop nautilus-nextcloud \
+    `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine ttf-mscorefonts-installer unifont \
+    `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
+    `# Libre Office` libreoffice-style-sifr libreoffice-style-elementary libreoffice-l10n-fr
+    `# Divers` homebank sweethome3d \
+    `# Images` gimp gthumb imagemagick inkscape \
+    `# Audio/video` audacity cuetools easytag libimage-exiftool-perl ffmpeg shntool soundconverter mkvtoolnix pitivi sound-juicer sox subtitleeditor vlc \
+    `# Codecs` flac frei0r-plugins gnome-video-effects-frei0r gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg vorbis-tools vorbisgain \
+    `# Musique` lilypond frescobaldi \
+    `# Jeux/loisirs` chromium-bsu dosbox marble stellarium
 
-     
+    
     `# Utilitaires` cmake git gparted htop mlocate net-tools python3-pip rename sqlite3 fwupd tlp tlp-rdw localepurge flatpak gnome-software-plugin-flatpak \
-    `# Web` chromium epiphany-browser torbrowser-launcher privoxy nextcloud-desktop nautilus-nextcloud \
     `# Utilitaires web` cifs-utils dnsutils gftp gocryptfs gvncviewer network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome revelation rsync screen unison \
-    `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine fonts-ubuntu ttf-mscorefonts-installer unifont \
-    `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-ca hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
-    `# Libre Office` libreoffice-style-sifr/bookworm-backports \
     `# R` r-base r-base-core r-base-dev r-recommended littler r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libnode-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers \
     `# QGIS` qgis qgis-plugin-grass \
     `# LaTex/PDF` texlive-full bibtex2html bookletimposer calibre gedit-latex-plugin gummi impressive ispell latex2rtf latexmk lcdf-typetools libtext-pdf-perl mupdf pandoc pdf2djvu pdf2svg pdfarranger pdfchain pdfposter pdfsam pdftk poppler-utils qpdf xournalpp \
-    `# Divers` homebank sweethome3d \
-    `# Codecs` flac frei0r-plugins gnome-video-effects-frei0r gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg vorbis-tools vorbisgain \
     `# Spécial Bluetooth` pulsemixer pipewire{,-alsa,-jack,-pulse} libspa-0.2-bluetooth wireplumber bluez-alsa-utils \
-    `# Audio/video` audacity cuetools easytag libimage-exiftool-perl ffmpeg shntool soundconverter devede gnome-mpv mkvtoolnix pitivi sound-juicer sox subtitleeditor vlc youtube-dl \
-    `# Images` gimp-gmic gimp-plugin-registry gthumb imagemagick inkscape \
-    `# Musique` lilypond frescobaldi \
-    `# Jeux/loisirs` chromium-bsu dosbox marble stellarium
-sudo apt install \
-     `# Libre Office` -t bookworm-backports libreoffice-style-sifr
 # Ghostty
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+# Snap : Zoom
+sudo snap install zoom-client
 #+end_src
 
 Effectuer une mise-à-jour de nettoyage pour terminer, avec mise-à-jour de
@@ -160,7 +159,7 @@ l'index de =locate= (pour recherche de fichiers en ligne de commande) et
 configuration pour la lecture des DVDs :
 
 #+begin_src sh
-sudo apt purge ubuntu-session && sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove --purge && sudo updatedb && sudo dpkg-reconfigure libdvd-pkg
+sudo apt purge ubuntu-session libreoffice-style-yaru cloud-init && sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove --purge && sudo updatedb && sudo dpkg-reconfigure libdvd-pkg
 #+end_src
 
 
@@ -176,6 +175,32 @@ d'accentuation d'orange (Ubuntu) à bleu (GNOME) :
 
 #+begin_src sh
 gsettings set org.gnome.desktop.interface accent-color 'blue'  
+#+end_src
+
+
+** Désactiver toutes les mises-à-jour automatiques
+
+Ici on souhaite avoir le contrôle complet du timing des mises-à-jour, qui sont
+faites manuellement. Par corollaire, on ne veut pas de notification de
+mises-à-jour disponibles.
+
+Pour APT :
+
+#+begin_src sh
+sudo tee /etc/apt/apt.conf.d/20auto-upgrades <<EOF
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Download-Upgradeable-Packages "0";
+APT::Periodic::AutocleanInterval "0";
+APT::Periodic::Unattended-Upgrade "0";
+EOF
+sudo dpkg-reconfigure unattended-upgrades # Répondre "Non"
+sudo systemctl disable unattended-upgrades.service
+#+end_src
+
+Pour Snap :
+
+#+begin_src sh
+sudo snap refresh --hold
 #+end_src
 
 
@@ -208,18 +233,11 @@ Tester la connection à GitHub :
 ssh -T git@github.com
 #+end_src
 
-Ne pas répondre immédiatement ; comparer la clé affichée avec celles disponibles
-[[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints][sur le site de GitHub]], récupérer celle qui semble correcte et la copier comme
-réponse à =fingerprint= (y compris le =SHA256:=). Si le shell renvoie : "Hi <login>! You've successfully authenticated,
+Si le shell renvoie : "Hi <login>! You've successfully authenticated,
 but GitHub does not provide shell access.", c'est que ça a fonctionné.
 
-Pour finir, on copie le fichier =.gitconfig= (du dossier Git) dans le dossier
-utilisateur :
-
-#+begin_src sh
-cp Git/.gitconfig ~/
-#+end_src
-
+Pour finir, on configure Git via le fichier =.gitconfig= dans le dossier
+utilisateur (notamment informations personnelles de compte et de clés).
 
 ** Configuration du terminal : Ghostty
 
@@ -227,8 +245,9 @@ cp Git/.gitconfig ~/
 Nautilus.
 
 - Configuration du Bash (ajout de ces lignes à la fin du fichier =~/.bashrc=) :
+  
 #+begin_src sh
-echo '/*
+tee -a ~/.bashrc <<EOF
 # Manpages with colors
 export MANPAGER="/usr/bin/most -s"
 
@@ -244,118 +263,98 @@ fi
 alias ls='ls --color=auto --group-directories-first'
 
 # Alias upgrade & upgrade-full
-alias upgrade='sudo apt update && sudo apt upgrade'
-alias upgrade-full='sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove'
-' >> ~/.bashrc
+alias upgrade='sudo apt update && sudo apt upgrade && sudo snap refresh'
+alias upgrade-full='sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove && sudo snap refresh'
+EOF
 #+end_src
+
 - Configuration de Ghostty (thème Nord ; opacité de 85 % ; copie automatiquement
   du texte sélectionné dans le presse-papier ; pas de barre de titre ;
   raccourcis claviers : ~Ctrl+Shift+D~ pour ouvrir un panneau dessous,
   ~Ctrl+Shift+R~ pour ouvrir un terminal à droite, ~Ctrl+Shift+←↑↓→~ pour se
   déplacer entre les panneaux, ~Ctrl+Shift+W~ pour fermer un panneau) :
+
 #+begin_src sh
-echo '/*
-XXXXX
-' >> ~/.config/ghostty/config
+tee -a ~/.config/ghostty/config <<EOF
+theme = Nord
+background-opacity = 0.85
+copy-on-select = clipboard
+gtk-titlebar = false
+keybind = ctrl+shift+d=new_split:down
+keybind = ctrl+shift+r=new_split:right
+keybind = ctrl+shift+arrow_down=goto_split:down
+keybind = ctrl+shift+arrow_left=goto_split:left
+keybind = ctrl+shift+arrow_right=goto_split:right
+keybind = ctrl+shift+arrow_up=goto_split:up
+keybind = ctrl+shift+w=close_surface
+EOF
 #+end_src
-- Mode Quake : Extension GNOME Quake Terminal (via GNOME extension website, puis
-  configuration dans le gestionnaire d'extension)
-  - Terminal Application : Ghostty
-  - Toggle Shortcut : ² (touche au-dessus de TAB)
-  - Auto Hide Terminal : désactiver
-  - Animation Time : 100
-  - Vertical Size : 35
-  - Always On Top : activer
-- Raccourcis clavier : dans les Paramètres GNOME > Clavier > Raccourcis clavier, ajouter
-  deux raccourcis personnalisés (en bas de la liste) : Ghostty / =ghostty= / ~Super+T~
+
+- Raccourcis clavier : dans les Paramètres GNOME > Clavier > Raccourcis clavier,
+  ajouter deux raccourcis personnalisés (en bas de la liste) : Ghostty /
+  =ghostty= / ~Super+T~
 - Renvoyer des insultes quand on se trompe de mot de passe :
+
 #+begin_src sh
 sudo visudo
 #+end_src
-  Ajouter cette ligne au début du fichier :
+
+Ajouter cette ligne au début du fichier :
+
 #+begin_quote
 : Defaults        insults
 #+end_quote
 
 
-** BIOS Dell
+** Mémoire et SWAP
 
-On peut vérifier la version et les détails du BIOS avec :
-
-#+begin_src sh
-sudo dmidecode | less
-#+end_src
-
-Dell fournit les mises-à-jour du BIOS via le Linux Vendor Firmware Service
-(LVFS via =fwupd=) :
-
-#+begin_src sh
-sudo fwupdmgr get-devices
-sudo fwupdmgr refresh
-sudo fwupdmgr get-updates
-#+end_src
-
-Et si besoin :
-
-#+begin_src sh
-sudo fwupdmgr update
-#+end_src
-
-Si la MAJ n'est pas possible (problème d'UEFI), on peut la faire à la main :
-- À la date du 26/10/2023, la dernière version disponible du BIOS est [[https://www.dell.com/support/home/fr-fr/product-support/product/precision-15-3581-laptop/drivers][1.4.1]]
-  (datée du 15/06/2023).
-- Après téléchargement, on vérifie les signatures :
-#+begin_src sh
-md5sum Precision_3581_1.4.1.exe
-sha1sum Precision_3581_1.4.1.exe
-sha256sum Precision_3581_1.4.1.exe
-#+end_src
-- Copier le fichier sur une clé USB, redémarrer, appuyer sur =F12= pour avoir le
-  menu de démarrage, sélectionner "BIOS Flash update" et suivre les
-  instructions.
-
+- On utilise =Zswap= pour compresser la mémoire virtuelle (fichier d'échange) en
+  RAM, ce qui permet une utilisation plus modérée de la partition de SWAP (utile
+  pour un SSD). Zswap peut s'appuyer sur =lz4= pour une compression plus
+  performante. Pour cela, on ajoute 3 modules dans le fichier de configuration
+  des modules :
   
-** Batterie, SWAP et RAM
-
-- Côté batterie, tout se passe par =TLP=, qui optimise par défaut l'utilisation
-  de la batterie pour en préserver la durée de vie, selon les recommandations
-  Powertop.
-
-- On utilise =Zswap= pour compresser la mémoire virtuelle en RAM, ce qui permet
-  une utilisation plus modérée de la partition de SWAP (utile pour un
-  SSD). Zswap peut s'appuyer sur =lz4= pour une compression plus
-  performante. Pour cela, on édite le fichier de configuration des modules :
 #+begin_src sh
-sudo nano /etc/initramfs-tools/modules
+sudo tee -a /etc/initramfs-tools/modules <<EOF
+z3fold
+lz4
+lz4_compress
+EOF
 #+end_src
-  Et on ajoute à la fin :
-#+begin_quote
-: z3fold
-: lz4
-: lz4_compress
-#+end_quote
-  Pour que la modification soit prise en compte :
+
+Pour que la modification soit prise en compte :
+
 #+begin_src sh
 sudo update-initramfs -u
 #+end_src
-  Puis on active Zswap via GRUB :
+
+Puis on active Zswap via GRUB :
+
 #+begin_src sh
 sudo nano /etc/default/grub
 #+end_src
-  Et on ajoute à la suite de la ligne démarrant par
-  « GRUB_CMDLINE_LINUX_DEFAULT= » :
+
+Et on ajoute à la suite de la ligne démarrant par
+« GRUB_CMDLINE_LINUX_DEFAULT= » :
+
 #+begin_quote
-: zswap.enabled=1 zswap.compressor=lz4 zswap.max_pool_percent=25 zswap.zpool=z3fold
+: zswap.enabled=1 zswap.compressor=lz4 zswap.max_pool_percent=50 zswap.zpool=z3fold
 #+end_quote
-  Pour que la modification soit prise en compte :
+
+Pour que la modification soit prise en compte :
+
 #+begin_src sh
 sudo update-grub
 #+end_src
-  Après redémarrage, on vérifie que tout est bien configuré :
+
+Après redémarrage, on vérifie que tout est bien configuré :
+
 #+begin_src sh
 grep -R . /sys/module/zswap/parameters
 #+end_src
-  Qui devrait retourner :
+
+Qui devrait retourner :
+
 #+begin_quote
 : /sys/module/zswap/parameters/same_filled_pages_enabled:Y
 : /sys/module/zswap/parameters/enabled:Y
@@ -365,79 +364,6 @@ grep -R . /sys/module/zswap/parameters
 : /sys/module/zswap/parameters/zpool:z3fold
 : /sys/module/zswap/parameters/accept_threshold_percent:90
 #+end_quote
-
-- Augmenter la taille du volume de swap (à faire dans une session live si besoin
-  de réduire =/root=, qui nécessite d'être démontée).
-  - On sauvegarde la configuration :
-#+begin_src sh
-sudo vgcfgbackup -f vg-config
-#+end_src
-  - On trouve le nom du volume :
-#+begin_src sh
-sudo lvs
-#+end_src
-  - Puis on l'éteint [/dev/VG/LV] :
-#+begin_src sh
-sudo swapoff /dev/vgubuntu/swap_1
-#+end_src
-  - On récupère de l'espace d'un autre volume (=/root=) :
-#+begin_src sh
-sudo lvresize --resizefs -L-7G /dev/vgubuntu/root
-#+end_src
-  - On redimensionne le volume de swap :
-#+begin_src sh
-sudo lvresize -L+7G /dev/vgubuntu/swap_1
-#+end_src
-  - On termine en formatant le nouvel espace de swap pour le rendre utilisable :
-#+begin_src sh
-sudo mkswap /dev/vgubuntu/swap_1
-#+end_src
-  - Et redémarrer le volume :
-#+begin_src sh
-sudo swapon /dev/vgubuntu/swap_1
-#+end_src
-  - On peut vérifier avec :
-#+begin_src sh
-swapon -s
-#+end_src
-
-
-** Note Bluetooth
-
-La gestion du Bluetooth est parfois un peu hasardeuse, notamment pour les
-périphériques audio (casques/oreillettes)… En principe, tout passe par
-=PipeWire=, qui a remplacé =PulseAudio=, mais on a besoin de quelques modules
-supplémentaires (=-alsa=, =-jack=, =-pulse=) pour être tranquille. On y rajoute
-des librairies et outils en plus (=pulsemixer=, =libspa-0.2-bluetooth=,
-=wireplumber=, =bluez-alsa-utils=).
-
-Concernant les codecs audio utilisés, [[https://wiki.debian.org/BluetoothUser/a2dp][Bluetooth]] a une limitation de bande
-passante qui fait qu'on a soit un mode unidirectionnel (=A2DP=) avec ) des
-codecs permettant une bonne qualité audio (=SBC=, =AptX= ou =LDAC=), soit un
-mode bidirectionnel (=HFP= ou =HSP=) permettant le micro (avec codec =mSBC= de
-préférence, ou =CVSD=).
-
-Pour vérifier les spécifications des périphériques Bluetooth, on peut utiliser :
-
-#+begin_src sh
-pactl list sinks
-#+end_src
-
-Pour basculer d'un périphérique à l'autre, ça se passe dans le panneau de
-contrôle en haut à droite de GNOME (le choix du micro ne s'affiche que quand une
-application souhaite utiliser le micro). Le choix des codecs se fait dans les
-réglages sons du système.
-
-Le Bluetooth peut être assez instable en terme de configuration. Pistes de
-solution :
-
-- Supprimer le périphérique de la liste Bluetooth avant de le reconfigurer
-  (appairage) ;
-- Relancer le serveur Bluetooth :
-
-#+begin_src sh
-sudo service bluetooth restart
-#+end_src
 
 
 ** Configurer Active Directory
@@ -452,84 +378,84 @@ https://github.com/ubuntu/adsys/blob/d42e5219b9ade2fd7d52416aa6cb90a07db6087e/do
 
 ** Clavier et internationalisation
 
-- Avoir français (France) et anglais (UK, US) dans la liste des
-  langues, en mettant le français comme langue par défaut :
+- Avoir français (France) et anglais (UK, US) dans la liste des langues, en
+  mettant le français comme langue par défaut :
+  
 #+begin_src sh
 sudo dpkg-reconfigure locales
 #+end_src
-  Sélectionner =en-GB.UTF-8=, =en-US.UTF-8=, =fr-FR.UTF-8= (actif par défaut).
+
+Sélectionner =en-GB.UTF-8=, =en-US.UTF-8=, =fr-FR.UTF-8= (actif par défaut).
+
 - Enlever les langues qui ne sont plus nécessaires :
+
 #+begin_src sh
 sudo localepurge
 #+end_src
-- [[https://help.ubuntu.com/community/Custom%20keyboard%20layout%20definitions][Disposition du clavier]] [à faire]:
+
+- [[https://help.ubuntu.com/community/Custom%20keyboard%20layout%20definitions][Disposition du clavier]] [TODO]:
   * La liste des caractères et fonctions se trouve à :
     =/usr/include/X11/keysymdef.h=.
   * J'utilise un clavier légèrement personnalisé (basé sur le Français —
     variante), qui inclue des caractères spéciaux (←→²³€—©☆§, etc.), des
     opérateurs mathématiques (±×÷≠≤≥), et les lettres, accents et ponctuation en
     français et espagnol (ÆæÀàÉéÈèÑñŒœÙù «» “” ¡¿, etc.) :
+
 #+begin_src sh
 sudo mv /usr/share/X11/xkb/symbols/fr /usr/share/X11/xkb/symbols/fr.bkp
 sudo cp Keyboard/keyboard-DELL-Precision-3581_fr /usr/share/X11/xkb/symbols/fr
 #+end_src
+
   * Puis dans les Paramètres GNOME > Pays et langue, choisir « Français
     (variante) » comme Source de saisie ; ajouter « Grec (étendu) » pour
     l'alphabet grec. Pour changer de clavier à la volée : =Windows+Espace=.
 
-Vérifer
+[TODO] Vérifer
 https://toutetrien.lithio.fr/article/une-histoire-de-latex-et-point-median/ pour
 le point médian (pas celui du clavier qui est l'opérateur mathématique)
 Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
 
+
 ** Réglagles spécifiques du bureau
 
 - Vérifier les applications favorites : Fichiers, Firefox, Thunderbird, Zoom,
-  Emacs, Libre Office Writer, Moniteur système
+  Emacs, Libre Office Writer, Moniteur système [TODO]
 - Vérifier les applications par défaut (Paramètres > Applications par défaut),
-  notamment Firefox, Thunderbird, VLC.
+  notamment Firefox, Thunderbird, VLC. [TODO]
 - Vérifier les applications au démarrage avec =Ajustements= (Applications au
   démarrage), notamment Firefox, Thunderbird, Zoom, Emacs, NextCloud et
-  Fichiers.
+  Fichiers. [TODO]
 - Souris et pavé tactile : Activer =Taper pour cliquer= :
-#+begin_src sh
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-#+end_src
-- Enlever le « bip » système : Paramètres GNOME > Son, mettre les Sons système
-  en silence.
-- Raccourcis clavier :
-  - Désactiver « Masquer la fenêtre » 
-  - Dossier personnel (fichiers) : ~Super+f~
-  - Masquer toutes les fenêtres normales : ~Super+D~
-  - Effectuer une capture d'écran : ~Super+P~
-  - Effectuer la capture d'écran d'une fenêtre : ~Ctrl+Super+P~
-  - Enregistrer une capture vidéo interactivement : ~Super+R~
-  - Verrouiller l'écran : ~Ctrl+Échap~
-  - Basculer l'état d'agrandissement : ~Super+Return~
-#+begin_src sh
-gsettings set org.gnome.desktop.wm.keybindings minimize ['']
-gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
-gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-gsettings set org.gnome.shell.keybindings screenshot "['<Super>p']"
-gsettings set org.gnome.shell.keybindings screenshot-window "['<Control><Super>p']"
-gsettings set org.gnome.shell.keybindings show-screen-recording-ui ['<Super>r']
-gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Control>Escape']"
-gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Super>Return']"
-#+end_src
-- Nautilus : Préférences > Vues : Trier les dossiers avant les fichiers
-- Calendrier qui affiche le numéro de la semaine :
-#+begin_src sh
-gsettings set org.gnome.desktop.calendar show-weekdate true
-#+end_src
+- Enlever le « bip » système : Paramètres GNOME > Son, passer le Son d'alerte à « Aucun ».
+- Raccourcis clavier (désactiver « Masquer la fenêtre » ; dossier personnel
+  (fichiers) : ~Super+f~ ; verrouiller l'écran : ~Ctrl+Échap~ ; maximiser la
+  fenêtre : ~Super+↑~ ; dé-maximiser la fenêtre  : ~Super+↓~).
+- Calendrier qui affiche le numéro de la semaine.
 - Mode nuit : activé au lever/coucher du soleil ; couleur à niveau 1 (échelle
   0–3) ; note : contrôle également le passage au thème sombre si Night theme
   switcher est également installé /!\ On active au passage les services de
   géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
+
 #+begin_src sh
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.sound event-sounds false
+gsettings set org.gnome.desktop.wm.keybindings minimize ['']
+gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver "['<Control>Escape']"
+gsettings set org.gnome.desktop.wm.keybindings maximize "['<Super>Up']"
+gsettings set org.gnome.desktop.wm.keybindings unmaximize "['<Super>Down']"
+gsettings set org.gnome.desktop.calendar show-weekdate true
 gsettings set org.gnome.system.location enabled true
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic true
-gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature uint32 3700
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "uint32 3700"
+#+end_src
+
+- Il y a un bug avec le « Fractional scaling » et la taille des curseurs. Semble
+  résolu par (à vérifier) :
+
+#+begin_src sh
+mkdir ~/.icons && cp -r /usr/share/icons/Adwaita ~/.icons/default
 #+end_src
   
 
@@ -539,91 +465,55 @@ On utilise le gestionnaire d'extensions de GNOME
 (=gnome-shell-extension-manager=) pour installer et gérer des extensions GNOME
 Shell :
 
-- [[https://extensions.gnome.org/extension/16/auto-move-windows/][Auto Move Windows]] [intégrée] : Firefox sur (2), Fichiers sur (3)
+- [[https://extensions.gnome.org/extension/16/auto-move-windows/][Auto Move Windows]] [intégrée] : Firefox sur (2), Fichiers sur (3) [TODO]
 - [[https://extensions.gnome.org/extension/28/gtile/][gTile]] : Changer la taille de grille à 4x2,3x2,4x3
 - [[https://github.com/ihpled/mute-unmute][Mute/Unmute]]
 - [[https://extensions.gnome.org/extension/2236/night-theme-switcher/][Night theme switcher]] : Passe automatiquement du thème clair au thème sombre
   selon les horaires du jour. 
 - [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] : Changer le raccourci pour ~Super+F1~ :
+
 #+begin_src sh
 dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '["<Super>F1"]'
 #+end_src
-- [[https://extensions.gnome.org/extension/750/openweather/][OpenWeather]] : Il y a un bug avec le jeu d'icônes (Adwaita) qui est normalement
-  corrigé avec l'installation de =gnome-icon-theme=.  Dans les paramètres,
-  Agencement : mettre au centre, avec un décalage de 1 (pour l'avoir à droite de
-  l'heure) ; Emplacements : ajouter « Pignan ».
-- [[https://extensions.gnome.org/extension/1133/supertab-launcher/][Super+Tab Launcher]] : L'extension n'est plus mise à jour mais fonctionne encore
-  sous GNOME 43 (à partir de GNOME 45, voir [[https://extensions.gnome.org/extension/6361/alttab-launcher/][ce fork]]). Pour cela, éditer le fichier
-  =~/.local/share/gnome-shell/extensions/gnome-shell-extension-super-tab-launcher.dsboger@gmail.com/metadata.json=,
-  et rajouter "43" dans la liste des "shell-version". Réouvrir la session.
+
+- [[https://extensions.gnome.org/extension/750/openweather/][OpenMeteoWeather]] : Il y a un bug avec le jeu d'icônes (Adwaita) qui est
+  normalement corrigé avec l'installation de =gnome-icon-theme=.  Dans les
+  paramètres, Agencement : mettre au centre, avec un décalage de 1 (pour l'avoir
+  à droite de l'heure) ; Emplacements : ajouter « Pignan ». [TODO] avec Météo
+  aussi
+- [[https://extensions.gnome.org/extension/6361/alttab-launcher/][Alt+Tab Launcher]]
 - Ubuntu AppIndicator [intégrée] : Utiliser une taille d'icone de 20.
+- [[https://extensions.gnome.org/extension/6307/quake-terminal/][Quake Terminal]] : Mode Quake pour le terminal :
+  - Terminal Application : Ghostty
+  - Toggle Shortcut : ² (touche au-dessus de TAB)
+  - Auto Hide Terminal : désactiver
+  - Show on the primary Display : activer
+  - Animation Time : 100
+  - Vertical Size : 35
+  - Always On Top : activer
 
 
 * Logiciels spécifiques
 
 ** Web
 
-*** Thunderbird
-
-- Nettoyage des locales :
-#+begin_src sh
-sudo apt purge thunderbird-l10n-* && sudo apt install thunderbird-l10n-en-gb thunderbird-l10n-fr
-#+end_src
+*** Thunderbird [TODO]
 
 Le dossier de profile se trouve dans =~/.thunderbird/XXX.default-default=.
 
-
-**** Configuration
-
-- Enlever la barre de titre : Paramètres > Général > Langue et apparence >
-  Disposition des fenêtres > cocher « Masquer la barre de titre de la
-  fenêtre ».
-- Barres d'outils mail : Clic droit sur la barre d'outils > Personnaliser :
-  enlever les boutons Messagerie instantanée, Adresses et Étiquettes, ajouter
-  les boutons « Reculer » et « Avancer » tout à gauche, ajouter un espace
-  flexible après la boîte de recherche, ajouter « Modules complémentaires » tout
-  à droite.
-- Vue des e-mails : bouton menu/affichage en haut de la liste des e-mails : Vue
-  en fiches, Trier par date, Ordre décroissant, Discussions groupées. Il ne
-  semble plus être possible de l'appliquer à tous. Vérifier tout de même :
-  Paramètres > Général > Éditeur de configuration :
-#+begin_quote
-: mailnews.default_sort_order: 1
-: mailnews.default_sort_type: 22
-#+end_quote
-- Limiter la largeur des messages textes à 80 caractères : Préférences > Général
-  > Éditeur de configuration :
-#+begin_quote
-: mailnews.wraplength: 80
-#+end_quote
-- Dans Paramètres > Vie privée et sécurité, Autoriser le contenu distant dans
-  les messages (l'extension Allow HTTP Temp s'occupe de bloquer l'HTML).
-- Pas de délai dans la popup des pièces jointes : Paramètres > Général >
-  Éditeur de configuration :
-#+begin_quote
-: security.dialog_enable_delay: 0
-#+end_quote
-- Pour afficher les quotas IMAP tout le temps (par défaut, uniquement si
-  > 75 %) : Paramètres > Général > Éditeur de configuration :
-#+begin_quote
-: mail.quota.mainwindow_threshold.show: 0
-#+end_quote
-- Dans le calendrier, empêcher le scroll de souris de changer de mois :
-#+begin_quote
-: calendar.view.mousescroll: false
-#+end_quote
-  
 **** [[https://github.com/rafaelmardojai/thunderbird-gnome-theme][Thème GNOME]]
 
 Télécharger le thème :
 
 #+begin_src sh
-cd Debian/Thunderbird
+mkdir -p ~/Documents/Informatique/Thunderbird && cd ~/Documents/Informatique/Thunderbird
 git clone https://github.com/rafaelmardojai/thunderbird-gnome-theme && cd thunderbird-gnome-theme
 ./scripts/auto-install.sh
 #+end_src
 
-Puis le configurer dans =about:config= :
+Puis le configurer dans l'éditeur de configuration de Thunderbird (tout en bas
+des paramètres) :
+
 #+begin_quote
 : toolkit.legacyUserProfileCustomizations.stylesheets: true
 : svg.context-properties.content.enabled: true
@@ -632,10 +522,12 @@ Puis le configurer dans =about:config= :
 #+end_quote
 
 Pour avoir le sujet des messages de la couleur des tags, on ajoute le snipet
-suivant dans le fichier =userChrome.css= :
+suivant dans le fichier =userChrome.css= (ajuster selon le dossier de profil
+Thunderbird):
 
 #+begin_src sh
-echo '/* Pour avoir le sujet des messages de la couleur des tags */
+tee -a ~/snap/thunderbird/common/.thunderbird/jzqh939m.default/chrome/userChrome.css <<EOF
+/* Pour avoir le sujet des messages de la couleur des tags */
 #threadTree tr.card-layout {
     .card-container {
 	.subject {
@@ -643,37 +535,78 @@ echo '/* Pour avoir le sujet des messages de la couleur des tags */
 	}
     }
 }
-' >> ~/.thunderbird/keiwnbok.default-default/chrome/userChrome.css
+EOF
 #+end_src
 
 Redémarrer Thunderbird.
 
-Pour les mises-à-jour, on va dans le dossier de profile Thunderbird
-(=~/.thunderbird/XXX.default-default=), sous-dossier
+Pour les mises-à-jour, on va dans le dossier de profil Thunderbird
+(=~/snap/thunderbird/common/XXX.default-default=), sous-dossier
 =chrome/thunderbird-gnome-theme=, puis on met à jour le dépôt :
 
 #+begin_src sh
 git pull origin main
 #+end_src
 
+**** Configuration
 
+- Barre d'outils mail : Clic droit sur la barre d'outils > Personnaliser :
+  ajouter les boutons « Reculer » et « Avancer » tout à gauche, « Modules
+  complémentaires » tout à droite, avec les icônes uniquement. On peut en
+  profiter pour « Modules complémentaires » tout à droite pour tous les onglets
+  qui nous intéressent.
+- Barre d'outils messages : Dans un message, cliquer sur Autres >
+  Personnaliser : on désactive tout (« Afficher la photo du profil de
+  l'expéditeur », « Toujours afficher l'adresse complète de l'expéditeur »,
+  « Masquer la colonne des étiquettes », « Grand sujet ») et basculer le Style
+  du bouton en Icônes.
+- Dans Paramètres > Vie privée et sécurité, Autoriser le contenu distant dans
+  les messages (l'extension Allow HTTP Temp s'occupe de bloquer l'HTML).
+- Vue des e-mails : bouton menu/affichage en haut de la liste des e-mails : Vue
+  en fiches, Trier par date, Ordre décroissant, Discussions groupées. Il ne
+  semble plus être possible de l'appliquer à tous. Vérifier tout de même :
+  Paramètres > Général > Éditeur de configuration :
+#+begin_quote
+: mailnews.default_sort_order: 1
+: mailnews.default_sort_type: 22
+#+end_quote
+- Limiter la largeur des messages textes à 80 caractères : 
+#+begin_quote
+: mailnews.wraplength: 80
+#+end_quote
+- Pas de délai dans la popup des pièces jointes : 
+#+begin_quote
+: security.dialog_enable_delay: 0
+#+end_quote
+- Pour afficher les quotas IMAP tout le temps (par défaut, uniquement si
+  > 75 %) :
+#+begin_quote
+: mail.quota.mainwindow_threshold.show: 0
+#+end_quote
+  
 **** Calendrier
 
 La gestion des calendriers se fait naturellement via Lightning (installé par
 défaut dans Thunderbird).
 
 - Barre d'outils calendrier : Clic droit sur la barre d'outils > Personnaliser :
-  on garde Synchroniser et Ajouter un événement tout à gauche, ajouter un espace
-  flexible puis le bouton Recherche.
+  Ajouter « Événement » et « Synchroniser » tout à gauche.
 
 - Pour envoyer des invitations à des événements :
-  - Associer le calendrier à l'adresse e-mail pertinente
+  - Associer le calendrier à l'adresse e-mail pertinente. A priori, il faut
+    aussi que ce soit le compte par défaut dans la liste des comptes…
   - Cocher : « Choisir la planification des courriels côté client »
   - Lorsqu'un événement est créé, inviter des participants se fait via le bouton
     dédié (on peut ajouter des e-mails qui sont dans les contacts ou non). À
     l'enregistrement de l'événement, une invitation est envoyée par e-mail (du
     type à accepter/décliner) ; les réponses sont également traitées comme des
     e-mails. 
+
+- Empêcher le scroll de souris de changer de mois :
+  
+#+begin_quote
+: calendar.view.mousescroll: false
+#+end_quote
 
 
 **** Extensions
@@ -684,12 +617,12 @@ défaut dans Thunderbird).
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/birthday-calendar/][Birthday Calendar]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/cardbook/][CardBook]] : configurer le carnet d'adresse CardDav
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T]] 
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/emojiaddin/][Emoji]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/awesome-emoji-picker/][Awesome Emoji Picker]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/lookout-fix-version/][LookOut (fix version)]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/nestedquote-remover/][NestedQuote Remover]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/quick-folder-move/][Quick Folder Move]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors & Collapse]]
+- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors]]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Remove Duplicate Messages]] [Supprimer les messages en double (Alternatif)]
 - [[https://addons.thunderbird.net/fr/thunderbird/addon/signature-switch/][Signature Switch]]
 
@@ -706,7 +639,7 @@ défaut dans Thunderbird).
   Calendar buttons », et enlever les tâches.
 
 
-*** Firefox
+*** Firefox [TODO]
 
 - Nettoyage des locales (vérifier aussi les fichiers dans
   =/usr/lib/firefox-esr/browser/extensions/langpack-=): 
@@ -776,6 +709,8 @@ git pull origin master
 - Search Engine Ad Remover : Removes ads when searching using Google, Bing,
   DuckDuckGo, StartPage and Ask!
 - Smart Referer : Des référents intelligents partout !
+- Pour un contrôle de la vie privée à bas niveau (système), on peut regarder du
+  côté de [[http://www.privoxy.org/][Privoxy]].
 
 *Autres :*
 
@@ -825,8 +760,8 @@ Voici la liste que je conserve :
 
 *** Navigateurs alternatifs
 
-L'installation propose Chromium (version libre de Google Chrome), Epiphany
-(navigateur GNOME), Tor Browser (navigation anonyme, en conjonction avec
+L'installation propose Chromium (version libre de Google Chrome), GNOME Web
+(anciennement Epiphany), Tor Browser (navigation anonyme, en conjonction avec
 =privoxy=).
 
 
@@ -834,8 +769,8 @@ L'installation propose Chromium (version libre de Google Chrome), Epiphany
 
 On configure l'app avec les bons identifiants, et on sélectionne ce que l'on
 veut synchroniser et où (je choisis pour ma part =Public=) ; dans les
-Paramètres, on coche « Lancer au démarrage » et « Utiliser les icônes
-monochrome ».
+Paramètres, on coche « Lancer au démarrage du système » et « Utiliser les icônes
+monochromes ».
 
 Le paquet =nautilus-nextcloud= assure une intégration complète dans Nautilus
 (icônes de synchronisation, lien de partage, partage avec d'autres utilisateurs,
@@ -844,24 +779,34 @@ Le paquet =nautilus-nextcloud= assure une intégration complète dans Nautilus
 
 *** Zoom
 
-Zoom est disponible en =flatpak=, avec l'avantage de mises-à-jour gérées par le système, mais deux inconvénients : la lourdeur de l'installation (toutes les librairies sont téléchargées dans un espace dédié à Zoom) et le fait que le 'systray' (la zone des icones en haut à droite) est mal géré (Zoom n'y reste pas quand on ferme l'application). On utilise donc le =.deb= officiel de Zoom à la place, avec l'inconvénient de devoir le mettre à jour manuellement régulièrement.
+Zoom est disponible en =snap= ou en =flatpak=, avec l'avantage de mises-à-jour
+gérées par le système, mais deux inconvénients : la lourdeur de l'installation
+(toutes les librairies sont téléchargées dans un espace dédié à Zoom) et le fait
+que le 'systray' (la zone des icones en haut à droite) est mal géré (Zoom n'y
+reste pas quand on ferme l'application). On utilise donc le =.deb= officiel de
+Zoom à la place, avec l'inconvénient de devoir le mettre à jour manuellement
+régulièrement.
 
-On le télécharge sur le [[https://zoom.us/download?os=linux][site de Zoom]] (version 5.16.5-303 au 28/10/2023), puis on l'installe avec :
+On le télécharge sur le [[https://zoom.us/download?os=linux][site de Zoom]] (version 6.6.0-4410 au 22/09/2025), puis on
+l'installe avec :
 
 #+begin_src sh
-sudo apt install ./Zoom/zoom_amd64_5.16.5-303
+sudo apt install ./zoom_amd64_6.6.0-4410_ubuntu.deb
 #+end_src
 
-Pour passer Zoom en français, il suffit de cliquer sur l'icone Zoom, puis "Switch language" et choisir Français. Si il y a un problème de connexion automatique au démarrage, simplement supprimer le dossier =~/.zoom/= peut régler le problème.
+Pour passer Zoom en français, il suffit de cliquer sur l'icone Zoom, puis
+"Switch language" et choisir Français. Si il y a un problème de connexion
+automatique au démarrage, simplement supprimer le dossier =~/.zoom/= peut régler
+le problème.
 
-Note : impossible en l'état de changer l'icone du systray, pour le passer en monochrome (il est intégré dans le binaire Zoom). 
+Note : impossible en l'état de changer l'icone du systray, pour le passer en
+monochrome (il est intégré dans le binaire Zoom).
 
 
-*** GFTP
+*** GFTP [TODO]
 
 Pour GTFP, on copie ensuite le fichier `bookmarks` du dossier `GFTP` dans le
 dossier de configuration créé après la première utilisation de GFTP (`~/.gftp`).
-
 
 
 ** Bureautique
@@ -869,15 +814,8 @@ dossier de configuration créé après la première utilisation de GFTP (`~/.gft
 
 *** Polices
 
-- Utiliser =Ajustements= pour changer la police de Texte à chasse fixe à « Hack
-  Regular 11 ».
-- [[https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts][Alternatives pour Calibri/Cambria]] (polices MS) : Carlito and Caladea. Une fois
-  ces polices installées, dans ffice : Outils > Options > LibreOffice >
-  Polices, cocher « Appliquer la table de remplacement » avec une règle de
-  remplacement pour chaque police (Calibri → Carlito, Cambria →
-  Caladea). Laisser « Toujours » et « Écran uniquement » décochés.
 - Pour installer des polices TrueType (=.ttf=), simplement les copier dans
-  =~/.fonts/~ (créer le dossier au besoin).
+  =~/.fonts/= (créer le dossier au besoin).
 - En cas de problème d'affichage des polices, on peut régénérer le cache via :
 
 #+begin_src sh
@@ -896,7 +834,7 @@ Ouvrir Emacs, qui va installer tout un ensemble de packages et
 s'auto-configurer. Si besoin, relancer Emacs plusieurs fois jusqu'à ce que tous
 les packages soient installés.
 
-**** Formater des fichiers markdown
+**** Formater des fichiers markdown [TODO]
 
 On utilise [[https://dprint.dev/overview/][dprint]] pour cela :
 
@@ -959,9 +897,20 @@ dprint fmt **/*.js --excludes **/data
 
 *** LibreOffice
 
-On choisit le style d'icônes =Sifr= dans les options (Outils > Options >
-LibreOffice > Affichage) et on bloque LibreOffice en mode clair (les icônes Sifr
-ne gèrent pas le changement).
+Pour avoir les onglets (façon MS Office) : Affichage > Interface utilisateur >
+Onglets, puis « Appliquer partout ».
+
+On choisit le thème d'icônes =Automatique= qui devrait utiliser =Elementary=
+quand le système est clair et =Sifr (dark)= quand le système est sombre (on
+vérifie dans Outils > Options > LibreOffice > Affichage), et on ajuste pour que
+le fond soit toujours blanc (Outils > Options > Apparence > Personnalisations :
+Éléments : Arrière-plan du document : Couleur : Blanc, pour l'apparence sombre).
+
+[[https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts][Alternatives pour Calibri/Cambria]] (polices Microsoft) : Carlito and Caladea. Une
+fois ces polices installées, dans LibreOffice : Outils > Options > LibreOffice >
+Polices, cocher « Appliquer la table de remplacement » avec une règle de
+remplacement pour chaque police (Calibri → Carlito, Cambria → Caladea). Laisser
+« Toujours » et « Écran uniquement » décochés.
 
 Pour pouvoir exporter proprement en PDF des diapos avec animation
 d'apparition/disparition, on installe l'extension [[https://github.com/monperrus/ExpandAnimations/releases][ExpandAnimations]], en
