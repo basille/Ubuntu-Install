@@ -417,9 +417,9 @@ sudo mv /usr/share/X11/xkb/symbols/fr /usr/share/X11/xkb/symbols/fr.bkp
 sudo cp Keyboard/keyboard-DELL-Precision-3581_fr /usr/share/X11/xkb/symbols/fr
 #+end_src
 
-  * Puis dans les Paramètres GNOME > Pays et langue, choisir « Français
-    (variante) » comme Source de saisie ; ajouter « Grec (étendu) » pour
-    l'alphabet grec. Pour changer de clavier à la volée : =Windows+Espace=.
+  * Puis dans les Paramètres GNOME > Pays et langue, vérifier que « Français
+    (variante) » est bien la Source de saisie ; ajouter « Grec » pour l'alphabet
+    grec. Pour changer de clavier à la volée : =Windows+Espace=.
 
 [TODO] Vérifer
 https://toutetrien.lithio.fr/article/une-histoire-de-latex-et-point-median/ pour
@@ -429,26 +429,24 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
 
 ** Réglagles spécifiques du bureau
 
-- Vérifier les applications favorites : Fichiers, Firefox, Thunderbird, Zoom,
-  Emacs, Libre Office Writer, Moniteur système [TODO]
-- Vérifier les applications par défaut (Paramètres > Applications par défaut),
-  notamment Firefox, Thunderbird, VLC. [TODO]
-- Vérifier les applications au démarrage avec =Ajustements= (Applications au
-  démarrage), notamment Firefox, Thunderbird, Zoom, Emacs, NextCloud et
-  Fichiers. [TODO]
-- Souris et pavé tactile : Activer =Taper pour cliquer= :
-- Enlever le « bip » système : Paramètres GNOME > Son, passer le Son d'alerte à « Aucun ».
+- Ajuster les applications favorites : Fichiers, Firefox, Thunderbird,
+  Emacs, Ghostty, Moniteur système ;
+- Souris et pavé tactile : Activer =Taper pour cliquer=, bords de l'écran
+  actifs (pour redimensionner les fenêtres) ;
+- Enlever le « bip » système ;
 - Raccourcis clavier (désactiver « Masquer la fenêtre » ; dossier personnel
   (fichiers) : ~Super+f~ ; verrouiller l'écran : ~Ctrl+Échap~ ; maximiser la
-  fenêtre : ~Super+↑~ ; dé-maximiser la fenêtre  : ~Super+↓~).
-- Calendrier qui affiche le numéro de la semaine.
+  fenêtre : ~Super+↑~ ; dé-maximiser la fenêtre  : ~Super+↓~) ;
+- Calendrier qui affiche le numéro de la semaine ;
 - Mode nuit : activé au lever/coucher du soleil ; couleur à niveau 1 (échelle
   0–3) ; note : contrôle également le passage au thème sombre si Night theme
   switcher est également installé /!\ On active au passage les services de
   géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
 
 #+begin_src sh
+gsettings set org.gnome.shell favorite-apps ['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacsclient.desktop', 'com.mitchellh.ghostty.desktop', 'org.gnome.SystemMonitor.desktop']
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.mutter edge-tiling true
 gsettings set org.gnome.desktop.sound event-sounds false
 gsettings set org.gnome.desktop.wm.keybindings minimize ['']
 gsettings set org.gnome.settings-daemon.plugins.media-keys home "['<Super>f']"
@@ -462,6 +460,11 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-autom
 gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "uint32 3700"
 #+end_src
 
+- Vérifier les applications par défaut (Paramètres > Applications > Applications
+  par défaut), notamment Firefox, Thunderbird ;
+- Éventuellement vérifier les applications au démarrage (Paramètres >
+  Applications > puis pour chaque application), notamment Firefox, Emacs,
+  NextCloud et Fichiers ;
 - Il y a un bug avec le « Fractional scaling » et la taille des curseurs. Semble
   résolu par (à vérifier) :
 
