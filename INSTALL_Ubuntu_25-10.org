@@ -216,6 +216,7 @@ EOF
   claviers personnalisés :
 
 #+begin_src sh
+gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
 #+end_src
 
   On ajoute ensuite celui pour Ghostty (attention, il faut bien ajouter un
