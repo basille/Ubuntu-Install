@@ -328,17 +328,20 @@ utilisateur (notamment informations personnelles de compte et de clés).
   des modules :
   
 #+begin_src sh
-sudo tee -a /etc/initramfs-tools/modules <<EOF
-z3fold
-lz4
-lz4_compress
-EOF
+sudo tee /etc/dracut.conf.d/lz4hc.conf <<EOF
+add_drivers+="lz4hc lz4hc_compress"
 #+end_src
 
 Pour que la modification soit prise en compte :
 
 #+begin_src sh
-sudo update-initramfs -u
+sudo dracut --regenerate-all --force
+#+end_src
+
+Et on fait en sorte que Zswap utilise bien lz4hc :
+
+#+begin_src sh
+echo lz4hc > /sys/module/zswap/parameters/compressor
 #+end_src
 
 Puis on active Zswap via GRUB :
@@ -351,7 +354,7 @@ Et on ajoute à la suite de la ligne démarrant par
 « GRUB_CMDLINE_LINUX_DEFAULT= » :
 
 #+begin_quote
-: zswap.enabled=1 zswap.compressor=lz4 zswap.max_pool_percent=50 zswap.zpool=z3fold
+: zswap.enabled=1 zswap.compressor=lz4hc zswap.max_pool_percent=25
 #+end_quote
 
 Pour que la modification soit prise en compte :
@@ -372,7 +375,7 @@ Qui devrait retourner :
 : /sys/module/zswap/parameters/same_filled_pages_enabled:Y
 : /sys/module/zswap/parameters/enabled:Y
 : /sys/module/zswap/parameters/max_pool_percent:25
-: /sys/module/zswap/parameters/compressor:lz4
+: /sys/module/zswap/parameters/compressor:lz4hc
 : /sys/module/zswap/parameters/non_same_filled_pages_enabled:Y
 : /sys/module/zswap/parameters/zpool:z3fold
 : /sys/module/zswap/parameters/accept_threshold_percent:90
