@@ -6,7 +6,7 @@ Ceci est un tutoriel complet pour installer Ubuntu version 25-10 "Questing
 Quokka" sur un portable Dell. La plupart des instructions sont génériques pour
 tout ordinateur, cependant :
 
-- Je remplace le desktop Ubuntu pour installer sur GNOME Vanilla ;
+- Je remplace le desktop Ubuntu pour installer GNOME Vanilla ;
 - Certaines étapes visent à optimiser la gestion d'un portable avec SSD ;
 - J'utilise un clavier AZERTY qui est ensuite largement personnalisé pour avoir
   notamment des caractères spéciaux dans différentes langues ;
@@ -81,8 +81,8 @@ correspondantes.
 ** Installer le système complet
 
 *L'installation par défaut prend environ 10–11 GB sur le disque dur (et démarre
-avec 1,7 GB de RAM utilisée). L'installation complète ajoute environ XX GB
-supplémentaires, pour un total de XX GB utilisés à la fin de la procédure.*
+avec 1,7 GB de RAM utilisée). L'installation complète ajoute environ 6 GB
+supplémentaires, pour un total de 16–17 GB utilisés à la fin de la procédure.*
 
 *Note :* Il est préférable d'utiliser une connexion à l'Internet rapide pour
 l'installation complète.
@@ -154,7 +154,7 @@ l'index de =locate= (pour recherche de fichiers en ligne de commande) et
 configuration pour la lecture des DVDs :
 
 #+begin_src sh
-sudo apt purge ubuntu-session libreoffice-style-yaru cloud-init && sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove --purge && sudo updatedb && sudo dpkg-reconfigure libdvd-pkg
+sudo apt purge ubuntu-session update-notifier libreoffice-style-yaru cloud-init && sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove --purge && sudo updatedb && sudo dpkg-reconfigure libdvd-pkg
 #+end_src
 
 
@@ -177,7 +177,7 @@ gsettings set org.gnome.desktop.interface accent-color 'blue'
 
 Ici on souhaite avoir le contrôle complet du timing des mises-à-jour, qui sont
 faites manuellement. Par corollaire, on ne veut pas de notification de
-mises-à-jour disponibles.
+mises-à-jour disponibles (on a par ailleurs déjà désinstallé =update-notifier=).
 
 Pour APT :
 
