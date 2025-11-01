@@ -444,7 +444,7 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
   géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
 
 #+begin_src sh
-gsettings set org.gnome.shell favorite-apps ['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacsclient.desktop', 'com.mitchellh.ghostty.desktop', 'org.gnome.SystemMonitor.desktop']
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacsclient.desktop', 'com.mitchellh.ghostty.desktop', 'org.gnome.SystemMonitor.desktop']"
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 gsettings set org.gnome.mutter edge-tiling true
 gsettings set org.gnome.desktop.sound event-sounds false
