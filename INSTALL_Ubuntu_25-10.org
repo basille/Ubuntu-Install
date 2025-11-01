@@ -330,6 +330,7 @@ utilisateur (notamment informations personnelles de compte et de clés).
 #+begin_src sh
 sudo tee /etc/dracut.conf.d/lz4hc.conf <<EOF
 add_drivers+="lz4hc lz4hc_compress"
+EOF
 #+end_src
 
 Pour que la modification soit prise en compte :
