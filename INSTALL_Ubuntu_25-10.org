@@ -21,12 +21,11 @@ correspondantes.
 - [[#installer-ubuntu][Installer Ubuntu]]
   - [[#installer-le-système-complet][Installer le système complet]]
 - [[#configuration-du-système][Configuration du système]]
+  - [[#configuration-du-terminal--ghostty][Configuration du terminal : Ghostty]]
   - [[#gnome-vanilla][GNOME Vanilla]]
   - [[#désactiver-toutes-les-mises-à-jour-automatiques][Désactiver toutes les mises-à-jour automatiques]]
   - [[#ssh-et-git][SSH et git]]
-  - [[#configuration-du-terminal--ghostty][Configuration du terminal : Ghostty]]
   - [[#mémoire-et-swap][Mémoire et SWAP]]
-  - [[#configurer-active-directory][Configurer Active Directory]]
 - [[#configurer-le-bureau][Configurer le bureau]]
   - [[#clavier-et-internationalisation][Clavier et internationalisation]]
   - [[#réglagles-spécifiques-du-bureau][Réglagles spécifiques du bureau]]
@@ -125,7 +124,7 @@ sudo apt update
 sudo apt upgrade
 sudo apt install \
     `# GNOME` vanilla-gnome-desktop vanilla-gnome-default-settings gnome-shell-extension-manager \
-    `# Utilitaires` curl gparted localepurge plocate sqlite3 \
+    `# Utilitaires` curl git gparted htop localepurge plocate sqlite3 \
     `# Terminal` python3-nautilus powerline most \
     `# Web` chromium-browser epiphany-browser nextcloud-desktop nautilus-nextcloud \
     `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine ttf-mscorefonts-installer unifont \
@@ -139,7 +138,7 @@ sudo apt install \
     `# Jeux/loisirs` chromium-bsu dosbox marble stellarium
 
     
-    `# Utilitaires` cmake git gparted htop mlocate net-tools python3-pip rename sqlite3 fwupd tlp tlp-rdw localepurge flatpak gnome-software-plugin-flatpak \
+    `# Utilitaires` cmake net-tools python3-pip rename sqlite3 fwupd tlp tlp-rdw localepurge flatpak gnome-software-plugin-flatpak \
     `# Utilitaires web` cifs-utils dnsutils gftp gocryptfs gvncviewer network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome revelation rsync screen unison \
     `# R` r-base r-base-core r-base-dev r-recommended littler r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libnode-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers \
     `# QGIS` qgis qgis-plugin-grass \
@@ -159,6 +158,74 @@ sudo apt purge ubuntu-session update-notifier libreoffice-style-yaru cloud-init 
 
 
 * Configuration du système
+
+
+** Configuration du terminal : Ghostty
+
+*Note :* Ghostty nécessite =python3-nautilus= pour "Open Ghostty here" dans
+Nautilus.
+
+- Configuration du Bash (ajout de ces lignes à la fin du fichier =~/.bashrc=) :
+  
+#+begin_src sh
+tee -a ~/.bashrc <<EOF
+# Manpages with colors
+export MANPAGER="/usr/bin/most -s"
+
+# For Powerline
+if [ -f `which powerline-daemon` ]; then
+        powerline-daemon -q
+        POWERLINE_BASH_CONTINUATION=1
+        POWERLINE_BASH_SELECT=1
+        . /usr/share/powerline/bindings/bash/powerline.sh
+fi
+
+# Alias ls to have colors and directories before files 
+alias ls='ls --color=auto --group-directories-first'
+
+# Alias upgrade & upgrade-full
+alias upgrade='sudo apt update && sudo apt upgrade && sudo snap refresh'
+alias upgrade-full='sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove && sudo snap refresh'
+EOF
+#+end_src
+
+- Configuration de Ghostty (thème Nord ; opacité de 85 % ; copie automatiquement
+  et silencieusement le texte sélectionné dans le presse-papier ; pas de barre
+  de titre ; raccourcis claviers : ~Ctrl+Shift+D~ pour ouvrir un panneau
+  dessous, ~Ctrl+Shift+R~ pour ouvrir un terminal à droite, ~Ctrl+Shift+←↑↓→~
+  pour se déplacer entre les panneaux, ~Ctrl+Shift+W~ pour fermer un panneau) :
+
+#+begin_src sh
+tee -a ~/.config/ghostty/config <<EOF
+theme = Nord
+background-opacity = 0.85
+copy-on-select = clipboard
+app-notifications = no-clipboard-copy
+gtk-titlebar = false
+keybind = ctrl+shift+d=new_split:down
+keybind = ctrl+shift+r=new_split:right
+keybind = ctrl+shift+arrow_down=goto_split:down
+keybind = ctrl+shift+arrow_left=goto_split:left
+keybind = ctrl+shift+arrow_right=goto_split:right
+keybind = ctrl+shift+arrow_up=goto_split:up
+keybind = ctrl+shift+w=close_surface
+EOF
+#+end_src
+
+- Raccourcis clavier : dans les Paramètres GNOME > Clavier > Raccourcis clavier,
+  ajouter deux raccourcis personnalisés (en bas de la liste) : Ghostty /
+  =ghostty= / ~Super+T~
+- Renvoyer des insultes quand on se trompe de mot de passe :
+
+#+begin_src sh
+sudo visudo
+#+end_src
+
+Ajouter cette ligne au début du fichier :
+
+#+begin_quote
+: Defaults        insults
+#+end_quote
 
 
 ** GNOME Vanilla
@@ -228,78 +295,13 @@ Tester la connection à GitHub :
 ssh -T git@github.com
 #+end_src
 
-Si le shell renvoie : "Hi <login>! You've successfully authenticated,
-but GitHub does not provide shell access.", c'est que ça a fonctionné.
+On vérifie que la clé retournée correspond bien à la [[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints][clé publique de GitHub]],
+auqul cas on peut répondre « Oui ». Puis si le shell renvoie : "Hi <login>!
+You've successfully authenticated, but GitHub does not provide shell access.",
+c'est que ça a fonctionné.
 
 Pour finir, on configure Git via le fichier =.gitconfig= dans le dossier
 utilisateur (notamment informations personnelles de compte et de clés).
-
-** Configuration du terminal : Ghostty
-
-*Note :* Ghostty nécessite =python3-nautilus= pour "Open Ghostty here" dans
-Nautilus.
-
-- Configuration du Bash (ajout de ces lignes à la fin du fichier =~/.bashrc=) :
-  
-#+begin_src sh
-tee -a ~/.bashrc <<EOF
-# Manpages with colors
-export MANPAGER="/usr/bin/most -s"
-
-# For Powerline
-if [ -f `which powerline-daemon` ]; then
-        powerline-daemon -q
-        POWERLINE_BASH_CONTINUATION=1
-        POWERLINE_BASH_SELECT=1
-        . /usr/share/powerline/bindings/bash/powerline.sh
-fi
-
-# Alias ls to have colors and directories before files 
-alias ls='ls --color=auto --group-directories-first'
-
-# Alias upgrade & upgrade-full
-alias upgrade='sudo apt update && sudo apt upgrade && sudo snap refresh'
-alias upgrade-full='sudo apt update && sudo apt full-upgrade && sudo apt clean && sudo apt autoclean && sudo apt autoremove && sudo snap refresh'
-EOF
-#+end_src
-
-- Configuration de Ghostty (thème Nord ; opacité de 85 % ; copie automatiquement
-  du texte sélectionné dans le presse-papier ; pas de barre de titre ;
-  raccourcis claviers : ~Ctrl+Shift+D~ pour ouvrir un panneau dessous,
-  ~Ctrl+Shift+R~ pour ouvrir un terminal à droite, ~Ctrl+Shift+←↑↓→~ pour se
-  déplacer entre les panneaux, ~Ctrl+Shift+W~ pour fermer un panneau) :
-
-#+begin_src sh
-tee -a ~/.config/ghostty/config <<EOF
-theme = Nord
-background-opacity = 0.85
-copy-on-select = clipboard
-gtk-titlebar = false
-keybind = ctrl+shift+d=new_split:down
-keybind = ctrl+shift+r=new_split:right
-keybind = ctrl+shift+arrow_down=goto_split:down
-keybind = ctrl+shift+arrow_left=goto_split:left
-keybind = ctrl+shift+arrow_right=goto_split:right
-keybind = ctrl+shift+arrow_up=goto_split:up
-keybind = ctrl+shift+w=close_surface
-EOF
-#+end_src
-
-- Raccourcis clavier : dans les Paramètres GNOME > Clavier > Raccourcis clavier,
-  ajouter deux raccourcis personnalisés (en bas de la liste) : Ghostty /
-  =ghostty= / ~Super+T~
-- Renvoyer des insultes quand on se trompe de mot de passe :
-
-#+begin_src sh
-sudo visudo
-#+end_src
-
-Ajouter cette ligne au début du fichier :
-
-#+begin_quote
-: Defaults        insults
-#+end_quote
-
 
 ** Mémoire et SWAP
 
@@ -359,13 +361,6 @@ Qui devrait retourner :
 : /sys/module/zswap/parameters/zpool:z3fold
 : /sys/module/zswap/parameters/accept_threshold_percent:90
 #+end_quote
-
-
-** Configurer Active Directory
-
-AD post-install
-
-https://github.com/ubuntu/adsys/blob/d42e5219b9ade2fd7d52416aa6cb90a07db6087e/doc/02.-Prerequisites.md
 
 
 * Configurer le bureau
