@@ -342,10 +342,12 @@ sudo dracut --regenerate-all --force
 Et on fait en sorte que Zswap utilise bien lz4hc :
 
 #+begin_src sh
-echo lz4hc > /sys/module/zswap/parameters/compressor
+sudo tee /sys/module/zswap/parameters/compressor <<EOF
+lz4hc
+EOF
 #+end_src
 
-Puis on active Zswap via GRUB :
+Puis on active Zswap au démarrage via GRUB :
 
 #+begin_src sh
 sudo nano /etc/default/grub
@@ -364,7 +366,8 @@ Pour que la modification soit prise en compte :
 sudo update-grub
 #+end_src
 
-Après redémarrage, on vérifie que tout est bien configuré :
+Et on redémarre pour être tranquille. Après redémarrage, on vérifie que tout est
+bien configuré :
 
 #+begin_src sh
 grep -R . /sys/module/zswap/parameters
@@ -373,13 +376,11 @@ grep -R . /sys/module/zswap/parameters
 Qui devrait retourner :
 
 #+begin_quote
-: /sys/module/zswap/parameters/same_filled_pages_enabled:Y
 : /sys/module/zswap/parameters/enabled:Y
+: /sys/module/zswap/parameters/shrinker_enabled:Y
 : /sys/module/zswap/parameters/max_pool_percent:25
 : /sys/module/zswap/parameters/compressor:lz4hc
-: /sys/module/zswap/parameters/non_same_filled_pages_enabled:Y
-: /sys/module/zswap/parameters/zpool:z3fold
-: /sys/module/zswap/parameters/accept_threshold_percent:90
+: /sys/module/zswap/parameters/zpool:zsmalloc
 #+end_quote
 
 
