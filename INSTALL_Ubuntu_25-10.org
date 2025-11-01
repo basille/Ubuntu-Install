@@ -212,9 +212,24 @@ keybind = ctrl+shift+w=close_surface
 EOF
 #+end_src
 
-- Raccourcis clavier : dans les Paramètres GNOME > Clavier > Raccourcis clavier,
-  ajouter deux raccourcis personnalisés (en bas de la liste) : Ghostty /
-  =ghostty= / ~Super+T~
+- Raccourcis clavier avec ~Super+T~ : On vérifie d'abord la liste des raccourcis
+  claviers personnalisés :
+
+#+begin_src sh
+#+end_src
+
+  On ajoute ensuite celui pour Ghostty (attention, il faut bien ajouter un
+  modèle de raccourci à la liste initiale, avec un nouveau numéro de
+  =customX=) :
+
+#+begin_src sh
+# gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>T'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Ghostty'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'ghostty'
+#+end_src
+
 - Renvoyer des insultes quand on se trompe de mot de passe :
 
 #+begin_src sh
