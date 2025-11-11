@@ -124,9 +124,9 @@ sudo apt update
 sudo apt upgrade
 sudo apt install \
     `# GNOME` vanilla-gnome-desktop vanilla-gnome-default-settings gnome-shell-extension-manager \
-    `# Utilitaires` curl git gparted htop localepurge plocate sqlite3 \
+    `# Utilitaires` curl git gparted htop localepurge plocate sqlite3 unison \
     `# Terminal` python3-nautilus powerline most \
-    `# Web` chromium-browser epiphany-browser nextcloud-desktop nautilus-nextcloud \
+    `# Web` chromium-browser epiphany-browser torbrowser-launcher nextcloud-desktop nautilus-nextcloud gftp revelation \
     `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine ttf-mscorefonts-installer unifont \
     `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
     `# Libre Office` libreoffice-style-sifr libreoffice-style-elementary libreoffice-l10n-fr \
@@ -139,7 +139,7 @@ sudo apt install \
 
     
     `# Utilitaires` cmake net-tools python3-pip rename sqlite3 fwupd tlp tlp-rdw localepurge flatpak gnome-software-plugin-flatpak \
-    `# Utilitaires web` cifs-utils dnsutils gftp gocryptfs gvncviewer network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome revelation rsync screen unison \
+    `# Utilitaires web` cifs-utils dnsutils gocryptfs gvncviewer network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome screen \
     `# R` r-base r-base-core r-base-dev r-recommended littler r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libnode-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers \
     `# QGIS` qgis qgis-plugin-grass \
     `# LaTex/PDF` texlive-full bibtex2html bookletimposer calibre gedit-latex-plugin gummi impressive ispell latex2rtf latexmk lcdf-typetools libtext-pdf-perl mupdf pandoc pdf2djvu pdf2svg pdfarranger pdfchain pdfposter pdfsam pdftk poppler-utils qpdf xournalpp \
@@ -436,7 +436,8 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
 - Enlever le « bip » système ;
 - Raccourcis clavier (désactiver « Masquer la fenêtre » ; dossier personnel
   (fichiers) : ~Super+f~ ; verrouiller l'écran : ~Ctrl+Échap~ ; maximiser la
-  fenêtre : ~Super+↑~ ; dé-maximiser la fenêtre  : ~Super+↓~) ;
+  fenêtre : ~Super+↑~ ; dé-maximiser la fenêtre : ~Super+↓~ ; vue divisée sur la
+  gauche : ~Super+←~ ; vue divisée sur la droite : ~Super+→~) ;
 - Calendrier qui affiche le numéro de la semaine ;
 - Mode nuit : activé au lever/coucher du soleil ; couleur à niveau 1 (échelle
   0–3) ; note : contrôle également le passage au thème sombre si Night theme
@@ -444,7 +445,7 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
   géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
 
 #+begin_src sh
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacsclient.desktop', 'com.mitchellh.ghostty.desktop', 'org.gnome.SystemMonitor.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacs.desktop', 'com.mitchellh.ghostty.desktop', 'org.gnome.SystemMonitor.desktop']"
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 gsettings set org.gnome.mutter edge-tiling true
 gsettings set org.gnome.desktop.sound event-sounds false
@@ -464,7 +465,7 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "u
   par défaut), notamment Firefox, Thunderbird ;
 - Éventuellement vérifier les applications au démarrage (Paramètres >
   Applications > puis pour chaque application cliquer sur « Autostart »),
-  notamment Firefox, Emacs, NextCloud et Fichiers [DONTWORK];
+  notamment Thunderbird, Firefox, Emacs, NextCloud et Fichiers [DONTWORK];
 - Il y a un bug avec le « Fractional scaling » et la taille des curseurs. Semble
   résolu par (à vérifier) :
 
@@ -475,36 +476,32 @@ mkdir ~/.icons && cp -r /usr/share/icons/Adwaita ~/.icons/default
 
 ** Extensions GNOME
 
-On utilise le gestionnaire d'extensions de GNOME
-(=gnome-shell-extension-manager=) pour installer et gérer des extensions GNOME
-Shell :
+On utilise le gestionnaire d'extensions de GNOME (via le lanceur d'applications)
+pour installer et gérer des extensions GNOME Shell :
 
-- [[https://extensions.gnome.org/extension/16/auto-move-windows/][Auto Move Windows]] [intégrée] : Firefox sur (2), Fichiers sur (3) [TODO]
+- [[https://extensions.gnome.org/extension/6361/alttab-launcher/][Alt+Tab Launcher]]
+- [[https://extensions.gnome.org/extension/615/appindicator-support/][AppIndicator]] : Utiliser une taille d'icone de 20.
+- Auto Move Windows [intégrée] : Firefox sur (2), Fichiers sur (3)
 - [[https://extensions.gnome.org/extension/28/gtile/][gTile]] : Changer la taille de grille à 4x2,3x2,4x3
-- [[https://github.com/ihpled/mute-unmute][Mute/Unmute]]
-- [[https://extensions.gnome.org/extension/2236/night-theme-switcher/][Night theme switcher]] : Passe automatiquement du thème clair au thème sombre
-  selon les horaires du jour. 
-- [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] : Changer le raccourci pour ~Super+F1~ :
+- [[https://extensions.gnome.org/extension/5088/muteunmute/][Mute/Unmute]] (coupe le son par un clic-milieu sur l'icône de volume).
+- [[https://extensions.gnome.org/extension/2236/night-theme-switcher/][Night theme switcher]] (passe automatiquement du thème clair au thème sombre
+  selon les horaires du jour).
+- [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] [pas encore disponible pour GNOME 49] : Changer le raccourci
+  pour ~Super+F1~ :
 
 #+begin_src sh
 dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '["<Super>F1"]'
 #+end_src
 
-- [[https://extensions.gnome.org/extension/750/openweather/][OpenMeteoWeather]] : Il y a un bug avec le jeu d'icônes (Adwaita) qui est
-  normalement corrigé avec l'installation de =gnome-icon-theme=.  Dans les
-  paramètres, Agencement : mettre au centre, avec un décalage de 1 (pour l'avoir
-  à droite de l'heure) ; Emplacements : ajouter « Pignan ». [TODO] avec Météo
-  aussi
-- [[https://extensions.gnome.org/extension/6361/alttab-launcher/][Alt+Tab Launcher]]
-- Ubuntu AppIndicator [intégrée] : Utiliser une taille d'icone de 20.
-- [[https://extensions.gnome.org/extension/6307/quake-terminal/][Quake Terminal]] : Mode Quake pour le terminal :
+- [[https://extensions.gnome.org/extension/6307/quake-terminal/][Quake Terminal]] (mode Quake pour le terminal) :
   - Terminal Application : Ghostty
   - Toggle Shortcut : ² (touche au-dessus de TAB)
   - Auto Hide Terminal : désactiver
   - Show on the primary Display : activer
   - Animation Time : 100
-  - Vertical Size : 35
+  - Vertical Size : 40
   - Always On Top : activer
+- [[https://extensions.gnome.org/extension/8261/simpleweather/][SimpleWeather]] : Mettre le panneau au centre (ordre 2), et utiliser des icônes symboliques.
 
 
 * Logiciels spécifiques
