@@ -32,12 +32,12 @@ correspondantes.
   - [[#extensions-gnome][Extensions GNOME]]
 - [[#logiciels-spécifiques][Logiciels spécifiques]]
   - [[#web][Web]]
-    - [[#thunderbird-todo][Thunderbird [TODO]]]
+    - [[#thunderbird-todo][Thunderbird (TODO)]]
     - [[#firefox][Firefox]]
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
     - [[#nextcloud][Nextcloud]]
     - [[#zoom][Zoom]]
-    - [[#gftp-todo][GFTP [TODO]]]
+    - [[#gftp-todo][GFTP (TODO)]]
   - [[#bureautique][Bureautique]]
     - [[#polices][Polices]]
     - [[#emacs][Emacs]]
@@ -45,9 +45,10 @@ correspondantes.
     - [[#r-rstudio--qgis][R, RStudio & QGIS]]
     - [[#latex--pdf][LaTeX & PDF]]
   - [[#multimédia][Multimédia]]
+  - [[#jeuxloisirs][Jeux/Loisirs]]
 - [[#opérations-systèmes][Opérations systèmes]]
-  - [[#mettre-à-jour-debian][Mettre à jour Debian]]
-  - [[#enlever-les-anciens-noyaux][Enlever les anciens noyaux]]
+  - [[#mettre-à-jour-ubuntu-todo][Mettre à jour Ubuntu (TODO)]]
+  - [[#enlever-les-anciens-noyaux-todo][Enlever les anciens noyaux (TODO)]]
 
 * Installer Ubuntu
 
@@ -503,7 +504,7 @@ dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '[
 
 ** Web
 
-*** Thunderbird [TODO]
+*** Thunderbird (TODO)
 
 Le dossier de profile se trouve dans =~/.thunderbird/XXX.default-default=.
 
@@ -787,7 +788,7 @@ Note : impossible en l'état de changer l'icone du systray, pour le passer en
 monochrome (il est intégré dans le binaire Zoom).
 
 
-*** GFTP [TODO]
+*** GFTP (TODO)
 
 Pour GTFP, on copie ensuite le fichier `bookmarks` du dossier `GFTP` dans le
 dossier de configuration créé après la première utilisation de GFTP (`~/.gftp`).
@@ -1039,55 +1040,22 @@ sudo sed -i_bak \
 sudo dpkg-reconfigure libdvd-pkg
 #+end_src
 
-- *Chromium BSU* est un bon gros /shoot'em up/ qui défoule bien ; *DOSBox* un
-  émulateur DOS pour jouer aux [[https://abandonware-france.org/][abandonwares]] ; *Marble* est un globe terrestre à
-  la Google Earth ; *Stellarium* est un planétarium.
+** Jeux/Loisirs
 
+- *Chromium BSU* est un bon gros /shoot'em up/ qui défoule bien ;
+- *DOSBox* un émulateur DOS pour jouer aux [[https://abandonware-france.org/][abandonwares]] ;
+- *Marble* est un globe terrestre à la Google Earth ;
+- *Stellarium* est un planétarium.
 
-
+  
 * Opérations systèmes
 
 
-** Mettre à jour Debian
+** Mettre à jour Ubuntu (TODO)
 
-===================================================
+Procédure pour mettre à jour d'une version à la suivante…
 
-La procédure est très simple :
-
-1) On préférera une connexion filaire pour plus de rapidité de
-   téléchargement. On s'assure d'avoir un système complètement à jour, et
-   d'avoir effectué une sauvegarde complète de celui-ci.
-
-2) On vérifie la version d'Ubuntu et s'il y a une mise-à-jour disponible :
-
-#+begin_src sh
-lsb_release -a
-do-release-upgrade --check-dist-upgrade-only
-#+end_src
-
-3) Si on utilise une LTS, il faut passer la variable =Prompt= à =normal= (au
-   lieu de =lts=) en bas de =/etc/update-manager/release-upgrades=.
-
-4) On lance la MAJ en répondant aux questions posées :
-
-#+begin_src sh
-do-release-upgrade
-#+end_src
-
-5) On réactive les dépôts de logiciels tiers dans =/etc/apt/sources.list.d=, par
-   exemple via « Logiciels et mises-à-jour » (« Autres logiciels », chercher
-   ceux indiqués « désactivé pour la mise à niveau vers hirsute »).
-
-6) On vérifie finalement la version d'Ubuntu :
-
-#+begin_src sh
-lsb_release -a
-#+end_src
-
-===================================================
-
-
-** Enlever les anciens noyaux
+** Enlever les anciens noyaux (TODO)
 
 Les noyaux peuvent s'accumuler au cours des mises-à-jour. On commence par
 vérifier la version utilisée :
