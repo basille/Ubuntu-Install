@@ -130,7 +130,7 @@ sudo apt install \
     `# Web` chromium-browser epiphany-browser torbrowser-launcher nextcloud-desktop nautilus-nextcloud gftp revelation \
     `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine ttf-mscorefonts-installer unifont \
     `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
-    `# Libre Office` libreoffice-style-sifr libreoffice-l10n-fr \
+    `# Libre Office` libreoffice-style-elementary libreoffice-style-sifr libreoffice-l10n-fr \
     `# R` r-base r-base-core r-base-dev r-recommended littler r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libnode-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers \
     `# QGIS` qgis qgis-plugin-grass \
     `# LaTex/PDF` texlive-full bibtex2html bookletimposer calibre gedit-latex-plugin gummi impressive ispell latex2rtf latexmk lcdf-typetools libtext-pdf-perl mupdf pandoc pdf2djvu pdf2svg pdfarranger pdfchain pdfposter pdfsam pdftk poppler-utils qpdf xournalpp \
@@ -197,6 +197,7 @@ theme = Nord
 background-opacity = 0.85
 copy-on-select = clipboard
 app-notifications = no-clipboard-copy
+shell-integration-features = sudo
 gtk-titlebar = false
 keybind = ctrl+shift+d=new_split:down
 keybind = ctrl+shift+r=new_split:right
@@ -724,8 +725,8 @@ git pull origin master
   websites! (community version of I don't care about cookies)
 - Intégration à GNOME Shell : Cette extension permet l'intégration à GNOME Shell
   et aux extensions correspondantes du dépôt https://extensions.gnome.org
-- Nuke Anything : Permet la suppression de n'importe quel element de la page via
-  le menu contextuel.
+- Nuke Anything Enhanced : Permet la suppression de n'importe quel element de la
+  page via le menu contextuel.
 - Textarea Cache : Allows to save automatically the content in a text input
   field. Régler "auto clear old cache" sur 15 jours.
 
@@ -888,7 +889,9 @@ Onglets, puis « Appliquer partout ».
 On choisit le thème d'icônes =Automatique=, et on vérifie qu'il utilise bien
 =Sifr= quand le système est clair et =Sifr (dark)= quand le système est sombre,
 et que le fond soit toujours blanc (on vérifie dans Outils > Options >
-LibreOffice > Apparence).
+LibreOffice > Apparence). BUG : Il ne semble justement pas possible d'utiliser
+les deux versions de Sifr, LO utilise par défaut Elementary pour le thème clair
+et Sifr pour le thème sombre…
 
 [[https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts][Alternatives pour Calibri/Cambria]] (polices Microsoft) : Carlito and Caladea. Une
 fois ces polices installées, dans LibreOffice : Outils > Options > LibreOffice >
