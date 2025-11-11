@@ -33,7 +33,7 @@ correspondantes.
 - [[#logiciels-spécifiques][Logiciels spécifiques]]
   - [[#web][Web]]
     - [[#thunderbird-todo][Thunderbird [TODO]]]
-    - [[#firefox-todo][Firefox [TODO]]]
+    - [[#firefox][Firefox]]
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
     - [[#nextcloud][Nextcloud]]
     - [[#zoom][Zoom]]
@@ -124,26 +124,21 @@ sudo apt update
 sudo apt upgrade
 sudo apt install \
     `# GNOME` vanilla-gnome-desktop vanilla-gnome-default-settings gnome-shell-extension-manager \
-    `# Utilitaires` curl git gparted htop localepurge plocate sqlite3 unison \
+    `# Utilitaires` cifs-utils cmake curl dnsutils git gocryptfs gparted htop localepurge net-tools plocate python3-pip rename sqlite3 unison \
     `# Terminal` python3-nautilus powerline most \
     `# Web` chromium-browser epiphany-browser torbrowser-launcher nextcloud-desktop nautilus-nextcloud gftp revelation \
     `# Polices` fonts-agave fonts-arphic-ukai fonts-arphic-uming fonts-arphic-gkai00mp fonts-arphic-gbsn00lp fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-baekmuk fonts-bebas-neue fonts-crosextra-carlito fonts-crosextra-caladea fonts-ecolier-court fonts-ecolier-lignes-court fonts-fantasque-sans fonts-firacode fonts-hack-ttf fonts-inconsolata fonts-jetbrains-mono fonts-liberation2 fonts-linuxlibertine ttf-mscorefonts-installer unifont \
     `# Emacs` emacs hunspell hunspell-en-gb hunspell-en-us hunspell-fr libpoppler-glib-dev ditaa elpa-pdf-tools-server sqlformat \
-    `# Libre Office` libreoffice-style-sifr libreoffice-style-elementary libreoffice-l10n-fr \
-    `# Divers` homebank sweethome3d \
-    `# Images` gimp gthumb imagemagick inkscape \
-    `# Audio/video` audacity cuetools easytag libimage-exiftool-perl ffmpeg shntool soundconverter mkvtoolnix pitivi sound-juicer sox subtitleeditor vlc \
-    `# Codecs` flac frei0r-plugins gnome-video-effects-frei0r gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg vorbis-tools vorbisgain \
-    `# Musique` lilypond frescobaldi \
-    `# Jeux/loisirs` chromium-bsu dosbox marble stellarium
-
-    
-    `# Utilitaires` cmake net-tools python3-pip rename sqlite3 fwupd tlp tlp-rdw localepurge flatpak gnome-software-plugin-flatpak \
-    `# Utilitaires web` cifs-utils dnsutils gocryptfs gvncviewer network-manager-openconnect-gnome network-manager-openvpn-gnome network-manager-vpnc-gnome openfortivpn network-manager-fortisslvpn-gnome screen \
+    `# Libre Office` libreoffice-style-sifr libreoffice-l10n-fr \
     `# R` r-base r-base-core r-base-dev r-recommended littler r-cran-rjags r-cran-rjava r-cran-rodbc r-cran-tkrplot libgdal-dev libproj-dev libgeos-dev libnetcdf-dev libnode-dev libgsl-dev libgmp-dev libmpfr-dev libcurl4-openssl-dev libssl-dev libxml2-dev libcairo2-dev libxt-dev libmagick++-dev libudunits2-dev libharfbuzz-dev libfribidi-dev libgit2-dev tcl-dev tk-dev opencl-headers \
     `# QGIS` qgis qgis-plugin-grass \
     `# LaTex/PDF` texlive-full bibtex2html bookletimposer calibre gedit-latex-plugin gummi impressive ispell latex2rtf latexmk lcdf-typetools libtext-pdf-perl mupdf pandoc pdf2djvu pdf2svg pdfarranger pdfchain pdfposter pdfsam pdftk poppler-utils qpdf xournalpp \
-    `# Spécial Bluetooth` pulsemixer pipewire{,-alsa,-jack,-pulse} libspa-0.2-bluetooth wireplumber bluez-alsa-utils \
+    `# Audio/video` audacity cuetools easytag libimage-exiftool-perl ffmpeg shntool soundconverter mkvtoolnix pitivi sound-juicer sox subtitleeditor vlc \
+    `# Images` gimp gthumb imagemagick inkscape \
+    `# Musique` lilypond frescobaldi \
+    `# Codecs` flac frei0r-plugins gnome-video-effects-frei0r gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg vorbis-tools vorbisgain \
+    `# Jeux/loisirs/divers` chromium-bsu dosbox marble stellarium homebank sweethome3d
+
 # Ghostty
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 #+end_src
@@ -650,13 +645,8 @@ défaut dans Thunderbird).
   Calendar buttons », et enlever les tâches.
 
 
-*** Firefox [TODO]
+*** Firefox
 
-- Nettoyage des locales (vérifier aussi les fichiers dans
-  =/usr/lib/firefox-esr/browser/extensions/langpack-=): 
-#+begin_src sh
-sudo apt purge firefox-esr-l10n-* && sudo apt install firefox-esr-l10n-en-gb firefox-esr-l10n-fr
-#+end_src
 - Se connecter à Firefox Sync avec un profil vierge : cela synchronisera les
   marques-page, mots de passe, historique, extensions et préférences. Attention,
   certains extensions ne sont pas ajoutées ou correctement configurées, et
@@ -667,8 +657,6 @@ sudo apt purge firefox-esr-l10n-* && sudo apt install firefox-esr-l10n-en-gb fir
 #+begin_quote
 : security.dialog_enable_delay: 0
 #+end_quote
-- Utilisation de Pocket pour sauvegarder des liens à lire pour plus tard. (en
-  cours de test)
 
 **** [[https://github.com/rafaelmardojai/firefox-gnome-theme][Thème GNOME]]
 
@@ -677,7 +665,7 @@ Télécharger le thème :
 #+begin_src sh
 cd Firefox
 git clone https://github.com/rafaelmardojai/firefox-gnome-theme/ && cd firefox-gnome-theme
-./scripts/install.sh -f ~/.mozilla/firefox
+./scripts/auto-install.sh
 #+end_src
 
 Puis le configurer dans =about:config= :
@@ -690,13 +678,14 @@ Puis le configurer dans =about:config= :
 #+end_quote
 
 Redémarrer Firefox. Pour coller au visuel GNOME global, on ajoute le bouton de
-nouvel onglet à gauche et celui du panneau latéral à droite ainsi que celui des
-extensions, puis on enlève le bouton d'accueil Firefox à gauche des onglets. On
+nouvel onglet à gauche et celui du panneau latéral à droite (on s'assure au
+passage que ledit panneau s'ouvre également à droite), puis on enlève le bouton
+des extensions et celui d'accueil Firefox à gauche des onglets. Au besoin, on
 rajoutera ensuite les extensions liées aux sites visités directement à droite de
-la barre d'adresse (par exemple Pocket ou Bitwarden).
+la barre d'adresse.
 
 Pour les mises-à-jour, on va dans le dossier de profile Firefox
-(=~/.mozilla/firefox/XXX.default-esr=), sous-dossier
+(=~/snap/firefox/common/.mozilla/firefox/XXX.default=), sous-dossier
 =chrome/firefox-gnome-theme=, puis on met à jour le dépôt :
 
 #+begin_src sh
@@ -704,10 +693,11 @@ git pull origin master
 #+end_src
 
 
-**** Extensions :
+**** Extensions
 
 *Vie privée :*
 
+- [[https://addons.mozilla.org/en-US/firefox/addon/adblock-for-youtube/][AdBlocker for YouTube™]]
 - ClearURLs : Retirer les espions dans les adresses Internet. (semble redondant
   avec Search Engine Ad Remover ci-dessous pour Google)
 - Cookie AutoDelete : Contrôlez vos fichiers témoins ! Supprimez automatiquement
@@ -738,23 +728,7 @@ git pull origin master
 - Textarea Cache : Allows to save automatically the content in a text input
   field. Régler "auto clear old cache" sur 15 jours.
 
-*YouTube et vidéos :*
-
-- [[https://addons.mozilla.org/en-US/firefox/addon/adblock-for-youtube/][AdBlocker for YouTube™]]
-- Easy Youtube Video Downloader Express
-
-*Désactivées :*
-
-- Firefox Multi-Account Containers
-- Simple Tab Groups
-- User-Agent Switcher and Manager : Spoof websites trying to gather information
-  about your web navigation to deliver distinct content you may not want
-- Video DownloadHelper : Download Videos from the Web
-
-Conserver uniquement Bitwarden et Simple Tab Groups dans la barre des outils.
-
-
-**** Moteurs de recherche
+**** Moteurs de recherche [TODO]
 
 Le plus simple est de le faire à la main. Pour enlever les moteurs de recherche
 des moteurs proposés dans la barre d'adresse, ça se passe dans les Paramètres >
@@ -766,7 +740,6 @@ Voici la liste que je conserve :
 - Google [par défaut ; mot-clé @google]
 - Wikipedia (fr) [mot-clé : @wp]
 - Wikipedia (en) [installé ; mot-clé : @wpen]
-- [[https://mycroftproject.com/install.html?id=19956&basename=all-debian-packages&icontype=ico&name=Debian+Packages+-+Names+%28All%29][Paquets Debian]] : Ajouter le moteur Debian Packages - Names (All)
 
 
 *** Navigateurs alternatifs
@@ -798,11 +771,11 @@ reste pas quand on ferme l'application). On utilise donc le =.deb= officiel de
 Zoom à la place, avec l'inconvénient de devoir le mettre à jour manuellement
 régulièrement.
 
-On le télécharge sur le [[https://zoom.us/download?os=linux][site de Zoom]] (version 6.6.0-4410 au 22/09/2025), puis on
+On le télécharge sur le [[https://zoom.us/download?os=linux][site de Zoom]] (version 6.6.6-5306 au 11/11/2025), puis on
 l'installe avec :
 
 #+begin_src sh
-sudo apt install ./zoom_amd64_6.6.0-4410_ubuntu.deb
+sudo apt install ./zoom_amd64_6.6.6-5306-ubuntu.deb
 #+end_src
 
 Pour passer Zoom en français, il suffit de cliquer sur l'icone Zoom, puis
@@ -911,11 +884,10 @@ dprint fmt **/*.js --excludes **/data
 Pour avoir les onglets (façon MS Office) : Affichage > Interface utilisateur >
 Onglets, puis « Appliquer partout ».
 
-On choisit le thème d'icônes =Automatique= qui devrait utiliser =Elementary=
-quand le système est clair et =Sifr (dark)= quand le système est sombre (on
-vérifie dans Outils > Options > LibreOffice > Affichage), et on ajuste pour que
-le fond soit toujours blanc (Outils > Options > Apparence > Personnalisations :
-Éléments : Arrière-plan du document : Couleur : Blanc, pour l'apparence sombre).
+On choisit le thème d'icônes =Automatique=, et on vérifie qu'il utilise bien
+=Sifr= quand le système est clair et =Sifr (dark)= quand le système est sombre,
+et que le fond soit toujours blanc (on vérifie dans Outils > Options >
+LibreOffice > Apparence).
 
 [[https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts][Alternatives pour Calibri/Cambria]] (polices Microsoft) : Carlito and Caladea. Une
 fois ces polices installées, dans LibreOffice : Outils > Options > LibreOffice >
