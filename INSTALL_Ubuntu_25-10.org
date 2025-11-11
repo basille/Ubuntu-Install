@@ -141,7 +141,7 @@ sudo apt install \
     `# Jeux/loisirs/divers` chromium-bsu dosbox marble stellarium homebank sweethome3d
 
 # Ghostty
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+sudo snap install ghostty --classic
 #+end_src
 
 Effectuer une mise-à-jour de nettoyage pour terminer, avec mise-à-jour de
