@@ -32,7 +32,7 @@ correspondantes.
   - [[#extensions-gnome][Extensions GNOME]]
 - [[#logiciels-spécifiques][Logiciels spécifiques]]
   - [[#web][Web]]
-    - [[#thunderbird-todo][Thunderbird (TODO)]]
+    - [[#thunderbird][Thunderbird]]
     - [[#firefox][Firefox]]
     - [[#navigateurs-alternatifs][Navigateurs alternatifs]]
     - [[#nextcloud][Nextcloud]]
@@ -326,7 +326,7 @@ utilisateur (notamment informations personnelles de compte et de clés).
   
 #+begin_src sh
 sudo tee /etc/dracut.conf.d/lz4hc.conf <<EOF
-add_drivers+="lz4hc lz4hc_compress"
+add_drivers+=" lz4hc lz4hc_compress "
 EOF
 #+end_src
 
@@ -505,9 +505,10 @@ dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '[
 
 ** Web
 
-*** Thunderbird (TODO)
+*** Thunderbird
 
-Le dossier de profile se trouve dans =~/.thunderbird/XXX.default-default=.
+Le dossier de profile se trouve dans
+=~/snap/thunderbird/common/.thunderbird/XXX.default=.
 
 **** [[https://github.com/rafaelmardojai/thunderbird-gnome-theme][Thème GNOME]]
 
@@ -534,7 +535,7 @@ suivant dans le fichier =userChrome.css= (ajuster selon le dossier de profil
 Thunderbird):
 
 #+begin_src sh
-tee -a ~/snap/thunderbird/common/.thunderbird/jzqh939m.default/chrome/userChrome.css <<EOF
+tee -a ~/snap/thunderbird/common/.thunderbird/XXX.default/chrome/userChrome.css <<EOF
 /* Pour avoir le sujet des messages de la couleur des tags */
 #threadTree tr.card-layout {
     .card-container {
@@ -548,8 +549,7 @@ EOF
 
 Redémarrer Thunderbird.
 
-Pour les mises-à-jour, on va dans le dossier de profil Thunderbird
-(=~/snap/thunderbird/common/XXX.default-default=), sous-dossier
+Pour les mises-à-jour, on va dans le dossier de profil Thunderbird, sous-dossier
 =chrome/thunderbird-gnome-theme=, puis on met à jour le dépôt :
 
 #+begin_src sh
@@ -559,10 +559,14 @@ git pull origin main
 **** Configuration
 
 - Barre d'outils mail : Clic droit sur la barre d'outils > Personnaliser :
-  ajouter les boutons « Reculer » et « Avancer » tout à gauche, « Modules
-  complémentaires » tout à droite, avec les icônes uniquement. On peut en
-  profiter pour « Modules complémentaires » tout à droite pour tous les onglets
-  qui nous intéressent.
+  ajouter les boutons « Reculer », « Avancer », « Relever » et « Écrire » tout à
+  gauche, « Modules complémentaires » tout à droite, avec les icônes
+  uniquement. On peut en profiter pour ajouter « Modules complémentaires » tout
+  à droite pour tous les onglets qui nous intéressent.
+- Dans le panneau des dossiers, ajouter les étiquettes, puis masquer l'en-tête
+  du panneau des dossiers.
+- Dans Affichage > Densité : Compacte.
+- Masquer la barre d'espaces (la flèche en bas à gauche).
 - Barre d'outils messages : Dans un message, cliquer sur Autres >
   Personnaliser : on désactive tout (« Afficher la photo du profil de
   l'expéditeur », « Toujours afficher l'adresse complète de l'expéditeur »,
@@ -598,8 +602,8 @@ La gestion des calendriers se fait naturellement via Lightning (installé par
 défaut dans Thunderbird).
 
 - Barre d'outils calendrier : Clic droit sur la barre d'outils > Personnaliser :
-  Ajouter « Événement » et « Synchroniser » tout à gauche.
-
+  Ajouter « Événement » et « Synchroniser » tout à gauche, et « Recherche
+  d'événements » au milieu à la place de la recherche globale d'e-mails.
 - Pour envoyer des invitations à des événements :
   - Associer le calendrier à l'adresse e-mail pertinente. A priori, il faut
     aussi que ce soit le compte par défaut dans la liste des comptes…
@@ -609,45 +613,35 @@ défaut dans Thunderbird).
     l'enregistrement de l'événement, une invitation est envoyée par e-mail (du
     type à accepter/décliner) ; les réponses sont également traitées comme des
     e-mails. 
-
 - Empêcher le scroll de souris de changer de mois :
   
 #+begin_quote
 : calendar.view.mousescroll: false
 #+end_quote
 
-
 **** Extensions
 
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/filelink-nextcloud-owncloud/][*cloud - FileLink for Nextcloud and ownCloud]] : configurer le serveur
-  NextCloud dans les Paramètres > Rédaction > Pièces jointes
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/allow-html-temp/][Allow HTML Temp]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/birthday-calendar/][Birthday Calendar]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/cardbook/][CardBook]] : configurer le carnet d'adresse CardDav
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/display-mail-user-agent-t/][Display Mail User Agent T]] 
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/awesome-emoji-picker/][Awesome Emoji Picker]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/provider-for-google-calendar/][Fournisseur pour Google Agenda]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/lookout-fix-version/][LookOut (fix version)]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/nestedquote-remover/][NestedQuote Remover]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/quick-folder-move/][Quick Folder Move]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/quotecolors/][Quote Colors]]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/removedupes/][Remove Duplicate Messages]] [Supprimer les messages en double (Alternatif)]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/signature-switch/][Signature Switch]]
-
-- Compact Headers [désactivé]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/send-later-3/][Envoyer Plus Tard]] [désactivé]
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/msghdr-toolbar-customize/][Message Header Toolbar Customize]] [désactivé]: dans la barre d'outils, « Customize
-- [[https://addons.thunderbird.net/fr/thunderbird/addon/show-inout/][Show InOut]] [désactivé et plus mis à jour] : réglage des [[https://www.ggbs.de/extensions/ShowInOut_Styles.html][styles]] : 
-#+begin_quote
-: toolkit.legacyUserProfileCustomizations.stylesheets: true
-#+end_quote
-  Cocher « Sujet » dans les colonnes sélectionnées, ajouter le dossier =chrome=
-  avec les PNGs et le fichier =showInOut.css= dans le dossier d'utilisateur
-  Thunderbird (=.thunderbird/***.default-release=). Redémarrer Thunderbird.
-  Calendar buttons », et enlever les tâches.
-
+- *cloud - FileLink for Nextcloud and ownCloud : configurer le serveur NextCloud
+  dans les Paramètres > Rédaction > Pièces jointes
+- Allow HTML Temp
+- Awesome Emoji Picker
+- Birthday Calendar
+- Display Mail User Agent T
+- LookOut (fix version)
+- Message Header Toolbar Customize
+- NestedQuote Remover
+- Quick Folder Move : déplacer l'icône à droite de la barre de recherche
+- Quote Colors
+- Remove Duplicate Messages [Supprimer les messages en double (Alternatif)]
+- Signature Switch : enlever l'icône de la barre supérieure et de la barre de
+  messages
+- Envoyer Plus Tard : enlever l'icône de la barre supérieure et de la barre de
+  messages
 
 *** Firefox
+
+Le dossier de profile se trouve dans
+==~/snap/firefox/common/.mozilla/firefox/XXX.default==.
 
 - Se connecter à Firefox Sync avec un profil vierge : cela synchronisera les
   marques-page, mots de passe, historique, extensions et préférences. Attention,
@@ -686,8 +680,7 @@ des extensions et celui d'accueil Firefox à gauche des onglets. Au besoin, on
 rajoutera ensuite les extensions liées aux sites visités directement à droite de
 la barre d'adresse.
 
-Pour les mises-à-jour, on va dans le dossier de profile Firefox
-(=~/snap/firefox/common/.mozilla/firefox/XXX.default=), sous-dossier
+Pour les mises-à-jour, on va dans le dossier de profile Firefox, sous-dossier
 =chrome/firefox-gnome-theme=, puis on met à jour le dépôt :
 
 #+begin_src sh
