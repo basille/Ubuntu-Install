@@ -892,6 +892,10 @@ Polices, cocher « Appliquer la table de remplacement » avec une règle de
 remplacement pour chaque police (Calibri → Carlito, Cambria → Caladea). Laisser
 « Toujours » et « Écran uniquement » décochés.
 
+Pour insérer des lignes automatiquement avec =---=,  =___=, ~===~, =~~~=, il
+faut valider l'option « Appliquer une bordure » dans Outils > Auto-correction >
+Options.
+
 Pour pouvoir exporter proprement en PDF des diapos avec animation
 d'apparition/disparition, on installe l'extension [[https://github.com/monperrus/ExpandAnimations/releases][ExpandAnimations]], en
 double-cliquant sur le fichier =.oxt=.
