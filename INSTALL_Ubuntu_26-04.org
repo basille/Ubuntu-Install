@@ -234,6 +234,21 @@ tee ~/.config/terminator/config &>/dev/null <<EOF
 EOF
 #+end_src
 
+- Bug pour l'utilisation de la police Powerline dans Ubuntu : Pour le résoudre,
+  ajouter manuellement ces lines dans le bon fichier de configuration :
+
+#+begin_src sh
+sudo nano /etc/fonts/conf.d/10-powerline-symbols.conf
+#+end_src
+  
+#+begin_quote
+: <fontconfig>
+:         <alias>
+:                 <family>Ubuntu Sans Mono</family>
+:                 <prefer><family>PowerlineSymbols</family></prefer>
+:         </alias>
+#+end_quote
+
 - « Ouvrir dans Terminator » dans Nautilus : Nécessite =python3-nautilus=. 
 
 #+begin_src sh
