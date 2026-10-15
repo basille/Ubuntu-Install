@@ -98,22 +98,28 @@ Par défaut, la liste des dépôts Ubuntu (désormais dans
 Ubuntu, qu'ils soient libres (=main=) ou non (=restricted=), et les paquets
 maintenus par la communauté, qu'ils soient libres (=universe=) ou non
 (=multiverse=), pour les dépots de base, les dépôts de mises à jour, les dépôts
-de sécurité et les dépôts de rétro-portage (en anglais, /backports/).
+de rétro-portage (en anglais, /backports/) et les dépôts de sécurité.
 
 On rajoute quelques dépôts au cas par cas, avec les clés d'authentification : R
 et QGIS. 
 
 #+begin_src sh
-# R [!! à tester !!]
-# To verify key, run gpg --show-keys /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc 
-# Fingerprint: E298A3A825C0D65DFD57CBB651716619E084DAB9
-wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
-# add the repo from CRAN -- lsb_release adjusts to 'noble' or 'jammy' or ... as needed
-sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu/noble-cran40/"
+# R
+# trusted key (fingerprint: E298A3A825C0D65DFD57CBB651716619E084DAB9)
+wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/keyrings/cran_ubuntu_key.asc &>/dev/null
+if gpg --show-keys --with-colons /etc/apt/keyrings/cran_ubuntu_key.asc | awk -F':' '$1=="fpr"{print $10}'  | head -n 1 | grep -q "E298A3A825C0D65DFD57CBB651716619E084DAB9"; then echo "Key OK"; else echo "Key problem"; fi
+sudo tee /etc/apt/sources.list.d/cran.sources &>/dev/null <<EOF
+Types: deb
+URIs: https://cloud.r-project.org/bin/linux/ubuntu/
+Suites: resolute-cran40/
+Components:
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/cran_ubuntu_key.asc
+EOF
 
 # QGIS
-sudo wget -O /etc/apt/keyrings/qgis-archive-keyring.gpg https://download.qgis.org/downloads/qgis-archive-keyring.gpg
-sudo tee /etc/apt/sources.list.d/qgis.sources <<EOF
+wget -qO- https://download.qgis.org/downloads/qgis-archive-keyring.gpg | sudo tee -a /etc/apt/keyrings/qgis-archive-keyring.gpg &>/dev/null
+sudo tee /etc/apt/sources.list.d/qgis.sources &>/dev/null <<EOF
 Types: deb deb-src
 URIs: https://qgis.org/debian
 Suites: plucky
@@ -450,10 +456,10 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
 
 ** Réglagles spécifiques du bureau
 
-- Ajuster les applications favorites : Fichiers, Firefox, Thunderbird,
-  Emacs, Ghostty, Moniteur système ;
-- Souris et pavé tactile : Activer =Taper pour cliquer=, bords de l'écran
-  actifs (pour redimensionner les fenêtres) ;
+- Ajuster les applications favorites : Fichiers, Firefox, Thunderbird, Emacs,
+  Terminator, Ressources ;
+- Souris et pavé tactile : Activer le clic du milieu pour coller ce qui a été
+  sélectionné ; bords de l'écran actifs (pour redimensionner les fenêtres) ;
 - Enlever le « bip » système ;
 - Raccourcis clavier (désactiver « Masquer la fenêtre » ; dossier personnel
   (fichiers) : ~Super+f~ ; verrouiller l'écran : ~Ctrl+Échap~ ; maximiser la
@@ -466,8 +472,8 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
   géolocalisation pour avoir les horaires de lever/couchers de soleil /!\ :
 
 #+begin_src sh
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacs.desktop', 'com.mitchellh.ghostty.desktop', 'org.gnome.SystemMonitor.desktop']"
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacs.desktop', 'terminator.desktop', 'net.nokyan.Resources.desktop']"
+gsettings set org.gnome.desktop.interface gtk-enable-primary-paste true
 gsettings set org.gnome.mutter edge-tiling true
 gsettings set org.gnome.desktop.sound event-sounds false
 gsettings set org.gnome.desktop.wm.keybindings minimize ['']
