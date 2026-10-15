@@ -21,9 +21,9 @@ correspondantes.
   - [[#installer-le-système-complet][Installer le système complet]]
 - [[#configurer-le-système][Configurer le système]]
   - [[#terminal--terminator][Terminal : Terminator]]
-  - [[#gnome][GNOME]]
+  - [[#gnome--session-et-mises-à-jour][GNOME : session et mises-à-jour]]
   - [[#ssh-et-git][SSH et git]]
-  - [[#mémoire-et-swap][Mémoire et SWAP]]
+  - [[#mémoire-et-swap-nécessaire-][Mémoire et SWAP [nécessaire ?]]]
 - [[#configurer-le-bureau][Configurer le bureau]]
   - [[#clavier-et-internationalisation][Clavier et internationalisation]]
   - [[#réglagles-spécifiques-du-bureau][Réglagles spécifiques du bureau]]
@@ -290,16 +290,11 @@ Ajouter cette ligne au début du fichier :
 #+end_quote
 
 
-** GNOME
+** GNOME : session et mises-à-jour
 
 Au redémarrage (ou après avoir fermé la session), cliquer sur l’icône en bas à
 droite après avoir entré le nom d'utilisateur, puis choisir =GNOME=. Ça restera
-ensuite le choix par défaut. Pour terminer, on remplace la couleur
-d'accentuation d'orange (Ubuntu) à bleu (GNOME) :
-
-#+begin_src sh
-gsettings set org.gnome.desktop.interface accent-color 'blue'  
-#+end_src
+ensuite le choix par défaut. 
 
 Ici on souhaite avoir le contrôle complet du timing des mises-à-jour, qui sont
 faites manuellement. Par corollaire, on ne veut pas de notification de
@@ -355,14 +350,14 @@ ssh -T git@github.com
 #+end_src
 
 On vérifie que la clé retournée correspond bien à la [[https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints][clé publique de GitHub]],
-auqul cas on peut répondre « Oui ». Puis si le shell renvoie : "Hi <login>!
-You've successfully authenticated, but GitHub does not provide shell access.",
-c'est que ça a fonctionné.
+auquel cas on peut répondre « Oui » ou "yes". Puis si le shell renvoie : "Hi
+<login>!  You've successfully authenticated, but GitHub does not provide shell
+access.", c'est que ça a fonctionné.
 
 Pour finir, on configure Git via le fichier =.gitconfig= dans le dossier
 utilisateur (notamment informations personnelles de compte et de clés).
 
-** Mémoire et SWAP
+** Mémoire et SWAP [nécessaire ?]
 
 - On utilise =Zswap= pour compresser la mémoire virtuelle (fichier d'échange) en
   RAM, ce qui permet une utilisation plus modérée de la partition de SWAP (utile
@@ -460,7 +455,7 @@ sudo mv /usr/share/X11/xkb/symbols/fr /usr/share/X11/xkb/symbols/fr.bkp
 sudo cp Keyboard/keyboard-DELL-Precision-3581_fr /usr/share/X11/xkb/symbols/fr
 #+end_src
 
-  * Puis dans les Paramètres GNOME > Pays et langue, vérifier que « Français
+  * Puis dans les Paramètres GNOME > Clavier, vérifier que « Français
     (variante) » est bien la Source de saisie ; ajouter « Grec » pour l'alphabet
     grec. Pour changer de clavier à la volée : =Windows+Espace=.
 
@@ -474,6 +469,7 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
 
 - Ajuster les applications favorites : Fichiers, Firefox, Thunderbird, Emacs,
   Terminator, Ressources ;
+- Couleur d'accentuation : bleu (GNOME) et icônes en bleu sous Nautilus ;
 - Souris et pavé tactile : Activer le clic du milieu pour coller ce qui a été
   sélectionné ; bords de l'écran actifs (pour redimensionner les fenêtres) ;
 - Enlever le « bip » système ;
@@ -489,6 +485,8 @@ Attention : ne marche pas sous Wayland, il faut bien modifier dans xkb
 
 #+begin_src sh
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox_firefox.desktop', 'thunderbird_thunderbird.desktop', 'emacs.desktop', 'terminator.desktop', 'net.nokyan.Resources.desktop']"
+gsettings set org.gnome.desktop.interface accent-color 'blue'
+gsettings set org.gnome.desktop.interface icon-theme 'Yaru-blue-dark'
 gsettings set org.gnome.desktop.interface gtk-enable-primary-paste true
 gsettings set org.gnome.mutter edge-tiling true
 gsettings set org.gnome.desktop.sound event-sounds false
@@ -504,17 +502,12 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-autom
 gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "uint32 3700"
 #+end_src
 
-- Vérifier les applications par défaut (Paramètres > Applications > Applications
-  par défaut), notamment Firefox, Thunderbird ;
-- Éventuellement vérifier les applications au démarrage (Paramètres >
-  Applications > puis pour chaque application cliquer sur « Autostart »),
-  notamment Thunderbird, Firefox, Emacs, NextCloud et Fichiers [DONTWORK];
-- Il y a un bug avec le « Fractional scaling » et la taille des curseurs. Semble
-  résolu par (à vérifier) :
+# - Il y a un bug avec le « Fractional scaling » et la taille des curseurs. Semble
+#   résolu par (à vérifier) :
 
-#+begin_src sh
-mkdir ~/.icons && cp -r /usr/share/icons/Adwaita ~/.icons/default
-#+end_src
+# #+begin_src sh
+# mkdir ~/.icons && cp -r /usr/share/icons/Adwaita ~/.icons/default
+# #+end_src
   
 
 ** Extensions GNOME
@@ -523,14 +516,14 @@ On utilise le gestionnaire d'extensions de GNOME (via le lanceur d'applications)
 pour installer et gérer des extensions GNOME Shell :
 
 - [[https://extensions.gnome.org/extension/6361/alttab-launcher/][Alt+Tab Launcher]]
-- [[https://extensions.gnome.org/extension/615/appindicator-support/][AppIndicator]] : Utiliser une taille d'icone de 20.
+- [[https://extensions.gnome.org/extension/615/appindicator-support/][AppIndicator]] / Ubuntu AppIndicators [intégrée] : Utiliser une taille d'icone de 20.
 - Auto Move Windows [intégrée] : Firefox sur (2), Fichiers sur (3)
+- Desktop Icons [intégrée] : Désactiver.
 - [[https://extensions.gnome.org/extension/28/gtile/][gTile]] : Changer la taille de grille à 4x2,3x2,4x3
 - [[https://extensions.gnome.org/extension/5088/muteunmute/][Mute/Unmute]] (coupe le son par un clic-milieu sur l'icône de volume).
 - [[https://extensions.gnome.org/extension/2236/night-theme-switcher/][Night theme switcher]] (passe automatiquement du thème clair au thème sombre
   selon les horaires du jour).
-- [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] [pas encore disponible pour GNOME 49] : Changer le raccourci
-  pour ~Super+F1~ :
+- [[https://extensions.gnome.org/extension/1113/nothing-to-say/][Nothing to say]] : Changer le raccourci pour ~Super+F1~ :
 
 #+begin_src sh
 dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '["<Super>F1"]'
@@ -544,7 +537,10 @@ dconf write /org/gnome/shell/extensions/nothing-to-say/keybinding-toggle-mute '[
   - Animation Time : 75
   - Vertical Size : 35
   - Always On Top : désactiver
-- Météo : essayer [[https://extensions.gnome.org/extension/5156/desktop-clock/][Desktop Widgets (Desktop Clock)]] ou [[https://extensions.gnome.org/extension/11077/weatherglass/][Weatherglass]]
+- Ubuntu Doc [intégrée] : Désactiver.
+- [[https://extensions.gnome.org/extension/11077/weatherglass/][Weatherglass]] : Ajuster la position manuellement, désactiver « Animer
+  l'icône », mettre comme Style d'arrière plan « Fond du thème », et ajuster le
+  Texte des données à « Grand ».
 
 
 * Web
