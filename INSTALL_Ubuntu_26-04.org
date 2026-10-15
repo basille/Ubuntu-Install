@@ -1,7 +1,7 @@
-#+TITLE: Installation d'Ubuntu 25-10
+#+TITLE: Installation d'Ubuntu 26.04
 #+AUTHOR: Mathieu Basille
 
-Ceci est un tutoriel complet pour installer Ubuntu version 26-04 LTS « Resolute
+Ceci est un tutoriel complet pour installer Ubuntu version 26.04 LTS « Resolute
 Raccoon » sur un portable Dell. La plupart des instructions sont génériques pour
 tout ordinateur, cependant :
 
