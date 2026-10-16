@@ -502,6 +502,20 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-autom
 gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature "uint32 3700"
 #+end_src
 
+Une [[https://wallpapers.manishk.dev/][collection de fonds d'écran dynamiques]] et on en choisit un pour le jour et
+un pour la nuit :
+
+#+begin_src sh
+curl -s https://wallpapers.manishk.dev/install.sh | bash -s Lakeside
+curl -s https://wallpapers.manishk.dev/install.sh | bash -s Big_Sur_Beach
+curl -s https://wallpapers.manishk.dev/install.sh | bash -s Firewatch
+curl -s https://wallpapers.manishk.dev/install.sh | bash -s Lakeside-2
+curl -s https://wallpapers.manishk.dev/install.sh | bash -s Fuji
+curl -s https://wallpapers.manishk.dev/install.sh | bash -s Catalina
+gsettings set org.gnome.desktop.background picture-uri 'file:///home/mathieu/.local/share/backgrounds/gnome/Lakeside-timed.xml'
+gsettings set org.gnome.desktop.background picture-uri-dark 'file:///home/mathieu/.local/share/backgrounds/gnome/Lakeside-2-timed.xml'
+#+end_src
+
 # - Il y a un bug avec le « Fractional scaling » et la taille des curseurs. Semble
 #   résolu par (à vérifier) :
 
